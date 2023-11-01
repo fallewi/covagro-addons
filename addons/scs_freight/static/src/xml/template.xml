@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="freightDashboard">
+        <div class="accounts-dashboard-wrap">
+            <div class="o_dashboards col-xs-12 col-sm-12 col-lg-12 col-md-12"
+                 style="background-color: #e1e1e1;overflow: scroll; !important; ">
+                <div class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-12">
+                                <div class="dash-header">
+                                    <h1 class="">Tableau de Bord Covagro </h1>
+                                    <div class="muted small">statistiques et rapports </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin:0px">
+                <div class="col-xs-12 col-sm-12 col-lg-12 col-md-12">
+                    <div>
+                        <div class="row  account-details mt-3" style="margin:0px">
+
+<!--                            Net Profit -->
+                            <!--                            <div class="col-md-3 d-flex align-items-stretch">-->
+                            <!--                                <div class="tile wide invoice box-2">-->
+                            <!--                                    <div class="header">-->
+                            <!--                                        <div class="main-title">Net Profit</div>-->
+                            <!--                                        <h2 class="text-center my-4" id="net_profit">-->
+                            <!--                                            <span id="net_profit_value"></span>-->
+                            <!--                                        </h2>-->
+                            <!--                                        <canvas id="net_profit_progress" width="300" height="200"> </canvas>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+
+                            <!--                            cash Flow Ratio-->
+                            <!--                            <div class="col-md-3 d-flex align-items-stretch">-->
+                            <!--                                <div class="tile wide invoice box-2">-->
+                            <!--                                    <div class="header">-->
+                            <!--                                        <div class="main-title">Cash Flow Ratio</div>-->
+                            <!--                                        <h2 class="text-center my-4" id="cash_flow">-->
+                            <!--                                            <span id="cash_flow_value"></span>-->
+                            <!--                                        </h2>-->
+                            <!--                                        <canvas id="cash_flow_progress" width="300" height="200"> </canvas>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+
+                            <!--                            Gross Margin-->
+                            <!--                            <div class="col-md-3 d-flex align-items-stretch">-->
+                            <!--                                <div class="tile wide invoice box-2">-->
+                            <!--                                    <div class="header">-->
+                            <!--                                        <div class="main-title">Gross Margin</div>-->
+                            <!--                                        <h2 class="text-center my-4" id="gross_margin">-->
+                            <!--                                            <span id="gross_margin_value"></span>-->
+                            <!--                                        </h2>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                            -->
+
+                            <!--                            Overdue Ratio-->
+                            <!--                            <div class="col-md-3 d-flex align-items-stretch">-->
+                            <!--                                <div class="tile wide invoice box-2">-->
+                            <!--                                    <div class="header">-->
+                            <!--                                        <div class="main-title">Overdue Ratio</div>-->
+                            <!--                                        <canvas id="overdue_ratio_progress" width="300" height="200"> </canvas>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+
+                            <div class="col-md-3 d-flex align-items-stretch">
+                                <div class="tile wide invoice box-2">
+                                    <div class="p-5">
+                                        <h2 class=" mb-3" id="gross_margin">
+                                            <span class="text-primary" id="total_customers_value">0</span>
+                                        </h2>
+                                        <div class="text-primary">
+                                            Nombre total de clients
+                                        </div>
+                                        <div class="progress" id="percentage_newCustomers">
+
+                                        </div>
+                                        <div class="small text-success font-weight-bold">
+                                            <span id="new_customers_value"></span>
+                                            NOUVEAUX CLIENTS
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-stretch">
+                                <div class="tile wide invoice box-2">
+                                    <div class="p-5">
+                                        <h2 class=" mb-3" id="gross_margin">
+                                            <span class="text-primary" id="not_invoiced_operations_value">0</span>/
+                                            <span class="text-primary" id="operations_value">0</span>
+                                        </h2>
+                                        <div class="text-primary">
+                                            OPÉRATIONS TOTALES
+                                        </div>
+                                        <div class="progress" id="not_invoiced_operations">
+
+                                        </div>
+                                        <div class="small text-warning font-weight-bold">
+                                            NON FACTURÉ
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-stretch">
+                                <div class="tile wide invoice box-2">
+                                    <div class="p-5">
+                                        <h2 class=" mb-3" id="gross_margin">
+                                            <span class="text-primary" id="gross_margin_value">
+                                                <span id="is_opened_value"></span>/
+                                                <span id="folders_value"></span>
+                                            </span>
+                                        </h2>
+                                        <div class="text-primary">
+                                           Nombre total d'enregistrements
+                                        </div>
+                                        <div class="progress" id="is_opened_folders">
+                                          <div class="progress-bar" role="progressbar" style="width: 50%"
+                                               aria-valuenow="50" aria-valuemin="0"
+                                               aria-valuemax="100">
+                                          </div>
+                                        </div>
+                                        <div class="small text-primary font-weight-bold">OUVRIR</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-stretch">
+                                <div class="tile wide invoice box-2">
+                                    <div class="p-5">
+                                        <h2 class=" mb-3" id="gross_margin">
+                                            <span class="text-primary">
+                                            <span id="declined_offers"></span>/
+                                                <span id="total_offers"></span>
+                                            </span>
+                                        </h2>
+                                        <div class="text-primary">
+                                           Offres
+                                        </div>
+                                        <div class="progress" id="declined_percentage">
+
+                                        </div>
+                                        <div class="small text-danger font-weight-bold">DECLINES</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--                            <div class="col-md-6 d-flex align-items-stretch">-->
+                            <!--                                <div class="tile wide invoice box-2">-->
+                            <!--                                    <div class="p-5 pt-0">-->
+                            <!--                                        <h2 class=" mb-3" id="gross_margin">-->
+                            <!--                                            <span class="text-primary" id="gross_margin_value">Purchases  :   63.870.697 FCFA</span>-->
+                            <!--                                        </h2>-->
+                            <!--                                        <hr/>-->
+                            <!--                                        <canvas id="purchase_bar_chart" width="300" height="200"> </canvas>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                            -->
+                            <!--                            <div class="col-md-6 d-flex align-items-stretch">-->
+                            <!--                                <div class="tile wide invoice box-2">-->
+                            <!--                                    <div class="p-5 pt-0">-->
+                            <!--                                        <h2 class=" mb-3" id="gross_margin">-->
+                            <!--                                            <span class="text-primary" id="gross_margin_value">Sales  :   47.449.540 FCFA</span>-->
+                            <!--                                        </h2>-->
+                            <!--                                        <hr/>-->
+                            <!--                                        <canvas id="sales_bar_chart" width="300" height="200"> </canvas>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+
+                            <!--   Operation statistics  -->
+                            <div class="col-md-6 d-flex align-items-stretch">
+                                <div class="tile wide invoice box-2">
+                                    <div class="p-5 pt-0">
+                                        <h2 class=" mb-3" id="gross_margin">
+                                            <span class="text-primary">Statistiques d'exploitation</span>
+                                        </h2>
+                                        <table class="table">
+                                             <thead>
+                                                <tr>
+                                                    <th scope="col">Catégorie</th>
+                                                    <th scope="col">Nombre</th>
+
+                                                </tr>
+                                             </thead>
+                                            <tbody id="operations_row">
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Offers Statistics -->
+                            <div class="col-md-6 d-flex align-items-stretch">
+                                <div class="tile wide invoice box-2">
+                                    <div class="p-5 pt-0">
+                                        <h2 class=" mb-3" id="gross_margin">
+                                            <span class="text-primary" id="gross_margin_value">Meilleurs services</span>
+                                        </h2>
+                                        <table class="table">
+                                             <thead>
+                                                <tr>
+                                                    <th scope="col">Nom</th>
+                                                    <th scope="col">Montant</th>
+                                                </tr>
+                                             </thead>
+                                            <tbody id="top_10_services_row">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--                            Top Clients-->
+                            <div class="col-md-6 d-flex align-items-stretch">
+                                <div class="tile wide invoice box-2">
+                                    <div class="p-5 pt-0">
+                                        <h2 class=" mb-3" id="gross_margin">
+                                            <span class="text-primary" id="gross_margin_value">MEILLEURS Clients</span>
+                                        </h2>
+                                        <table class="table">
+                                             <thead>
+                                                <tr>
+                                                    <th scope="col">Nom</th>
+                                                    <th scope="col">Montant</th>
+
+                                                </tr>
+                                             </thead>
+                                            <tbody id="top_10_customers_row">
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--                            Top Services-->
+                            <div class="col-md-6 d-flex align-items-stretch">
+                                <div class="tile wide invoice box-2">
+                                    <div class="p-5 pt-0">
+                                        <h2 class=" mb-3" id="gross_margin">
+                                            <span class="text-primary" id="gross_margin_value">Meilleurs services</span>
+                                        </h2>
+                                        <table class="table">
+                                             <thead>
+                                                <tr>
+                                                    <th scope="col">Nom</th>
+                                                    <th scope="col">Montant</th>
+                                                </tr>
+                                             </thead>
+                                            <tbody id="top_10_services_row">
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

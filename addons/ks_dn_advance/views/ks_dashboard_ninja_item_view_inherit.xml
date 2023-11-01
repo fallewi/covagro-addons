@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ks_dn_advance.item_form_inherit" model="ir.ui.view">
+            <field name="name">ks_dashboard_ninja.ks_dashboard_ninja_item.form</field>
+            <field name="model">ks_dashboard_ninja.item</field>
+            <field name="inherit_id" ref="ks_dashboard_ninja.item_form_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ks_model_id']" position="replace">
+                    <field name="ks_model_id"
+                           options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                           context="{'current_id': id}"
+                           attrs="{'required':['|',('ks_dashboard_item_type','in',['ks_tile']),'&amp;',('ks_data_calculation_type','=','custom'),('ks_dashboard_item_type','not in',['ks_tile','ks_to_do'])],
+                                'invisible':['|',('ks_dashboard_item_type','in',['ks_to_do']),('ks_data_calculation_type','=','query')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='ks_dashboard_item_type']" position="after">
+                    <field name="ks_data_calculation_type" widget="radio" class="ks_data_calculation_widget"
+                           attrs="{'invisible':['|',('ks_dashboard_item_type','=','ks_tile'),('ks_dashboard_item_type','not in',
+                                                        ['ks_bar_chart','ks_horizontalBar_chart','ks_line_chart','ks_area_chart','ks_pie_chart',
+                                                        'ks_doughnut_chart','ks_polarArea_chart','ks_list_view','ks_kpi'])],
+                                'required' : [('ks_dashboard_item_type','not in',
+                                                        ['ks_kpi','ks_tile','ks_bar_chart','ks_horizontalBar_chart','ks_line_chart','ks_area_chart','ks_pie_chart',
+                                                        'ks_doughnut_chart','ks_polarArea_chart','ks_list_view'])]}"/>
+                </xpath>
+                <!--                 <xpath expr="//field[@name='ks_dashboard_item_type']" position="after">-->
+                <!--                    <field name="ks_hide_legend" context="{'current_id': id}"-->
+                <!--                                   attrs="{'invisible':[('ks_dashboard_item_type','in',['ks_tile', 'ks_kpi', 'ks_list_view'])]}"/>-->
+                <!--                </xpath>-->
+                <!--                <xpath expr="//field[@name='ks_dashboard_item_type']" position="before">-->
+                <!--                    <field name="ks_company_id"-->
+                <!--                           options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>-->
+                <!--                </xpath>-->
+                <xpath expr="//page[@name='data_sets']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':['|','|',('ks_data_calculation_type','!=','custom'),('ks_dashboard_item_type','not in',['ks_tile','ks_to_do','ks_kpi','ks_bar_chart','ks_line_chart','ks_area_chart','ks_horizontalBar_chart','ks_pie_chart','ks_doughnut_chart','ks_polarArea_chart','ks_list_view',]),('ks_data_calculation_type', '=', 'query')]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//page[@name='data_model_2']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':['|', ('ks_data_calculation_type','=','query'),('ks_dashboard_item_type','!=','ks_kpi')]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//page[@name='target_settings']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':['|','&amp;',('ks_data_calculation_type','=','query'),('ks_dashboard_item_type','=','ks_kpi'),'|','&amp;',('ks_chart_groupby_type','!=','date_type'),('ks_dashboard_item_type','!=','ks_kpi'),'|','|',('ks_dashboard_item_type','not in',['ks_bar_chart','ks_horizontalBar_chart','ks_line_chart','ks_area_chart','ks_list_view','ks_kpi']),'&amp;',('ks_dashboard_item_type','=','ks_list_view'),('ks_list_view_type','=','ungrouped'),'&amp;','&amp;',('ks_dashboard_item_type','=','ks_kpi'),('ks_model_id_2','!=',False),('ks_data_comparison','in',['None','Ratio'])]}
+                    </attribute>
+                </xpath>
+<!--                <xpath expr="//page[@name='adv_conf']" position="attributes">-->
+<!--                    <attribute name="attrs">-->
+<!--                        {'invisible':['|', ('ks_data_calculation_type', '=', 'query'),('ks_dashboard_item_type','=','ks_to_do')]}-->
+<!--                    </attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='ks_chart_measure_field']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':['|','|',('ks_chart_data_count_type','=','count'),('ks_model_id','=',False),('ks_dashboard_item_type','=','ks_list_view')], 'required':[('ks_dashboard_item_type','!=','ks_kpi'),('ks_dashboard_item_type','!=','ks_to_do'),('ks_dashboard_item_type','!=','ks_tile'),('ks_dashboard_item_type','!=','ks_list_view'),('ks_chart_data_count_type','!=','count'),('ks_data_calculation_type','=','custom')]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='ks_list_view_type']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('ks_dashboard_item_type','!=','ks_list_view')], 'required':[('ks_dashboard_item_type','=','ks_list_view'),('ks_data_calculation_type','=','custom')]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='ks_list_view_fields']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':['|',('ks_dashboard_item_type','!=','ks_list_view'),('ks_list_view_type','!=','ungrouped')], 'required':[('ks_dashboard_item_type','=','ks_list_view'),('ks_list_view_type','=','ungrouped'),('ks_data_calculation_type','=','custom')]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='ks_list_view_group_fields']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':['|',('ks_dashboard_item_type','!=','ks_list_view'),('ks_list_view_type','!=','grouped')], 'required':[('ks_dashboard_item_type','=','ks_list_view'),('ks_list_view_type','=','grouped'),('ks_data_calculation_type','=','custom')]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='ks_chart_relation_groupby']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':['|',('ks_model_id','=',False),('ks_dashboard_item_type','=','ks_list_view'),('ks_list_view_type','=','ungrouped')], 'required':[('ks_data_calculation_type','=','custom'),('ks_dashboard_item_type','!=','ks_kpi'),('ks_dashboard_item_type','!=','ks_tile'),('ks_dashboard_item_type','!=','ks_to_do'),'|',('ks_dashboard_item_type','!=','ks_list_view'),'&amp;',('ks_dashboard_item_type','=','ks_list_view'),('ks_list_view_type','=','grouped')]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='ks_chart_date_groupby']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|','&amp;',('ks_dashboard_item_type','=','ks_list_view'),('ks_list_view_type','=','ungrouped'),('ks_chart_groupby_type','!=','date_type')], 'required':[('ks_data_calculation_type','=','custom'),('ks_chart_groupby_type','=','date_type'),'|','&amp;',('ks_dashboard_item_type','=','ks_list_view'),('ks_list_view_type','=','grouped'),'&amp;','&amp;',('ks_dashboard_item_type','!=','ks_kpi'),('ks_dashboard_item_type','!=','ks_tile'),('ks_dashboard_item_type','!=','ks_list_view')]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//page[@name='data_sets']" position="after">
+                    <page string="Query" name="ks_query"
+                          attrs="{'invisible':['|',('ks_data_calculation_type','=','custom'),('ks_dashboard_item_type','=','ks_tile')]}">
+                        <group>
+                            <group>
+                                <field name="ks_is_date_ranges"/>
+                                <field name="ks_query_start_date" string="Start Date"
+                                       attrs="{'invisible': [('ks_is_date_ranges','=', False)],'required':[('ks_is_date_ranges','=', True)]}"/>
+                                <field name="ks_query_end_date" string="End Date"
+                                       attrs="{'invisible': [('ks_is_date_ranges','=', False)],'required':[('ks_is_date_ranges','=', True)]}"/>
+                            </group>
+                        </group>
+                        <group name="custom_query" string="Query">
+                            <field name="ks_custom_query"
+                                   attrs="{'required': [('ks_dashboard_item_type','!=','ks_tile'),('ks_data_calculation_type','=','query')]}"/>
+                            <field name="ks_query_result" invisible="1"/>
+                            <field name="ks_xlabels"
+                                   widget="ks_labels"
+                                   class="ks_y_label"
+                                   string="X-Label"
+                                   attrs="{'invisible':[('ks_dashboard_item_type','in',['ks_list_view','ks_kpi'])],
+                                           'required': [('ks_dashboard_item_type','!=','ks_list_view'),('ks_dashboard_item_type','!=','ks_kpi'),('ks_dashboard_item_type','!=','ks_tile'),('ks_data_calculation_type','=','query')]}"/>
+                            <field name="ks_ylabels" widget="ks_y_labels" string="Y-Axis"
+                                   attrs="{'invisible':[('ks_dashboard_item_type','in',['ks_list_view','ks_kpi'])],
+                                           'required': [('ks_dashboard_item_type','!=','ks_list_view'),('ks_dashboard_item_type','!=','ks_kpi'),('ks_dashboard_item_type','!=','ks_tile'),('ks_data_calculation_type','=','query')]}"
+                            />
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='display_settings']" position="attributes">
+                    <attribute name="attrs">
+                        {}
+                    </attribute>
+                </xpath>
+                <xpath expr="//page[@name='display_settings']" position="inside">
+                    <group>
+                        <group>
+                            <field name="ks_list_view_layout"
+                                   attrs="{'invisible':[('ks_dashboard_item_type','!=','ks_list_view')],
+                                           'required': [('ks_dashboard_item_type','=','ks_list_view')]}"/>
+                        </group>
+                    </group>
+                </xpath>
+<!--                <xpath expr="//page[@name='target_settings']" position="attributes">-->
+<!--                    <attribute name="attrs">{'invisible':['|','&amp;',('ks_data_calculation_type','=','query'),('ks_dashboard_item_type','!=','ks_kpi'),'|','&amp;',('ks_chart_groupby_type','!=','date_type'),('ks_dashboard_item_type','!=','ks_kpi'),'|','|',('ks_dashboard_item_type','not-->
+<!--                        in',['ks_bar_chart','ks_horizontalBar_chart','ks_line_chart','ks_area_chart','ks_list_view','ks_kpi']),'&amp;',('ks_dashboard_item_type','=','ks_list_view'),('ks_list_view_type','=','ungrouped'),'&amp;','&amp;',('ks_dashboard_item_type','=','ks_kpi'),('ks_model_id_2','!=',False),('ks_data_comparison','in',['None','Ratio'])]}-->
+<!--                    </attribute>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+
+        <record id="ks_dn_advance.item_quick_edit_form_inherit" model="ir.ui.view">
+            <field name="name">ks_dashboard_ninja.ks_dashboard_item_quick_edit_view</field>
+            <field name="model">ks_dashboard_ninja.item</field>
+            <field name="inherit_id" ref="ks_dashboard_ninja.item_quick_edit_form_view"/>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ks_model_id']" position="replace">
+                    <field name="ks_data_calculation_type" invisible="1"/>
+                    <field name="ks_model_id"
+                           options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                           context="{'current_id': id}"
+                           attrs="{'required':['|',('ks_dashboard_item_type','in',['ks_tile']),'&amp;',('ks_data_calculation_type','=','custom'),('ks_dashboard_item_type','not in',['ks_tile','ks_to_do'])],
+                                'invisible':['|',('ks_dashboard_item_type','in',['ks_to_do']),('ks_data_calculation_type','=','query')]}"/>
+                </xpath>
+                <xpath expr="//form/group[@name='chart_settings']" position="replace">
+                    <group name="chart_settings"
+                           attrs="{'invisible':['|','|',('ks_data_calculation_type','=','query'),('ks_dashboard_item_type','=','ks_tile'),('ks_dashboard_item_type','=','ks_kpi')]}"
+                           class="ks_qe_form_view_group">
+                        <field name="ks_chart_data_count_type" attrs="{'invisible':['|','|',('ks_model_id','=',False),('ks_dashboard_item_type','=','ks_tile'),('ks_dashboard_item_type','=','ks_list_view')],
+                                                                                'required':[('ks_data_calculation_type','=','custom'),('ks_dashboard_item_type','!=','ks_tile'),('ks_dashboard_item_type','!=','ks_list_view')]}"/>
+                        <field name="ks_list_view_type" attrs="{'invisible':['|',('ks_data_calculation_type','=','query'),('ks_dashboard_item_type','!=','ks_list_view')],
+                                           'required':[('ks_data_calculation_type','=','custom'),('ks_dashboard_item_type','=','ks_list_view')]}"/>
+                        <field name="ks_chart_measure_field" string="Measures" widget='many2many_tags'
+                               options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                               attrs="{'invisible':['|','|',('ks_chart_data_count_type','=','count'),('ks_model_id','=',False),('ks_dashboard_item_type','=','ks_list_view')],'required':[('ks_data_calculation_type','=','custom'),('ks_dashboard_item_type','!=','ks_to_do'),('ks_dashboard_item_type','!=','ks_tile'),('ks_dashboard_item_type','!=','ks_kpi'),('ks_dashboard_item_type','!=','ks_list_view'),('ks_chart_data_count_type','!=','count')]}"/>
+
+                        <field name="ks_chart_measure_field_2" string="Line Measure" widget='many2many_tags'
+                               options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                               attrs="{'invisible':['|','|','|',('ks_chart_data_count_type','=','count'),('ks_model_id','=',False),('ks_dashboard_item_type','=','ks_list_view'),('ks_dashboard_item_type','!=','ks_bar_chart')]}"/>
+
+
+                        <field name="ks_list_view_fields" string="Fields to show in list"
+                               widget='many2many_tags'
+                               options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                               attrs="{'invisible':['|','|',('ks_data_calculation_type','=','query'),('ks_dashboard_item_type','!=','ks_list_view'),('ks_list_view_type','!=','ungrouped')],'required':[('ks_data_calculation_type','=','custom'),('ks_dashboard_item_type','=','ks_list_view'),('ks_list_view_type','=','ungrouped')]}"/>
+
+                        <field name="ks_list_view_group_fields" string="Fields to show in list"
+                               widget='many2many_tags'
+                               options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                               attrs="{'invisible':['|',('ks_dashboard_item_type','!=','ks_list_view'),('ks_list_view_type','!=','grouped')],'required':[('ks_data_calculation_type','=','custom'),('ks_dashboard_item_type','=','ks_list_view'),('ks_list_view_type','=','grouped')]}"/>
+
+                        <field name="ks_chart_groupby_type" invisible="1"/>
+                        <field name="ks_chart_relation_groupby" string="Group By"
+                               options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                               attrs="{'invisible':['|',('ks_model_id','=',False),('ks_dashboard_item_type','=','ks_list_view'),('ks_list_view_type','=','ungrouped')],'required':[('ks_data_calculation_type','=','custom'),('ks_dashboard_item_type','!=','ks_to_do'),('ks_dashboard_item_type','!=','ks_tile'),('ks_dashboard_item_type','!=','ks_kpi'),'|',('ks_dashboard_item_type','!=','ks_list_view'),('ks_list_view_type','=','grouped')]}"/>
+                        <field name="ks_chart_date_groupby" string="Group By Date"
+                               attrs="{'invisible':[('ks_chart_groupby_type','!=','date_type')],'required':[('ks_data_calculation_type','=','custom'),('ks_dashboard_item_type','!=','ks_tile'),('ks_chart_groupby_type','=','date_type')]}"/>
+                    </group>
+                </xpath>
+                <xpath expr="//group[@name='chart_settings']" position="after">
+                    <group name="custom_query" class="ks_qe_form_view_group"
+                           attrs="{'invisible':['|',('ks_data_calculation_type','=','custom'),'|',('ks_dashboard_item_type','=','ks_tile'),('ks_dashboard_item_type','=','ks_kpi')]}">
+                        <field name="ks_custom_query"
+                               attrs="{'required': [('ks_dashboard_item_type','!=','ks_kpi'),('ks_dashboard_item_type','!=','ks_tile'),('ks_data_calculation_type','=','query')]}"/>
+                        <field name="ks_query_result" invisible="1"/>
+                        <field name="ks_xlabels" widget="ks_labels" attrs="{'invisible':[('ks_dashboard_item_type','=','ks_list_view')],
+                                                                            'required': [('ks_dashboard_item_type','!=','ks_list_view'),('ks_dashboard_item_type','!=','ks_kpi'),('ks_dashboard_item_type','!=','ks_tile'),('ks_data_calculation_type','=','query')]}"/>
+                    </group>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="ks_dn_advance.board_tree_inherit" model="ir.ui.view">
+            <field name="name">ks_dashboard_item_quick_edit_view</field>
+            <field name="model">ks_dashboard_ninja.board</field>
+            <field name="inherit_id" ref="ks_dashboard_ninja.board_tree"/>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ks_dashboard_end_date']" position="after">
+                    <field name="ks_croessel_speed" required="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,108 @@
+<odoo>
+    <!-- Inherited res.partner search view -->
+    <record id="inherit_res_partner_search_view" model="ir.ui.view">
+        <field name="name">inherit.res.partner.search.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="." position="inside">
+                <filter name="agent" string="Agents" domain="[('agent','=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+    <!-- Inherited res.partner form view -->
+    <record model="ir.ui.view" id="res_partner_inherit_view">
+        <field name="name">res.partner.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="vat" position="after">
+                <field name="agent"/>
+            </field>
+        </field>
+    </record>
+    <!-- Action res.partner for Vendor -->
+    <record id="action_vendor_partner" model="ir.actions.act_window">
+        <field name="name">Fournisseurs</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <!-- <field name="domain">[('supplier', '=', True)]</field> -->
+        <field
+                name="context"
+        >{'search_default_supplier':1, 'res_partner_search_mode': 'supplier'}
+        </field>
+    </record>
+    <!-- Action res.partner for Customer -->
+    <record id="action_customer_partner" model="ir.actions.act_window">
+        <field name="name">Clients</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <!-- 	<field name="domain">[('customer', '=', True)]</field> -->
+        <field
+                name="context"
+        >{'search_default_customer':1, 'res_partner_search_mode': 'customer'}
+        </field>
+    </record>
+
+    <!-- Action res.partner for Agents -->
+    <record id="action_agent_partner" model="ir.actions.act_window">
+        <field name="name">Agents</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+        <!-- 	<field name="domain">[('customer', '=', True)]</field> -->
+        <field
+                name="context"
+        >{'default_agent':1, 'search_default_agent':1, 'res_partner_search_mode': 'agent'}
+        </field>
+    </record>
+
+    <!-- Action res.partner for prospects -->
+    <record id="action_contacts_partner" model="ir.actions.act_window">
+        <field name="name">Prospects</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,form</field>
+         <field
+                name="context"
+        >{'search_default_customer':0,'search_default_supplier':0 }
+        </field>
+    </record>
+    <!--
+        <menuitem
+            id="main_menu_master_data"
+            name="Master Data"
+            parent="root_menu_freight"
+            sequence="2"
+            groups="freight_operation_admin"
+        />
+        -->
+
+    <menuitem
+            id="menu_customer"
+            name="Clients"
+            parent="scs_freight.freight_commercial_menu"
+            sequence="2"
+            action="action_customer_partner"
+    />
+    <menuitem
+            id="menu_prospects"
+            name="Prospects"
+            parent="scs_freight.freight_commercial_menu"
+            sequence="6"
+            action="action_contacts_partner"
+    />
+    <menuitem
+            id="menu_vendor"
+            name="Fournisseurs"
+            parent="scs_freight.freight_commercial_menu"
+            sequence="3"
+            action="action_vendor_partner"
+    />
+    <menuitem
+            id="menu_partner_agent"
+            name="Agents"
+            parent="scs_freight.freight_commercial_menu"
+            sequence="4"
+            action="action_agent_partner"
+    />
+</odoo>

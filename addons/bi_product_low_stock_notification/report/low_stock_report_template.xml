@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<template id="low_stock_template">
+    <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <center><table><th><h4><b>Product Low Stock Report</b></h4></th></table></center>
+                <br/><br/>
+                <table width="100%">
+                    <thead>
+                        <tr style="border: 1px solid black;">
+                            <th style="border: 1px solid black;">Product Name</th>
+                            <th style="border: 1px solid black;">Minimum Quantity</th>
+                            <th style="border: 1px solid black;">Product Quantity</th>
+                            <th style="border: 1px solid black;">Required Quantity</th>
+                        </tr>
+                    </thead>
+                    <t t-foreach="rec_ids" t-as="o">
+                        <tr style="border: 1px solid black;">
+                    	    <td style="border: 1px solid black;"><span t-field="o.name"/></td>
+                            <td style="border: 1px solid black;"><span t-field="o.limit_quantity"/></td>
+                            <td style="border: 1px solid black;"><span t-field="o.stock_quantity"/></td>
+                            <td style="border: 1px solid black;"><span t-esc="o.limit_quantity - o.stock_quantity"/></td>
+                        </tr>
+                    </t>
+                </table>
+            </div>
+        </t>
+    </t>
+</template>
+
+<report 
+    id="action_low_stock_report"
+    string="Product Low Stock Report"
+    model="res.config.settings" 
+    report_type="qweb-pdf"
+    file="bi_product_low_stock_notification.low_stock_template" 
+    name="bi_product_low_stock_notification.low_stock_template" 
+/>
+
+</data>
+</odoo>

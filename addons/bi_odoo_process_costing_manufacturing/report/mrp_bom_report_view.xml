@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+<template id="mrp_bom_cost_report_custom">
+    <t t-call="web.external_layout">
+        <div class="page">
+            <t t-foreach="docs" t-as="o">
+                <div class="row">
+                    <h2 style="text-align : center;">Nomenclature</h2><br/>
+                </div> 
+                
+                <table style="border-collapse: collapse;width: 100%;" class="table table-condensed">
+                    <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;height:50%;">
+                        <td><strong >Produit : </strong> </td>
+                        <td>[<span t-field="o.product_tmpl_id.default_code"/>] <span style="margin-left:10px;" t-field="o.product_tmpl_id.name" /></td>
+                        
+                        <td><strong >Référence : </strong> </td>
+                        <td><span t-field="o.code" /></td>
+                    </tr>
+                    
+                    <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+                        <td><strong >Variante de produit : </strong> </td>
+                        <td>[<span t-field="o.product_tmpl_id.default_code"/>] <span style="margin-left:10px;" t-field="o.product_id.name" /></td>
+                        
+                        <td><strong >Type de nomenclature : </strong> </td>
+                        <td><span t-field="o.type" /></td>
+                    </tr>
+                    
+                    <tr style="padding: 8px;text-align: left;border-top: 1px solid #ddd;">
+                        <td><strong >Quantité : </strong> </td>
+                        <td><span t-field="o.product_qty" /> <span style="margin-left:10px;" t-field="o.product_uom_id" /></td>
+                        
+                    </tr>
+                </table>
+                
+                <h2>Composants</h2><br/>
+                <table style="border-collapse: collapse;width: 100%;" class="table table-condensed">
+                    <thead>
+					    <tr>
+						    <th>Produit</th>
+						    <th>La quantité de produit</th>
+						    <th>Unité de mesure du produit</th>
+						    <th>Variantes</th>
+						    <th>Consommé en fabrication</th>
+					    </tr>
+			        </thead>  
+					<tbody class="components_tbody">
+					    <t t-foreach="o.bom_line_ids" t-as="bom_line">	 
+                        <tr>
+					        <td>
+						        <span t-field="bom_line.product_id.name" />
+					        </td>
+			                <td>
+						        <span t-field="bom_line.product_qty" />
+					        </td>
+					        <td>
+						        <span t-field="bom_line.product_uom_id.name" />
+					        </td>
+			                <td>
+						        <span t-field="bom_line.possible_bom_product_template_attribute_value_ids.name" />
+					        </td>
+					        <td>
+						        <span t-field="bom_line.operation_id.name" />
+					        </td>
+				        </tr>
+				        </t>
+					</tbody>
+                </table>
+
+                <h2>Coût matériel direct</h2><br/>
+                <table style="border-collapse: collapse;width: 100%;" class="table table-condensed">
+                    <thead>
+					    <tr>
+						    <th>Opération</th>
+						    <th>Produit</th>
+						    <th>Quantité prévue</th>
+						    <th>Unité</th>
+						    <th>Coût/Unité</th>
+						    <th>Coût total</th>
+					    </tr>
+			        </thead>  
+					<tbody class="material_tbody">
+					    <t t-set="material_total" t-value="0.0" />
+					    <t t-foreach="o.bom_material_cost_ids" t-as="bom_material">	 
+                        <tr>
+					        <td>
+						        <span t-field="bom_material.operation_id.name" />
+					        </td>
+			                <td>
+						        <span t-field="bom_material.product_id.name" />
+					        </td>
+					        <td>
+						        <span t-field="bom_material.planned_qty" />
+					        </td>
+					        <td>
+						        <span t-field="bom_material.uom_id.name" />
+					        </td>
+			                <td>
+						        <span t-field="bom_material.cost" />
+					        </td>
+					        <td>
+						        <span t-field="bom_material.total_cost" />
+					        </td>
+					        <t t-set="material_total" t-value="material_total +int (bom_material.total_cost) " />
+				        </tr>
+				        </t>
+				        <tr>
+				            <td></td>
+				            <td></td>
+				            <td></td>
+				            <td></td>
+							<td style="text-align: right;font-weight: bold;">Coût total du matériel :</td>
+							<td style="text-align: center; vertical-align: right;font-weight: bold;">
+								<span t-esc="material_total" />
+							</td>
+					    </tr>
+					</tbody>
+                </table>    
+                
+                <h2>Coût de la main-d'œuvre directe</h2><br/>
+                <table style="border-collapse: collapse;width: 100%;" class="table table-condensed">
+                    <thead>
+					    <tr>
+						    <th>Opération</th>
+						    
+						    <th>Heure prévue</th>
+						    
+						    <th>Coût/Heure</th>
+						    <th>Coût total</th>
+					    </tr>
+			        </thead>  
+					<tbody class="labour_tbody">
+					    <t t-set="labour_total" t-value="0.0" />
+					    <t t-foreach="o.bom_labour_cost_ids" t-as="bom_labour">	 
+                        <tr>
+					        <td>
+						        <span t-field="bom_labour.operation_id.name" />
+					        </td>
+			                
+					        <td>
+						        <span t-field="bom_labour.planned_qty" />
+					        </td>
+					        
+			                <td>
+						        <span t-field="bom_labour.cost" />
+					        </td>
+					        <td>
+						        <span t-field="bom_labour.total_cost" />
+					        </td>
+				        
+				            <t t-set="labour_total" t-value="labour_total +int (bom_labour.total_cost) " />
+			            </tr>
+				        </t>
+				        
+				        <tr>
+				            <td></td>
+				            <td></td>
+				            <td></td>
+				            <td></td>
+							<td style="text-align: right;font-weight: bold;">Coût total de la main-d'œuvre :</td>
+							<td style="text-align: center; vertical-align: right;font-weight: bold;">
+								<span t-esc="labour_total" />
+							</td>
+					    </tr>
+					</tbody>
+                </table>      
+                
+                <h2>Frais généraux directs</h2><br/>
+                <table style="border-collapse: collapse;width: 100%;" class="table table-condensed"  id="overhead_cost">
+                    <thead>
+					    <tr>
+						    <th>Opération</th>
+						    
+						    <th>Heure prévue</th>
+						    
+						    <th>Coût/Heure</th>
+						    <th>Coût total</th>
+					    </tr>
+			        </thead>  
+					<tbody class="labour_tbody">
+					    <t t-set="overhead_total" t-value="0.0" />
+					    <t t-foreach="o.bom_overhead_cost_ids" t-as="bom_overhead">	 
+                        <tr>
+					        <td>
+						        <span t-field="bom_overhead.operation_id.name" />
+					        </td>
+			                
+					        <td>
+						        <span t-field="bom_overhead.planned_qty" />
+					        </td>
+					        
+			                <td>
+						        <span t-field="bom_overhead.cost" />
+					        </td>
+					        <td>
+						        <span t-field="bom_overhead.total_cost" />
+					        </td>
+					        
+					        <t t-set="overhead_total" t-value="overhead_total +int ( bom_overhead.total_cost) " />
+				        </tr>
+				        </t>
+				        <tr>
+				            <td></td>
+				            <td></td>
+				            <td></td>
+				            <td></td>
+							<td style="text-align: right;font-weight: bold;">Frais généraux totaux :</td>
+							<td style="text-align: center; vertical-align: right;font-weight: bold;">
+								<span t-esc="overhead_total" />
+							</td>
+					    </tr>
+					</tbody>
+                </table>  
+                
+                <h2>Par produits</h2><br/>
+                <table style="border-collapse: collapse;width: 100%;" class="table table-condensed" t-if="o.byproduct_ids">
+                    <thead>
+					    <tr>
+						    <th>Produit</th>
+						    <th>Quantité de produit</th>
+						    <th>Unité de mesure</th>
+					    </tr>
+			        </thead>  
+					<tbody class="products_tbody">
+					    <t t-foreach="o.byproduct_ids" t-as="sub">	 
+                        <tr>
+					        <td>
+						        <span t-field="sub.product_id.name" />
+					        </td>
+			                <td>
+						        <span t-field="sub.product_qty" />
+					        </td>
+					        <td>
+						        <span t-field="sub.product_uom_id.name" />
+					        </td>
+			            </tr>
+				        </t>
+					</tbody>
+                </table>                         
+                    
+            </t>
+        </div>
+    </t>
+</template>
+
+<template id="mrp_bom_cost_report">
+    <t t-call="web.html_container">
+        <t t-foreach="doc_ids" t-as="o">
+            <t t-call="bi_odoo_process_costing_manufacturing.mrp_bom_cost_report_custom" />
+        </t>
+    </t>
+</template>
+
+
+</data>
+</odoo>
+

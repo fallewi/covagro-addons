@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Form View of Set Shipping Date -->
+    <record id="wiz_set_shipping_date_view" model="ir.ui.view">
+        <field name="name">wiz.set.shipping.date.view</field>
+        <field name="model">wiz.set.shipping.date</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="date" required="1" />
+                    </group>
+                    <group>
+                        <field
+                            name="ship_type"
+                            widget="radio"
+                            options="{'horizontal': true}"
+                        />
+                    </group>
+                </group>
+                <separator string="Opération d'expédition" />
+                <field
+                    name="operation_ids"
+                    domain="[('state','not in',['draft','custom','recived','delivered','cancel'])]"
+                >
+                    <tree string="Opérations de fret">
+                        <field name="name" required="1" />
+                        <field name="customer_id" />
+                        <field name="loading_port_id" />
+                        <field name="discharg_port_id" />
+                        <field name="direction" />
+                        <field name="order_date" />
+                    </tree>
+                </field>
+                <footer>
+                    <button
+                        name="action_set_date"
+                        string="Set"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button string="Annuler" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!-- Action View of Set Shipping Date -->
+    <record id="action_wiz_set_shipping_date" model="ir.actions.act_window">
+        <field name="name">Définir la date de réception / livraison sur l'expédition</field>
+        <field name="res_model">wiz.set.shipping.date</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="scs_freight.wiz_set_shipping_date_view" />
+    </record>
+    <!-- Menuitem of Set Shipping Date -->
+<!--
+    <menuitem
+        id="menu_set_shipping_date"
+        name="Set Shipping Date"
+        parent="main_menu_shipping_operation"
+        sequence="2"
+        action="action_wiz_set_shipping_date"
+        groups="freight_operation_admin"
+    />
+     -->
+</odoo>

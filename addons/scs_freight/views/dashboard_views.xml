@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="action_freight_report_all" model="ir.actions.client">
+            <field name="name">Rapport de fret COVAGRO</field>
+            <field name="tag">freight_dashboard</field>
+        </record>
+
+        <menuitem name="Tableau de Bord COVAGRO" id="menu_freight_dashboard" parent="scs_freight.root_menu_freight"
+                  sequence="0"
+                  action="action_freight_report_all"/>
+        <!-- -->
+    </data>
+</odoo>

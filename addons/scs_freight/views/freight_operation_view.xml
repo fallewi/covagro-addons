@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Action for operation.custom clearance Smart button -->
+    <record id="action_operation_custom_smart_button" model="ir.actions.act_window">
+        <field name="name">Dédouanement</field>
+        <field name="res_model">operation.custom</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('operation_id', '=', active_id)]</field>
+        <field name="context">{'default_operation_id': active_id}</field>
+    </record>
+    <record id="action_open_direct_shipment_invoices" model="ir.actions.act_window">
+        <field name="name">Factures</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field
+                name="domain"
+        >[('move_type', '=', 'out_invoice'),('operation_id', '=', active_id)]
+        </field>
+        <field
+                name="context"
+        >{'default_move_type': 'out_invoice', 'default_operation_id': active_id}
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer une facture client
+            </p>
+            <p>
+                Créez des factures, enregistrez des paiements et suivez les discussions avec vos clients.
+            </p>
+        </field>
+    </record>
+    <record id="action_open_direct_shipment_bills" model="ir.actions.act_window">
+        <field name="name">Factures</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="account.view_invoice_tree"/>
+        <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        <field
+                name="domain"
+        >[('move_type', '=', 'in_invoice'), ('operation_id', '=', active_id)]
+        </field>
+        <field
+                name="context"
+        >{'default_move_type': 'in_invoice', 'default_operation_id': active_id}
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer une facture fournisseur
+            </p>
+            <p>
+               Créez des factures, enregistrez les paiements et suivez les discussions avec vos fournisseurs.
+            </p>
+        </field>
+    </record>
+    <!-- freight.operations search view -->
+    <record id="view_freight_operation_search" model="ir.ui.view">
+        <field name="name">view.freight.operation.search</field>
+        <field name="model">freight.operation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="customer_id"/>
+                <field name="consignee_id"/>
+                <field name="direction"/>
+                <field name="transport"/>
+                <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                <filter
+                        name="confirm"
+                        string="Confirmez"
+                        domain="[('state','=','confirm')]"
+                />
+                <filter
+                        name="in_progress"
+                        string="En cours"
+                        domain="[('state','=','in_progress')]"
+                />
+                <filter
+                        name="in_transit"
+                        string="En transit"
+                        domain="[('state','=','in_transit')]"
+                />
+                <filter
+                        name="recived"
+                        string="Reçu"
+                        domain="[('state','=','recived')]"
+                />
+                <filter
+                        name="delivered"
+                        string="Livré"
+                        domain="[('state','=','delivered')]"
+                />
+                <filter
+                        name="cancel"
+                        string="Annuler"
+                        domain="[('state','=','cancel')]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                            name="group_by_customer_id"
+                            string="Client"
+                            context="{'group_by':'customer_id'}"
+                    />
+                    <filter
+                            name="group_by_consignee_id"
+                            string="Destinataire"
+                            context="{'group_by':'consignee_id'}"
+                    />
+                    <filter
+                            string="Opérateur"
+                            name="operator"
+                            context="{'group_by':'operator_id'}"
+                    />
+                    <filter
+                            name="status"
+                            string="Statut"
+                            context="{'group_by':'state'}"
+                    />
+                    <separator/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- freight.operation tree view -->
+    <record id="view_freight_operation_tree" model="ir.ui.view">
+        <field name="name">view.freight.operation.tree</field>
+        <field name="model">freight.operation</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="folder_id"/>
+                <field name="transport"/>
+                <field name="direction"/>
+                <field name="customer_id"/>
+                <field name="loading_port_id"/>
+                <field name="discharg_port_id"/>
+                <field name="state"/>
+                <field name="invoicing_state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- freight.operation form view -->
+    <record id="view_freight_operation_form" model="ir.ui.view">
+        <field name="name">view.freight.operation.form</field>
+        <field name="model">freight.operation</field>
+        <field name="arch" type="xml">
+            <form string="Fret">
+                <header>
+                    <button
+                            name="action_set_to_draft"
+                            type="object"
+                            string="Définir sur brouillon"
+                            attrs="{'invisible': [('state', 'in', ['draft'])]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="action_confirm"
+                            type="object"
+                            string="Confirmer"
+                            attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="action_invoice"
+                            type="object"
+                            string="Factures"
+                            attrs="{'invisible': [('state', 'in', ['draft', 'cancel'])]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="action_bill"
+                            type="object"
+                            string="Facture"
+                            attrs="{'invisible': [('state', 'in', ['draft', 'cancel'])]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="action_in_progress"
+                            type="object"
+                            string="En cours"
+                            attrs="{'invisible': [('state', 'not in', ['confirm'])]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="action_in_transit"
+                            type="object"
+                            string="En transit"
+                            attrs="{'invisible': [('state', 'not in', ['in_progress'])]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="action_recived"
+                            type="object"
+                            string="Reçu"
+                            attrs="{'invisible': ['|',('state', 'not in', ['in_transit']),('direction','=','export')]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="action_delivered"
+                            type="object"
+                            string="Livré"
+                            attrs="{'invisible': ['|',('state', 'not in', ['in_transit']),('direction','=','import')]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="action_cancel"
+                            type="object"
+                            string="Annuler"
+                            attrs="{'invisible': [('state', 'in', ['recived', 'cancel', 'delivered', 'intransit'])]}"
+                            class="oe_highlight"
+                    />
+                    <field
+                            name="state"
+                            widget="statusbar"
+                            nolabel="1"
+                            statusbar_visible="draft,confirm,cancel"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                                name="%(action_oper_service_frieght)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-bars"
+                        >
+                            <field
+                                    name="service_count"
+                                    widget="statinfo"
+                                    string="Service"
+                            />
+                        </button>
+                        <button
+                                name="%(action_open_direct_shipment_invoices)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-credit-card"
+                        >
+                            <field
+                                    name="invoice_count"
+                                    widget="statinfo"
+                                    string="Factures"
+                            />
+                        </button>
+                        <!-- Bill -->
+                        <button
+                                name="%(action_open_direct_shipment_bills)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-credit-card-alt"
+                        >
+                            <field name="bill_count" widget="statinfo" string="Facture"/>
+                        </button>
+                        <button
+                                name="%(scs_freight.action_operation_custom_smart_button)d"
+                                type="action"
+                                class="oe_stat_button"
+                                icon="fa-file"
+                                attrs="{'invisible': [('total_custom', '=', 0)]}"
+                        >
+                            <field
+                                    name="total_custom"
+                                    widget="statinfo"
+                                    string="Autorisation"
+                            />
+                        </button>
+                    </div>
+                    <h2>
+                        <field name="name" readonly="1"/>
+                    </h2>
+                    <group>
+                        <group>
+                            <field name="folder_id" required="1"/>
+                            <field
+                                    name="direction"
+                                    required="1"
+                                    attrs="{'readonly': [('state','not in',['draft','confirm'])]}"
+                            />
+                            <field
+                                    name="customer_id"
+                                    required="1"
+                                    context="{'res_partner_search_mode': 'customer'}"
+                                    attrs="{'readonly': [('state','not in',['draft','confirm'])]}"
+                            />
+                            <field
+                                    name="consignee_id"
+                                    required="1"
+                                    context="{'res_partner_search_mode': 'customer'}"
+                                    attrs="{'readonly': [('state','not in',['draft','confirm'])]}"
+                            />
+                        </group>
+                        <group>
+                            <field
+                                    name="transport"
+                                    attrs="{'readonly': [('state','not in',['draft'])]}"
+                            />
+                            <field
+                                    name="ocean_shipping"
+                                    attrs="{'invisible': [('transport', '!=', 'ocean')],'readonly': [('state','not in',['draft'])]}"
+                            />
+                            <field
+                                    name="land_shipping"
+                                    attrs="{'invisible': [('transport', '!=', 'land')],'readonly': [('state','not in',['draft'])]}"
+                            />
+                            <field
+                                    name="order_date"
+                                    required="1"
+                                    attrs="{'readonly': [('state','not in',['draft','confirm'])]}"
+                            />
+                            <field
+                                    name="master_awb"
+                                    attrs="{'invisible': [('transport', '!=', 'air')],'readonly': [('state','not in',['draft'])]}"
+                            />
+                            <field
+                                    name="house_awb"
+                                    attrs="{'invisible': [('transport', '!=', 'air')],'readonly': [('state','not in',['draft'])]}"
+                            />
+                            <field
+                                    name="master_lt"
+                                    attrs="{'invisible': [('transport', '!=', 'land')],'readonly': [('state','not in',['draft'])]}"
+                            />
+                            <field
+                                    name="house_lt"
+                                    attrs="{'invisible': [('transport', '!=', 'land')],'readonly': [('state','not in',['draft'])]}"
+                            />
+                            <field
+                                    name="master_bl"
+                                    attrs="{'invisible': [('transport', '!=', 'ocean')],'readonly': [('state','not in',['draft'])]}"
+                            />
+                            <field
+                                    name="house_bl"
+                                    attrs="{'invisible': [('transport', '!=', 'ocean')],'readonly': [('state','not in',['draft'])]}"
+                            />
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Général">
+                            <field
+                                    name="loading_port_id"
+                                    required="1"
+                                    attrs="{'readonly': [('state','not in',['draft'])]}"
+                            />
+                            <field
+                                    name="discharg_port_id"
+                                    required="1"
+                                    attrs="{'readonly': [('state','not in',['draft'])]}"
+                            />
+                            <field
+                                    name="voyage_no"
+                                    attrs="{'readonly': [('state','not in',['draft'])]}"
+                            />
+                            <field
+                                    name="vessel_id"
+                                    attrs="{'readonly': [('state','not in',['draft'])], 'invisible': [('transport', '!=', 'ocean')]}"
+                            />
+                            <field
+                                    name="airline_id"
+                                    attrs="{'invisible': [('transport','!=','air')]}"
+                            />
+                        </group>
+                        <group string="Chariot principal">
+                            <field
+                                    name="operator_id"
+                                    required="1"
+                                    attrs="{'readonly': [('state','not in',['draft','confirm'])]}"
+                            />
+                            <field
+                                    name="agent_id"
+                                    context="{'default_agent': True, 'res_partner_search_mode': 'supplier'}"
+                                    domain="[('agent','=',True)]"
+                                    attrs="{'readonly': [('state','not in',['draft','confirm'])]}"
+                            />
+                        </group>
+                    </group>
+                                        <group string="Incoterms" class="p-3 my-4 border">
+                        <group>
+                            <field name="incoterm_from" domain="[('is_source','=','True')]"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <group>
+                            <field name="incoterm_to" domain="[('is_destination','=','True')]"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                    </group>
+                    <group string="Cargaison" class="p-3 my-4 border">
+                        <field
+                                name="container_ids"
+                                nolabel="1"
+                        >
+                            <tree editable="bottom">
+                                <field
+                                        name="container_id"
+                                        options="{'no_create': True}"
+                                />
+                                <field name="qty" sum="Number of parcel"/>
+                                <field name="volume" sum="Total volume"/>
+                                <field name="weight" sum="Total weight"/>
+                                <field name="total_weight"/>
+                                <field name="taxable_weight"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group string="Conditions d'expédition">
+                        <group>
+                            <field
+                                    name="exp_send_date"
+                                    attrs="{'required': [('direction', '=', 'export')], 'readonly': [('state','in',['cancel','recived','delivered'])]}"
+                            />
+                            <field
+                                    name="exp_rec_date"
+                                    attrs="{'required': [('direction', '=', 'import')], 'readonly': [('state','in',['cancel','recived','delivered'])]}"
+                            />
+                        </group>
+                        <group>
+                            <field
+                                    name="act_send_date"
+                                    attrs="{'readonly': [('state','in',['cancel','recived','delivered'])]}"
+                            />
+                            <field
+                                    name="act_rec_date"
+                                    attrs="{'readonly': [('state','in',['cancel','recived','delivered'])]}"
+                            />
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <!--
+                        <page string="Order">
+                            <field
+                                    name="operation_line_ids"
+                            >
+                                <tree editable="top">
+                                    <field name="price_list_id" required="1"/>
+                                    <field
+                                            name="container_id"
+                                            options="{'no_create': True, 'no_open': True}"
+                                    />
+                                    <field name="product_id"/>
+                                    <field name="billing_on" required="1"/>
+
+                                    <field
+                                            name="exp_gross_weight"
+                                            sum="Total Weight"
+                                            class="text-center"
+                                            attrs="{'invisible':[('billing_on','in',['volume', 'service'])]}"
+                                    />
+                                    <field
+                                            name="exp_vol"
+                                            sum="Total Volume"
+                                            class="text-center"
+                                            attrs="{'invisible':[('billing_on','in',['weight','service'])]}"
+                                    />
+                                    <field name="price" class="text-center"/>
+                                    <field name="sale_price" sum="Total Cost" class="text-center"/>
+                                </tree>
+                            </field>
+                        </page>
+                        -->
+                        <page string="Services">
+                            <field
+                                    name="service_ids"
+                                    attrs="{'readonly': [('state','in',['recived','delivered','cancel'])]}"
+                            >
+                                <tree string="Services">
+                                    <field name="display_type" invisible="1"/>
+                                    <field name="vendor_id" attrs="{'required': [('display_type','=', False)]}"/>
+                                    <field name="product_id" string="Service"
+                                           attrs="{'required': [('display_type','=', False)]}"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id"/>
+                                    <field name="list_price"/>
+                                    <field name="sale_total"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Comptes">
+                            <table class="table table-bordered">
+                                <tr class="row_modifier row_hover">
+                                    <th
+                                            style="text-align:left;width:24%;background-color:gainsboro;"
+                                    />
+                                    <th
+                                            style="text-align:left;width:24%;background-color:gainsboro;text-align:center;"
+                                    >
+                                        <h3>Facture (à recevoir)</h3>
+                                    </th>
+                                    <th
+                                            style="text-align:left;width:24%;background-color:gainsboro;text-align:center;"
+                                    >
+                                        <h3>Facture (Payable)</h3>
+                                    </th>
+                                    <th
+                                            style="text-align:left;width:24%;background-color:gainsboro;text-align:center;"
+                                    >
+                                        <h3>Marge</h3>
+                                    </th>
+                                </tr>
+                                <tr class="row_modifier row_hover">
+                                    <th
+                                            style="text-align:left;width:24%;background-color:gainsboro;text-align:center;"
+                                    >
+                                        <h3>Paiement attendu</h3>
+                                    </th>
+                                    <td style="text-align:left;width:24%">
+                                        <field name="exp_inv_payment"/>
+                                    </td>
+                                    <td style="text-align:left;width:24%">
+                                        <field name="exp_bill_payment"/>
+                                    </td>
+                                    <td style="text-align:left;width:24%">
+                                        <field name="exp_payment_margin"/>
+                                    </td>
+                                </tr>
+                                <tr class="row_modifier row_hover">
+                                    <th
+                                            style="text-align:left;width:24%;background-color:gainsboro;text-align:center;"
+                                    >
+                                        <h3>Paiement payant</h3>
+                                    </th>
+                                    <td style="text-align:left;width:24%">
+                                        <field name="act_inv_payment"/>
+                                    </td>
+                                    <td style="text-align:left;width:24%">
+                                        <field name="act_bill_payment"/>
+                                    </td>
+                                    <td style="text-align:left;width:24%">
+                                        <field name="act_payment_margin"/>
+                                    </td>
+                                </tr>
+                                <tr class="row_modifier row_hover">
+                                    <th
+                                            style="text-align:left;width:24%;background-color:gainsboro;text-align:center;"
+                                    >
+                                        <h3>Montant dû</h3>
+                                    </th>
+                                    <td style="text-align:left;width:24%">
+                                        <field name="inv_amount_due"/>
+                                    </td>
+                                    <td style="text-align:left;width:24%">
+                                        <field name="bill_amount_due"/>
+                                    </td>
+                                    <td
+                                            style="text-align:left;width:24%;background-color:gainsboro;"
+                                    />
+                                </tr>
+                            </table>
+                        </page>
+                        <page string="Routes">
+                            <field
+                                    name="routes_ids"
+                                    attrs="{'readonly': [('state','in',['draft','recived','delivered','cancel'])]}"
+                            >
+                                <tree>
+                                    <field name="route_operation"/>
+                                    <field name="source_location"/>
+                                    <field name="dest_location"/>
+                                    <field name="transport"/>
+                                    <field name="cost_total" sum="Total Cost"/>
+                                    <field name="sale_total" sum="Total Sale"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Suivi">
+                            <field
+                                    name="tracking_ids"
+                                    attrs="{'readonly': [('state','in',['draft','recived','delivered','cancel'])]}"
+                            >
+                                <tree>
+                                    <field name="source_location_id"/>
+                                    <field name="dest_location_id"/>
+                                    <field name="date"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Note">
+                            <field
+                                    name="note"
+                                    attrs="{'readonly':[('state','in',['cancel','recived','delivered'])]}"
+                            />
+                        </page>
+                        <page string="Factures commerciales">
+                            <field
+                                    name="commercial_invoices_ids"
+                            >
+                                <tree editable="top">
+                                    <field name="product_name"/>
+                                    <field name="reference"/>
+                                    <field name="supplier"/>
+                                    <field name="amount" required="1"/>
+                                    <field name="currency_id"/>
+                                    <field name="rate"/>
+                                    <field name="transit_coast"/>
+                                    <field name="transit_currency_id"/>
+                                    <field name="transit_rate"/>
+
+
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for freight.operation -->
+    <record id="action_freight_operation" model="ir.actions.act_window">
+        <field name="name">Expédition directe</field>
+        <field name="res_model">freight.operation</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- freight.operation.line tree view -->
+    <record id="freight_operation_lin_tree_view" model="ir.ui.view">
+        <field name="name">freight.operation.line.tree.view</field>
+        <field name="model">freight.operation.line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="container_id" domain="[('state','=','available')]"/>
+                <field name="product_id" required="1"/>
+                <field name="price_list_id" required="1"/>
+                <field
+                        name="exp_gross_weight"
+                        sum="Total Weight"
+                        attrs="{'invisible':[('billing_on','=','volume')]}"
+                />
+                <field
+                        name="exp_vol"
+                        sum="Total Volume"
+                        attrs="{'invisible':[('billing_on','=','weight')]}"
+                />
+                <field name="price"/>
+                <field name="sale_price" sum="Coût total"/>
+                <field name="billing_on"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- freight.operation.line form view -->
+    <record id="freight_operation_line_form_view" model="ir.ui.view">
+        <field name="name">freight.operation.line.form.view</field>
+        <field name="model">freight.operation.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field
+                                    name="container_id"
+                                    required="1"
+                                    domain="[('state','=','available')]"
+                            />
+                            <field name="price_list_id"/>
+                            <field name="sale_price"/>
+                        </group>
+                        <group>
+                            <field name="product_id" required="1"/>
+                            <field name="billing_on"/>
+                            <field name="price"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="qty" invisible="1"/>
+                            <field
+                                    name="exp_vol"
+                                    attrs="{'invisible':[('billing_on','=','weight')]}"
+                            />
+                            <field
+                                    name="exp_gross_weight"
+                                    attrs="{'invisible':[('billing_on','=','volume')]}"
+                            />
+                        </group>
+                        <group/>
+                    </group>
+                    <notebook>
+                        <page string="Goods Description">
+                            <field name="goods_desc" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- operation.route form view -->
+    <record id="operation_route_form_view" model="ir.ui.view">
+        <field name="name">operation.route.form.view</field>
+        <field name="model">operation.route</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="route_operation"/>
+                            <field name="source_location" string="De" required="1"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="transport"/>
+                            <field name="dest_location" string="A" required="1"/>
+                            <field name="recived_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Services">
+                            <field name="service_ids">
+                                <tree>
+                                    <field name="vendor_id"/>
+                                    <field name="product_id" string="Service"/>
+                                    <field name="qty"/>
+                                    <field name="cost_price"/>
+                                    <field name="list_price"/>
+                                    <field name="cost_total" sum="Total Cost"/>
+                                    <field name="sale_total" sum="Total Sale"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <menuitem
+            id="root_menu_freight"
+            web_icon="scs_freight,static/description/icon.png"
+            name="Livraison COVAGRO"
+    />
+    <menuitem
+            id="main_menu_freight_shipping"
+            name="Opérations"
+            parent="root_menu_freight"
+            sequence="2"
+            groups="freight_operation_admin"
+    />
+    <menuitem
+            id="freight_direct_shipping_menu"
+            name="Expédition directe"
+            parent="main_menu_freight_shipping"
+            action="action_freight_operation"
+            sequence="1"
+            groups="freight_operation_admin"
+    />
+</odoo>

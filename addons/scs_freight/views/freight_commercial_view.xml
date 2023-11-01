@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- freight.offer search view -->
+    <record id="view_freight_offer_search" model="ir.ui.view">
+        <field name="name">freight.offer.search</field>
+        <field name="model">freight.offer</field>
+        <field name="arch" type="xml">
+            <search string="Offres de fret">
+                <field name="state"/>
+                <group>
+                    <filter string="Non refusé"
+                            name="not_declined"
+                            domain="[('state','!=','cancel')]"/>
+                    <filter string="Nouveau"
+                            name="is_declined"
+                            domain="[('state','=','new')]"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- freight.offer form view -->
+    <record id="view_freight_offer_form" model="ir.ui.view">
+        <field name="name">freight.offer.form</field>
+        <field name="model">freight.offer</field>
+        <field name="arch" type="xml">
+            <form string="Freight">
+                <header attrs="{'invisible': [('name', '=', ['new'])]}">
+                    <button
+                            name="action_set_to_draft"
+                            type="object"
+                            string="Définir sur brouillon"
+                            attrs="{'invisible': [('state', 'in', ['draft'])]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="action_send_to_client"
+                            type="object"
+                            string="Envoyé par email"
+                            attrs="{'invisible': [('state', 'in', ['cancel', 'sent', 'confirm'])]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="action_confirm"
+                            type="object"
+                            string="Confirmer"
+                            class="oe_highlight"
+                            attrs="{'invisible': [('state', 'in', ['cancel', 'confirm'])]}"
+                    />
+                    <button
+                            name="action_cancel"
+                            type="object"
+                            string="Refuser"
+                            attrs="{'invisible': [('state', 'in', ['cancel'])]}"
+                            class="oe_highlight"
+                    />
+                    <field
+                            name="state"
+                            widget="statusbar"
+                            nolabel="1"
+                            statusbar_visible="draft,sent,confirm"
+                    />
+                </header>
+                <sheet>
+                    <h2>
+                        <field name="name" readonly="1"/>
+                    </h2>
+                    <group string="Client" class="p-3 my-4 border">
+                        <group>
+                            <field
+                                    name="customer_id"
+                                    required="1"
+                                    context="{'res_partner_search_mode': 'customer'}"
+                                    attrs="{'readonly': [('state','not in',['draft','confirm'])]}"
+                            />
+                        </group>
+                        <group>
+                            <field name="currency_id"/>
+                            <field name="rate" attrs="{'invisible': [('currency_id','=','False')]}"/>
+                        </group>
+                    </group>
+                    <group string="Général" class="p-3 my-4 border">
+                        <group>
+                            <field name="direction"
+                                   required="1"
+                                   attrs="{'readonly': [('state','not in',['draft','confirm'])]}"
+                            />
+                            <field name="transport"
+                                   attrs="{'readonly': [('state','not in',['draft'])]}"
+                            />
+                            <field name="ocean_shipping"
+                                   attrs="{'invisible': [('transport', '!=', 'ocean')],'readonly': [('state','not in',['draft'])]}"
+                            />
+                            <field name="land_shipping"
+                                   attrs="{'invisible': [('transport', '!=', 'land')],'readonly': [('state','not in',['draft'])]}"
+                            />
+                        </group>
+                        <group>
+                            <field name="cargo_type"/>
+                            <field name="consignee_id"
+                                   required="1"
+                                   context="{'res_partner_search_mode': 'customer'}"
+                                   attrs="{'readonly': [('state','not in',['draft','confirm'])]}"
+                            />
+                            <field name="reference"/>
+                        </group>
+                    </group>
+                    <group string="Incoterms" class="p-3 my-4 border">
+                        <group>
+                            <field name="incoterm_from" domain="[('is_source','=','True')]"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <group>
+                            <field name="incoterm_to" domain="[('is_destination','=','True')]"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                    </group>
+                    <group string="Cargaison" class="p-3 my-4 border">
+                        <field
+                                name="container_ids"
+                                nolabel="1"
+                        >
+                            <tree editable="bottom">
+                                <field
+                                        name="container_id"
+                                        options="{'no_create': True}"
+                                />
+                                <field name="qty" sum="Number of parcel"/>
+                                <field name="volume" sum="Total volume"/>
+                                <field name="weight" sum="Total weight"/>
+                                <field name="total_weight"/>
+                                <field name="taxable_weight"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group string="Conditions d'expédition" class="p-3 my-4 border">
+                        <group class="w-100">
+                            <group>
+                                <field
+                                        name="loading_country_id"
+                                        required="1"
+                                />
+                                <field
+                                        name="loading_port_id"
+                                        required="1"
+                                        domain="[('country_id','=',loading_country_id)]"
+                                        attrs="{'readonly': [('state','not in',['draft'])]}"
+                                />
+
+                            </group>
+                            <group>
+                                <field
+                                        name="discharg_country_id"
+                                        required="1"
+                                        attrs="{'readonly': [('state','not in',['draft'])]}"
+                                />
+                                <field
+                                        name="discharg_port_id"
+                                        required="1"
+                                        domain="[('country_id','=',discharg_country_id)]"
+                                        attrs="{'readonly': [('state','not in',['draft'])]}"
+                                />
+
+                            </group>
+                        </group>
+                        <group class="w-100">
+                            <group>
+                                <field name="exp_send_date"/>
+                            </group>
+                            <group>
+                                <field name="duration"/>
+                            </group>
+                        </group>
+                    </group>
+                    <group string="Chariot principal" class="p-3 my-4 border">
+                        <group>
+                            <field
+                                    name="operator_id"
+                                    required="1"
+                                    attrs="{'readonly': [('state','not in',['draft','confirm'])]}"
+                            />
+                        </group>
+                        <group>
+                            <field
+                                    name="agent_id"
+                                    context="{'default_agent': True, 'res_partner_search_mode': 'supplier'}"
+                                    domain="[('agent','=',True)]"
+                                    attrs="{'readonly': [('state','not in',['draft','confirm'])]}"
+                            />
+                        </group>
+                    </group>
+                    <notebook>
+                        <!--
+                        <page string="Order">
+                            <field
+                                    name="operation_line_ids"
+                                    widget="section_and_note_one2many"
+                            >
+                                <tree editable="bottom">
+                                    <control>
+                                        <create name="add_product_control" string="Add product"/>
+                                        <create name="add_section_control" string="Add group"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                    </control>
+                                    <field name="display_type" invisible="1"/>
+                                    <field name="id" invisible="1" widget="handle"/>
+                                    <field name="name" nolabel="1" widget="section_and_note_text"
+                                           attrs="{'invisible': [('display_type', '=', False)]}"/>
+                                    <field name="product_id" attrs="{'required': [('display_type', '=', False)]}"/>
+                                    <field name="qty"/>
+                                    <field name="billing_on" required="1"/>
+
+                                    <field
+                                            name="exp_gross_weight"
+                                            sum="Total Weight"
+                                            class="text-center"
+                                            attrs="{'invisible':[('billing_on','in',['volume', 'service'])]}"
+                                    />
+                                    <field
+                                            name="exp_vol"
+                                            sum="Total Volume"
+                                            class="text-center"
+                                            attrs="{'invisible':[('billing_on','in',['weight','service'])]}"
+                                    />
+                                    <field name="price" class="text-center"/>
+                                    <field name="tax_id" class="text-center" widget="many2many_tags"
+                                           options="{'no_create': True}"
+                                           domain="[('type_tax_use','=','sale')]"
+                                    />
+                                    <field name="sale_price" sum="Total Cost" class="text-center"/>
+                                </tree>
+                            </field>
+                        </page>
+                        -->
+                        <page string="Services">
+                            <field
+                                    name="operation_service_ids"
+                                    widget="section_and_note_one2many"
+                                    attrs="{'readonly': [('state','in',['recived','delivered','cancel'])]}"
+                            >
+                                <tree string="Services">
+                                    <control>
+                                        <create name="add_product_control" string="Add service"/>
+                                        <create name="add_section_control" string="Add group"
+                                                context="{'default_display_type': 'line_section'}"/>
+                                    </control>
+                                    <field name="display_type" invisible="1"/>
+                                    <field name="id" invisible="1" widget="handle"/>
+                                    <field name="name" nolabel="1" widget="section_and_note_text"
+                                           attrs="{'invisible': [('display_type', '=', False)]}"/>
+                                    <field name="vendor_id"/>
+                                    <field name="product_id" string="Service"/>
+                                    <field name="qty"/>
+                                    <field name="list_price"/>
+                                    <field name="sale_total"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Note">
+                            <field
+                                    name="note"
+                                    attrs="{'readonly':[('state','in',['cancel','received','delivered'])]}"
+                            />
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- freight.offer tree view -->
+    <record id="view_freight_offer_tree" model="ir.ui.view">
+        <field name="name">freight.offer.tree</field>
+        <field name="model">freight.offer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="transport"/>
+                <field name="direction"/>
+                <field name="customer_id"/>
+                <field name="loading_port_id"/>
+                <field name="discharg_port_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Action for freight.offer -->
+    <record id="action_freight_offers" model="ir.actions.act_window">
+        <field name="name">Offres d'expédition</field>
+        <field name="res_model">freight.offer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_not_declined': 1}</field>
+        <field name="search_view_id" ref="view_freight_offer_search"/>
+    </record>
+
+    <menuitem
+            id="freight_commercial_menu"
+            name="Commercial"
+            parent="scs_freight.root_menu_freight"
+            sequence="1"
+    />
+    <menuitem
+            id="freight_commercial_offers_menu"
+            name="Offres"
+            parent="freight_commercial_menu"
+            action="action_freight_offers"
+            sequence="1"
+    />
+
+</odoo>

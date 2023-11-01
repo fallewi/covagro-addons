@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Graph view for shipping operation report -->
+    <record id="shipping_operation_report_graph_view" model="ir.ui.view">
+        <field name="name">shipping.operation.report.graph.view</field>
+        <field name="model">shipping.operation.report</field>
+        <field name="arch" type="xml">
+            <graph disable_linking="1">
+                <field name="bill_payment" type="measure" />
+                <field name="inv_payment" type="measure" />
+                <field name="customer_id" />
+                <field name="order_date" />
+            </graph>
+        </field>
+    </record>
+    <!-- Pivot view for shipping operation report -->
+    <record id="shipping_operation_report_pivot_view" model="ir.ui.view">
+        <field name="name">shipping.operation.report.pivot.view</field>
+        <field name="model">shipping.operation.report</field>
+        <field name="arch" type="xml">
+            <pivot disable_linking="True">
+                <field name="name" />
+                <field name="inv_payment" type="measure" />
+                <field name="bill_payment" type="measure" />
+                <field name="customer_id" type="row" />
+                <field name="order_date" />
+            </pivot>
+        </field>
+    </record>
+    <!-- Action for shippinga nalysis report -->
+    <record id="action_freight_shipping_analysis_report" model="ir.actions.act_window">
+        <field name="name">Shipping Invoice/Bill Analysis</field>
+        <field name="res_model">shipping.operation.report</field>
+        <field name="view_mode">pivot,graph</field>
+    </record>
+    <!-- Menuitem for reporting -->
+    <menuitem
+        id="main_menu_reporting"
+        parent="root_menu_freight"
+        sequence="5"
+        name="Rapports"
+        groups="freight_operation_admin"
+    />
+    <menuitem
+        id="menu_shipping_analysis"
+        parent="main_menu_reporting"
+        action="action_freight_shipping_analysis_report"
+        sequence="1"
+        name="Facture d'expédition/analyse de la facture"
+        groups="freight_operation_admin"
+    />
+</odoo>

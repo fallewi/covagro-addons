@@ -1,0 +1,88 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<odoo>
+	<data>
+	<record id="view_stock_config_settings_inherit_notification" model="ir.ui.view">
+			<field name="name">stock.config.settings.product_low_stock.module</field>
+			<field name="model">res.config.settings</field>
+			<field name="inherit_id" ref="stock.res_config_settings_view_form"/>
+
+			<field name="arch" type="xml">
+				<xpath expr="//h2[@id='schedule_info']" position="before">
+				<h2>Product Stock Notification</h2>
+			
+			<div class="row mt16 o_settings_container">
+				<div class="col-xs-12 col-md-6 o_setting_box">
+
+				 	
+				 	<div class="o_setting_right_pane">
+						<label for='notification_base'/>
+						<div class="text-muted">
+                        Set quantity type
+                    	</div>
+                    	
+					</div>
+					<div class="o_setting_right_pane">
+						<field name="notification_base" widget='radio'/>
+					</div>
+					
+				</div>
+				<div class="col-xs-12 col-md-6 o_setting_box">
+					<div class="o_setting_right_pane">
+						<label for='notification_products'/>
+						<div class="text-muted">
+                        Set notification mode
+                    	</div>
+					</div>
+					<div class="o_setting_right_pane">
+						<field name="notification_products" widget='radio'/>
+					</div>
+				</div>
+				
+				<seprator/>
+					<div class="col-xs-12 col-md-6 o_setting_box" >
+					
+						<div class="o_setting_right_pane">
+							<label for='min_quantity' attrs="{'invisible':['|',('notification_products','=','fore_product'),('notification_products','=','reorder')]}" />
+							<div class="text-muted"  attrs="{'invisible':['|',('notification_products','=','fore_product'),('notification_products','=','reorder')]}">
+                        		Set minimum quantity 
+                    		</div>
+						</div>
+						<div class="o_setting_right_pane">
+							<field name="min_quantity" attrs="{'invisible':['|',('notification_products','=','fore_product'),('notification_products','=','reorder')]}" />
+				    	</div>
+				 	</div>
+
+				 	<div class="col-xs-12 col-md-6 o_setting_box" >
+				    	<div class="o_setting_right_pane">
+							<label for='notification_product_type'/>
+							<div class="text-muted">
+	                        	Check minimum quantity on Product or Product Variant. 
+	                    	</div>
+						</div>
+						<div class="o_setting_right_pane">
+							<field name="notification_product_type" widget='radio'/>
+				    	</div>
+				 	</div>
+
+				<seprator/>
+
+				<group>
+					<field name='email_user' invisible ='1' />
+					<field name='current_user' invisible ='1' />
+
+					<field name='low_stock_products_ids' invisible ='1' >
+						<tree>
+							<field name="name"/>
+							<field name="stock_quantity"/>
+							<field name="limit_quantity"/>
+						</tree>
+					</field>
+				</group>
+					
+			</div>
+				</xpath>
+				
+			</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates>
+    <t t-name="ks_dashboard_theme_view">
+        <div class="ks_dashboard_theme_view_render">
+            <div class="ks_dashboard_theme_input_container">
+                <input class="ks_dashboard_theme_input ks_color_white" type="checkbox" name="White Theme"
+                       value="white"/>
+                <span class="ks_checkmark"/>
+            </div>
+            <div class="ks_dashboard_theme_input_container">
+                <input class="ks_dashboard_theme_input ks_color_blue" type="checkbox" name="Blue Theme" value="blue"/>
+                <span class="ks_checkmark"/>
+            </div>
+            <div class="ks_dashboard_theme_input_container">
+                <input class="ks_dashboard_theme_input ks_color_red" type="checkbox" name="Red Theme" value="red"/>
+                <span class="ks_checkmark"/>
+            </div>
+            <div class="ks_dashboard_theme_input_container">
+                <input class="ks_dashboard_theme_input ks_color_yellow" type="checkbox" name="Yellow Theme"
+                       value="yellow"/>
+                <span class="ks_checkmark"/>
+            </div>
+            <div class="ks_dashboard_theme_input_container">
+                <input class="ks_dashboard_theme_input ks_color_green" type="checkbox" name="Green Theme"
+                       value="green"/>
+                <span class="ks_checkmark"/>
+            </div>
+        </div>
+    </t>
+</templates>

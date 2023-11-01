@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Form View of Track Shipping Order -->
+    <record id="wiz_track_operation_view" model="ir.ui.view">
+        <field name="name">wiz.track.operation.view</field>
+        <field name="model">wiz.track.operation</field>
+        <field name="arch" type="xml">
+            <form string="Suivre la commande d'expédition">
+                <sheet>
+                    <group>
+                        <group>
+                            <field
+                                    name="order_number"
+                                    placeholder="Entrez votre numéro de commande..."
+                                    required="1"
+                                    attrs="{'readonly':[('source_location','!=',False)]}"
+                            />
+                        </group>
+                        <group/>
+                    </group>
+                    <table
+                            class="table table-bordered"
+                            attrs="{'invisible':[('source_location','=',False)]}"
+                    >
+                        <tr class="row_modifier row_hover">
+                            <th
+                                    style="width:24%;background-color:gainsboro;text-align:center;"
+                            >Emplacement de la source
+                            </th>
+                            <th
+                                    style="width:24%;background-color:gainsboro;text-align:center;"
+                            >Lieu de destination
+                            </th>
+                            <th
+                                    style="width:24%;background-color:gainsboro;text-align:center;"
+                            >Transport 
+                            </th>
+                            <th
+                                    style="width:24%;background-color:gainsboro;text-align:center;"
+                            >Statut
+                            </th>
+                        </tr>
+                        <tr class="row_modifier row_hover">
+                            <td style="width:24%;">
+                                <field name="source_location" readonly="1"/>
+                            </td>
+                            <td style="width:24%;">
+                                <field name="dest_location" readonly="1"/>
+                            </td>
+                            <td style="width:24%;">
+                                <field name="transport" readonly="1"/>
+                            </td>
+                            <td style="width:24%;">
+                                <field name="status" readonly="1"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <field
+                            name="tracking_ids"
+                            readonly="1"
+                            attrs="{'invisible':[('source_location','=',False)]}"
+                    >
+                        <tree>
+                            <field name="date"/>
+                            <field name="source_location_id"/>
+                            <field name="activity"/>
+                        </tree>
+                    </field>
+                    <footer>
+                        <button
+                                name="action_track"
+                                string="Suivie"
+                                type="object"
+                                class="oe_highlight"
+                                attrs="{'invisible':[('source_location','!=',False)]}"
+                        />
+                        <button
+                                string="Cancel"
+                                class="btn-secondary"
+                                special="cancel"
+                        />
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Action View of Track Shipping Order -->
+    <record id="action_track_operation" model="ir.actions.act_window">
+        <field name="name">Suivre la commande d'expédition</field>
+        <field name="res_model">wiz.track.operation</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="wiz_track_operation_view"/>
+    </record>
+    <!-- Menuitem View of Shipping Order -->
+    <!--
+       <menuitem
+           id="main_menu_shipping_operation"
+           name="Shipping Operation"
+           sequence="4"
+           parent="root_menu_freight"
+           groups="freight_user"
+       />
+        -->
+    <!-- Menuitem View of Track Shipping Order -->
+    <!--
+   <menuitem
+           id="main_menu_track_order"
+           name="Track Order"
+           sequence="1"
+           parent="main_menu_shipping_operation"
+           action="action_track_operation"
+           groups="freight_user"
+   />
+    -->
+
+</odoo>

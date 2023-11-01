@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Inherit product.product form view -->
+    <record id="inherit_product_normal_form_view" model="ir.ui.view">
+        <field name="name">inherit.product.normal.form.view</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='weight']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='volume']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+        </field>
+    </record>
+    <!-- Action for product.product -->
+    <record id="product_action" model="ir.actions.act_window">
+        <field name="name">Services</field>
+        <field name="res_model">product.product</field>
+        <field name="view_mode">tree,form</field>
+        <field
+            name="context"
+        >{'default_type':'service', 'search_default_services':1}</field>
+    </record>
+    <!-- Menuitem for services -->
+    <menuitem
+        id="menu_services"
+        name="Services"
+        parent="scs_freight.freight_commercial_menu"
+        action="product_action"
+        sequence="1"
+        groups="freight_operation_admin"
+    />
+</odoo>

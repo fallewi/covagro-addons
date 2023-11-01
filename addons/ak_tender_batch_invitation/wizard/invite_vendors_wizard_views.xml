@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="requisition_invite_vendors_wizard_form" model="ir.ui.view">
+        <field name="name">requisition_invite_vendors_wizard_form</field>
+        <field name="model">invite.vendors.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Appels d'offres">
+                <group class="" >
+                    <div>
+                        <p><span class="font-weight-bold mr-3">Création d'un appel d'offre sans Email:</span>crée des devis pour chacun des fournisseurs sans envoyer d'e-mails.</p>
+                        <p><span class="font-weight-bold mr-3">Création d'un appel d'offre avec Email:</span>un e-mail avec la demande de devis est envoyé avec chaque devis créé.</p>
+                    </div>
+                </group>
+                <footer>
+                    <button name="action_create_rfq_only" string="Création des appels d'offres" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button name="action_create_rfq_with_email" string="Créer des appels d'offres avec des e-mails" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Annuler" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>   
+    <record id="action_invite_vendors" model="ir.actions.act_window">
+            <field name="name">Inviter des fournisseurs</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">invite.vendors.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="requisition_invite_vendors_wizard_form"/>
+            <field name="target">new</field>
+    </record>
+</odoo>

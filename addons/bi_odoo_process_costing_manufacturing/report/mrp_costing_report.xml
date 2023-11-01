@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_bom_cost_report" model="ir.actions.report">
+            <field name="name">Rapport sur les coûts de nomenclature</field>
+            <field name="model">mrp.bom</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">bi_odoo_process_costing_manufacturing.mrp_bom_cost_report</field>
+            <field name="report_file">bi_odoo_process_costing_manufacturing.mrp_bom_cost_report</field>
+            <field name="binding_model_id" ref="model_mrp_bom"/>
+            <field name="print_report_name">'Ordre de fabrication - %s' % (object.product_id.name or object.product_tmpl_id.name or '').replace('/','')
+            </field>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_report_order_cost" model="ir.actions.report">
+            <field name="name">Coût de l'ordre de fabrication</field>
+            <field name="model">mrp.production</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">bi_odoo_process_costing_manufacturing.mrp_production_order_report</field>
+            <field name="report_file">bi_odoo_process_costing_manufacturing.mrp_production_order_report</field>
+            <field name="binding_model_id" ref="model_mrp_production"/>
+            <field name="print_report_name">'Coût de l'ordre de fabrication - %s' % (object.name or '').replace('/','')
+            </field>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>
+

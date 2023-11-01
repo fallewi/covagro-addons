@@ -1,0 +1,345 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ks_dn_advance
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-26 15:37+0000\n"
+"PO-Revision-Date: 2021-05-26 15:37+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,help:ks_dn_advance.field_ks_dashboard_ninja_item__ks_is_date_ranges
+msgid ""
+" Checkbox to apply default date range filter. The date filter applied will "
+"also reflect on the main page."
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,help:ks_dn_advance.field_ks_dashboard_ninja_item__ks_custom_query
+msgid " Fetch, combine, and compare data by generating SQL query on your own."
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields.selection,name:ks_dn_advance.selection__ks_dashboard_ninja_board__ks_croessel_speed__60000
+msgid "1 minute"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields.selection,name:ks_dn_advance.selection__ks_dashboard_ninja_board__ks_croessel_speed__10000
+msgid "10 Seconds"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields.selection,name:ks_dn_advance.selection__ks_dashboard_ninja_board__ks_croessel_speed__15000
+msgid "15 Seconds"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields.selection,name:ks_dn_advance.selection__ks_dashboard_ninja_board__ks_croessel_speed__3000
+msgid "3 Seconds"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields.selection,name:ks_dn_advance.selection__ks_dashboard_ninja_board__ks_croessel_speed__30000
+msgid "30 Seconds"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields.selection,name:ks_dn_advance.selection__ks_dashboard_ninja_board__ks_croessel_speed__45000
+msgid "45 Seconds"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields.selection,name:ks_dn_advance.selection__ks_dashboard_ninja_board__ks_croessel_speed__5000
+msgid "5 Seconds"
+msgstr ""
+
+#. module: ks_dn_advance
+#. openerp-web
+#: code:addons/ks_dn_advance/static/src/xml/ks_query_templates.xml:0
+#, python-format
+msgid "Chart Type"
+msgstr ""
+
+#. module: ks_dn_advance
+#: code:addons/ks_dn_advance/models/ks_dashboard_advance_ninja.py:0
+#: code:addons/ks_dn_advance/models/ks_dashboard_advance_ninja.py:0
+#: code:addons/ks_dn_advance/models/ks_dashboard_advance_ninja.py:0
+#, python-format
+msgid ""
+"Current Json File is not properly formatted according to Dashboard Ninja "
+"Model."
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_item__ks_custom_query
+#: model:ir.model.fields.selection,name:ks_dn_advance.selection__ks_dashboard_ninja_item__ks_data_calculation_type__query
+msgid "Custom Query"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model,name:ks_dn_advance.model_ks_dashboard_ninja_board
+msgid "Dashboard Ninja"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model,name:ks_dn_advance.model_ks_dashboard_ninja_item
+msgid "Dashboard Ninja items"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_item__ks_data_calculation_type
+msgid "Data Calculation Type"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,help:ks_dn_advance.field_ks_dashboard_ninja_item__ks_model_id
+msgid ""
+"Data source to fetch and read the data for the creation of dashboard items. "
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_item__ks_is_date_ranges
+msgid "Date Ranges"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields.selection,name:ks_dn_advance.selection__ks_dashboard_ninja_item__ks_data_calculation_type__custom
+msgid "Default Query"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields.selection,name:ks_dn_advance.selection__ks_dashboard_ninja_item__ks_list_view_layout__layout_1
+msgid "Default layout"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_board__display_name
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_item__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: ks_dn_advance
+#. openerp-web
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#, python-format
+msgid "Drill Up"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model_terms:ir.ui.view,arch_db:ks_dn_advance.item_form_inherit
+msgid "End Date"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model_terms:ir.ui.view,arch_db:ks_dn_advance.item_quick_edit_form_inherit
+msgid "Fields to show in list"
+msgstr ""
+
+#. module: ks_dn_advance
+#. openerp-web
+#: code:addons/ks_dn_advance/static/src/xml/ks_query_templates.xml:0
+#, python-format
+msgid "Group"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model_terms:ir.ui.view,arch_db:ks_dn_advance.item_quick_edit_form_inherit
+msgid "Group By"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model_terms:ir.ui.view,arch_db:ks_dn_advance.item_quick_edit_form_inherit
+msgid "Group By Date"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_board__id
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_item__id
+msgid "ID"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_item__ks_query_end_date
+msgid "Ks Query End Date"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_item__ks_query_start_date
+msgid "Ks Query Start Date"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_board____last_update
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_item____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields.selection,name:ks_dn_advance.selection__ks_dashboard_ninja_item__ks_list_view_layout__layout_2
+msgid "Layout 1"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields.selection,name:ks_dn_advance.selection__ks_dashboard_ninja_item__ks_list_view_layout__layout_3
+msgid "Layout 2"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields.selection,name:ks_dn_advance.selection__ks_dashboard_ninja_item__ks_list_view_layout__layout_4
+msgid "Layout 3"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model_terms:ir.ui.view,arch_db:ks_dn_advance.item_quick_edit_form_inherit
+msgid "Line Measure"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_item__ks_list_view_layout
+msgid "List View Layout"
+msgstr ""
+
+#. module: ks_dn_advance
+#. openerp-web
+#: code:addons/ks_dn_advance/static/src/xml/ks_query_templates.xml:0
+#: model_terms:ir.ui.view,arch_db:ks_dn_advance.item_quick_edit_form_inherit
+#, python-format
+msgid "Measures"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_item__ks_model_id
+msgid "Model"
+msgstr ""
+
+#. module: ks_dn_advance
+#. openerp-web
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#, python-format
+msgid "No Data Present"
+msgstr ""
+
+#. module: ks_dn_advance
+#. openerp-web
+#: code:addons/ks_dn_advance/static/src/xml/ks_dna_to_template.xml:0
+#, python-format
+msgid "No Section Available."
+msgstr ""
+
+#. module: ks_dn_advance
+#. openerp-web
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#, python-format
+msgid "Play"
+msgstr ""
+
+#. module: ks_dn_advance
+#: code:addons/ks_dn_advance/models/ks_dashboard_advance_ninja.py:0
+#, python-format
+msgid ""
+"Please Install the Module which contains the following Model : %s "
+"ks_model_id"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model_terms:ir.ui.view,arch_db:ks_dn_advance.item_form_inherit
+msgid "Query"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_item__ks_query_result
+msgid "Result"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,help:ks_dn_advance.field_ks_dashboard_ninja_item__ks_data_calculation_type
+msgid "Select the type of calculation you want to perform on the data."
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_board__ks_croessel_speed
+msgid "Slide Interval"
+msgstr ""
+
+#. module: ks_dn_advance
+#. openerp-web
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#: code:addons/ks_dn_advance/static/src/xml/ks_dashboard_tv_ninja.xml:0
+#, python-format
+msgid "Sort button"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model_terms:ir.ui.view,arch_db:ks_dn_advance.item_form_inherit
+msgid "Start Date"
+msgstr ""
+
+#. module: ks_dn_advance
+#: code:addons/ks_dn_advance/models/ks_dashboard_advance_ninja_item.py:0
+#, python-format
+msgid "Start Date should be less than End Date"
+msgstr ""
+
+#. module: ks_dn_advance
+#: code:addons/ks_dn_advance/models/ks_dashboard_advance_ninja.py:0
+#, python-format
+msgid "This file is not supported"
+msgstr ""
+
+#. module: ks_dn_advance
+#: code:addons/ks_dn_advance/models/ks_dashboard_advance_ninja_item.py:0
+#: code:addons/ks_dn_advance/models/ks_dashboard_advance_ninja_item.py:0
+#, python-format
+msgid ""
+"Wrong date variables, Please use ks_start_date and ks_end_date in custom "
+"query"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model_terms:ir.ui.view,arch_db:ks_dn_advance.item_form_inherit
+msgid "X-Label"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_item__ks_xlabels
+msgid "X-Labels"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model_terms:ir.ui.view,arch_db:ks_dn_advance.item_form_inherit
+msgid "Y-Axis"
+msgstr ""
+
+#. module: ks_dn_advance
+#: model:ir.model.fields,field_description:ks_dn_advance.field_ks_dashboard_ninja_item__ks_ylabels
+msgid "Y-Labels"
+msgstr ""
+
+#. module: ks_dn_advance
+#: code:addons/ks_dn_advance/models/ks_dashboard_advance_ninja_item.py:0
+#: code:addons/ks_dn_advance/models/ks_dashboard_advance_ninja_item.py:0
+#, python-format
+msgid "You can only read the Data from Database"
+msgstr ""

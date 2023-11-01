@@ -1,0 +1,101 @@
+id,name,code,country_id:id
+Port1,Shanghai,Port1,base.cn
+Port2,Singapore,Port2,base.sg
+Port3,Ningbo-Zhoushan,Port3,base.cn
+Port4,Shenzhen,Port4,base.cn
+Port5,Guangzhou,Port5,base.cn
+Port6,Qingdao,Port6,base.cn
+Port7,Busan,Port7,base.kr
+Port8,Tianjin,Port8,base.cn
+Port9,Hong Kong,Port9,base.cn
+Port10,Rotterdam,Port10,base.nl
+Port11,Dubai,Port11,base.ae
+Port12,Port Klang,Port12,base.my
+Port13,Antwerp,Port13,base.be
+Port14,Xiamen,Port14,base.cn
+Port15,Tanjung Pelepas,Port15,base.my
+Port16,Kaohsiung,Port16,base.tw
+Port17,Los Angeles,Port17,base.us
+Port18,Hamburg,Port18,base.de
+Port19,Long Beach,Port19,base.us
+Port20,Ho Chi Minh City,Port20,base.vn
+Port21,New York/New Jersey,Port21,base.us
+Port22,Laem Chabang,Port22,base.th
+Port23,Tanjung Priok,Port23,base.id
+Port24,Colombo,Port24,base.lk
+Port25,Tanger Med,Port25,base.ma
+Port26,Mundra,Port26,base.io
+Port27,Yingkou,Port27,base.cn
+Port28,Piraeus,Port28,base.gr
+Port29,Valencia,Port29,base.es
+Port30,Taicang,Port30,base.cn
+Port31,Hai Phong,Port31,base.vn
+Port32,Dalian,Port32,base.cn
+Port33,Algeciras,Port33,base.es
+Port34,Rizhao,Port34,base.cn
+Port35,Lianyungang,Port35,base.cn
+Port36,Bremen/Bremerhaven,Port36,base.cn
+Port37,Jeddah,Port37,base.sa
+Port38,Savannah,Port38,base.us
+Port39,Jawaharlal Nehru,Port39,base.in
+Port40,Colón,Port40,base.pa
+Port41,Manila,Port41,base.ph
+Port42,Cai Mep,Port42,base.vn
+Port43,Salalah,Port43,base.om
+Port44,Tokyo,Port44,base.jp
+Port45,Santos,Port45,base.br
+Port46,Port Said,Port46,base.eg
+Port47,Qinzhou,Port47,base.cn
+Port48,Tanjung Perak,Port48,base.id
+Port49,Fuzhou,Port49,base.cn
+Port50,Vancouver,Port50,base.ca
+Port51,Felixstowe,Port51,base.uk
+Port52,Dongguan,Port52,base.cn
+Port53,Seattle/Tacoma,Port53,base.us
+Port54,Yantai,Port54,base.cn
+Port55,Incheon,Port55,base.kr
+Port56,Abu Dhabi,Port56,base.ae
+Port57,Gioia Tauro,Port57,base.it
+Port58,Balboa,Port58,base.pa
+Port59,Cartagena,Port59,base.co
+Port60,Tangshan,Port60,base.cn
+Port61,Nanjing,Port61,base.cn
+Port62,Houston,Port62,base.us
+Port63,Melbourne,Port63,base.au
+Port64,Barcelona,Port64,base.es
+Port65,Manzanillo,Port65,base.mx
+Port66,Ambarli,Port66,base.tr
+Port67,Chittagong,Port67,base.bd
+Port68,Virginia,Port68,base.us
+Port69,London,Port69,base.uk
+Port70,Yokohama,Port70,base.jp
+Port71,Kobe,Port71,base.jp
+Port72,Durban,Port72,base.za
+Port73,Genoa,Port73,base.it
+Port74,Nagoya,Port74,base.jp
+Port75,Oakland,Port75,base.us
+Port76,Marsaxlokk,Port76,base.mt
+Port77,Le Havre,Port77,base.fr
+Port78,Sydney,Port78,base.au
+Port79,Osaka,Port79,base.jp
+Port80,Charleston,Port80,base.us
+Port81,Quanzhou,Port81,base.cn
+Port82,Callao,Port82,base.pe
+Port83,Yeosu Gwangyang,Port83,base.kr
+Port84,King Abdullah,Port84,base.sa
+Port85,St Petersburg,Port85,base.ru
+Port86,Karachi,Port86,base.pk
+Port87,Guayaquil,Port87,base.ec
+Port88,Haikou,Port88,base.cn
+Port89,Jiaxing,Port89,base.cn
+Port90,Mersin,Port90,base.tr
+Port91,Gdansk,Port91,base.pl
+Port92,Nantong,Port92,base.cn
+Port93,Dammam,Port93,base.sa
+Port94,Zhuhai,Port94,base.cn
+Port95,Taichung,Port95,base.tw
+Port96,Southampton,Port96,base.uk
+Port97,Izmit,Port97,base.tr
+Port98,Lomé,Port98,base.tg
+Port99,Alexandria,Port99,base.eg
+Port100,Jinzhou,Port100,base.cn

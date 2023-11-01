@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ins_account_financial_report,ins.account.financial.report,model_ins_account_financial_report,account.group_account_user,1,1,1,1
+access_ins_general_ledger,ins.general.ledger,model_ins_general_ledger,account.group_account_user,1,1,1,1
+access_ins_financial_report,ins.financial.report,model_ins_financial_report,account.group_account_user,1,1,1,1
+access_ins_partner_ageing,ins.partner.ageing,model_ins_partner_ageing,account.group_account_user,1,1,1,1
+access_ins_partner_ledger,ins.partner.ledger,model_ins_partner_ledger,account.group_account_user,1,1,1,1
+access_ins_trial_balance,ins.trial.balance,model_ins_trial_balance,account.group_account_user,1,1,1,1
+access_common_xlsx_out,Common.xlsx.out,model_common_xlsx_out,base.group_user,1,0,0,0

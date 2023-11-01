@@ -1,0 +1,4 @@
+15.0.0.1 ==>fixed issue of cost price in bom.
+15.0.0.2 ==>fixed issue of traceback while edit the direct material cost.
+15.0.0.3 ==>fixed issue of actual quantity in material,labour and overhead cost.
+15.0.0.4==>made labour,overhead and material line readonly when state in progress,done and cancel.

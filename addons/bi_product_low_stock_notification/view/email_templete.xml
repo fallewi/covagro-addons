@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+        <record id="low_stock_email_template" model="mail.template">
+          <field name="name">Low Stock e-mail template</field>
+          <field name="subject">Low stock of your products </field>
+          <field name="model_id" ref="bi_product_low_stock_notification.model_res_config_settings"/>
+          <field name="auto_delete" eval="True"/>
+	  <field name="body_html">
+            <![CDATA[
+
+	      <p>Hello,</p> <br/><br/>
+	      <br/>
+      %if object.notification_products == 'for_all':
+        %if object.notification_base == 'on_hand':
+            <p>List of product which have less on hand quantity  then global quantity ${object.min_quantity} are:</p><br/>
+        %endif
+        %if object.notification_base == 'fore_cast':
+            <p>List of product which have less forecast quantity then global quantity ${object.min_quantity} are:</p><br/>
+        %endif
+        
+        <table border=1>
+          <tr> 
+            <th>Product name</th>
+            <th>Product quantity</th>
+            <th>Required quantity</th>
+          </tr>
+        
+        %for product in object.low_stock_products_ids:
+             
+          
+          <tr>
+          <td>${product.name}</td>
+          <td>${product.stock_quantity}</td>
+          <td>${object.min_quantity - product.stock_quantity}</td>
+        </tr>
+        %endfor
+      </table>
+      %endif
+
+      %if object.notification_products == 'fore_product':
+        %if object.notification_base == 'on_hand':
+           <p>List of product which have less on hand quantity  then individual minimum quantity are:</p><br/>
+        %endif
+        %if object.notification_base == 'fore_cast':
+           <p>List of product which have less forecast quantity  then individual minimum quantity are:</p><br/>
+        %endif
+         <table border=1>
+          <tr>
+            <th>Product name</th>
+            <th>Individual minimum quantity</th>
+            <th>Product quantity</th>
+            <th>Required quantity</th>
+          </tr>
+           %for product in object.low_stock_products_ids:
+          <tr>
+          <td>${product.name}</td>
+          <td>${product.limit_quantity}</td>
+          <td>${product.stock_quantity}</td>
+          <td>${product.limit_quantity - product.stock_quantity}</td>
+        </tr>
+        %endfor
+      </table>
+      %endif
+
+      %if object.notification_products == 'reorder':
+        %if object.notification_base == 'on_hand':
+           <p>List of product which have less on hand quantity  then individual minimum quantity on reorder rules specified are:</p><br/>
+        %endif
+        %if object.notification_base == 'fore_cast':
+           <p>List of product which have less forecast quantity  then individual minimum quantity on reorder rules specified are:</p><br/>
+        %endif
+         <table border=1>
+          <tr>
+            <th>Product name</th>
+            <th>Minimum quantity Stock</th>
+            <th>Product quantity</th>
+            <th>Required quantity</th>
+          </tr>
+           %for product in object.low_stock_products_ids:
+          <tr>
+          <td>${product.name}</td>
+          <td>${product.limit_quantity}</td>
+          <td>${product.stock_quantity}</td>
+          <td>${product.limit_quantity - product.stock_quantity}</td>
+        </tr>
+        %endfor
+      </table>
+      %endif
+	    ]]>
+	  </field>
+       </record>
+    
+</odoo>

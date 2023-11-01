@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017 ForgeFlow
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="mrp_bom_line_tree_view" model="ir.ui.view">
+        <field name="name">mrp.bom.line.tree.view</field>
+        <field name="model">mrp.bom.line</field>
+        <field name="arch" type="xml">
+            <tree create="0">
+                <field name="bom_id" />
+                <field name="product_id" />
+                <field name="product_qty" />
+                <field name="product_uom_id" optional="hide" />
+                <field name="operation_id" optional="hide" />
+            </tree>
+        </field>
+    </record>
+    <record id="mrp_bom_form_action2" model="ir.actions.act_window">
+        <field name="name">Nomenclature des Composants</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mrp.bom.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" eval="ref('mrp_bom_line_tree_view')" />
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Cliquez pour ajouter un composant à une nomenclature.
+            </p>
+            <p>
+                Les composants des nomenclatures sont des composants et des sous-produits
+                utilisé pour créer des nomenclatures principales. Utilisez ce menu pour
+                rechercher dans quelle nomenclature un composant spécifique est utilisé.
+            </p>
+        </field>
+    </record>
+    <record id="mrp_bom_line_view_filter" model="ir.ui.view">
+        <field name="name">mrp.bom.line.view.filter</field>
+        <field name="model">mrp.bom.line</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher des composants de nomenclature">
+                <field name="bom_id" />
+                <field name="product_id" />
+                <group expand="0" string="Group By...">
+                    <filter
+                        name="bom"
+                        string="Nomenclature"
+                        context="{'group_by':'bom_id'}"
+                    />
+                    <filter
+                        name="product"
+                        string="Produit"
+                        context="{'group_by':'product_id'}"
+                    />
+                    <filter
+                        name="uom"
+                        string='Unité de mesure par défaut'
+                        context="{'group_by' : 'product_uom_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <menuitem
+        action="mrp_bom_form_action2"
+        id="menu_mrp_bom_form_action2"
+        parent="mrp.menu_mrp_bom"
+        sequence="14"
+    />
+</odoo>

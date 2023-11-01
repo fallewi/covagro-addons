@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="freight_shipping_order_report" model="ir.actions.report">
+        <field name="name">Envoi de la commande</field>
+        <field name="model">freight.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scs_freight.freight_shipping_order</field>
+        <field name="report_file">scs_freight.freight_shipping_order</field>
+        <field name="binding_model_id" ref="scs_freight.model_freight_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Bill Payment Receipt Report -->
+    <record id="bill_payment_receipt_details_report" model="ir.actions.report">
+        <field name="name">Reçu de paiement de facture</field>
+        <field name="model">freight.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scs_freight.bill_payment_receipt_report</field>
+        <field name="report_file">scs_freight.bill_payment_receipt_report</field>
+        <field name="binding_model_id" ref="scs_freight.model_freight_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Invoice Payment Receipt Report -->
+    <record id="inv_payment_receipt_details_report" model="ir.actions.report">
+        <field name="name">Reçu de paiement de facture</field>
+        <field name="model">freight.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scs_freight.inv_payment_receipt_report</field>
+        <field name="report_file">scs_freight.inv_payment_receipt_report</field>
+        <field name="binding_model_id" ref="scs_freight.model_freight_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Exonération(Adms.Temp)	 Report -->
+    <record id="exoneration_report" model="ir.actions.report">
+        <field name="name">Exonération(Adms.Temp)</field>
+        <field name="model">freight.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scs_freight.inv_payment_receipt_report</field>
+        <field name="report_file">scs_freight.inv_payment_receipt_report</field>
+        <field name="binding_model_id" ref="scs_freight.model_freight_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Exonération(Consomable)	 Report -->
+    <record id="exoneration_consommable_report" model="ir.actions.report">
+        <field name="name">Exonération(Consomable)</field>
+        <field name="model">freight.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scs_freight.inv_payment_receipt_report</field>
+        <field name="report_file">scs_freight.inv_payment_receipt_report</field>
+        <field name="binding_model_id" ref="scs_freight.model_freight_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Enlevement Direct	Report -->
+    <record id="enlevement_direct_report" model="ir.actions.report">
+        <field name="name">Enlevement Direct</field>
+        <field name="model">freight.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scs_freight.inv_payment_receipt_report</field>
+        <field name="report_file">scs_freight.inv_payment_receipt_report</field>
+        <field name="binding_model_id" ref="scs_freight.model_freight_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Ordre de Transit Report -->
+    <record id="enlevement_direct_report" model="ir.actions.report">
+        <field name="name">Ordre de Transit	</field>
+        <field name="model">freight.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scs_freight.inv_payment_receipt_report</field>
+        <field name="report_file">scs_freight.inv_payment_receipt_report</field>
+        <field name="binding_model_id" ref="scs_freight.model_freight_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- CMR Report -->
+    <record id="enlevement_direct_report" model="ir.actions.report">
+        <field name="name">Opération de Fret</field>
+        <field name="model">freight.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scs_freight.inv_payment_receipt_report</field>
+        <field name="report_file">scs_freight.inv_payment_receipt_report</field>
+        <field name="binding_model_id" ref="scs_freight.model_freight_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <!-- Offer report -->
+    <record id="offer_report" model="ir.actions.report">
+        <field name="name">Offre</field>
+        <field name="model">freight.offer</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">scs_freight.freight_offer_report</field>
+        <field name="report_file">scs_freight.freight_offer_report</field>
+        <field name="binding_model_id" ref="scs_freight.model_freight_offer"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

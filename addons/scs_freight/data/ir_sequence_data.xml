@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequence for Freight Operation -->
+        <record id="seq_direct_freight_operation" model="ir.sequence">
+            <field name="name">Opération de fret direct</field>
+            <field name="code">freight.operation.direct</field>
+            <field name="prefix">DIR-</field>
+            <field name="padding">4</field>
+        </record>
+        <!-- Sequence for Freight Container -->
+        <record id="seq_freight_container" model="ir.sequence">
+            <field name="name">Séquence de conteneurs de fret</field>
+            <field name="code">freight.container.sequence</field>
+            <field name="prefix">CN</field>
+            <field name="padding">4</field>
+        </record>
+        <!-- Sequence for Freight Folder -->
+        <record id="seq_freight_folder" model="ir.sequence">
+            <field name="name">Séquence de dossiers de fret</field>
+            <field name="code">freight.folder.sequence</field>
+            <field name="prefix">F</field>
+            <field name="padding">4</field>
+        </record>
+
+        <!-- Sequence for Freight offer -->
+        <record id="seq_freight_offer" model="ir.sequence">
+            <field name="name">Séquence d'offre de fret</field>
+            <field name="code">freight.offer.sequence</field>
+            <field name="prefix">OF</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

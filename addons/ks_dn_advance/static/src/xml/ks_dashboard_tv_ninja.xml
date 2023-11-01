@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates>
+    <t t-name="ks_owl_carssel">
+        <div class="d-none ks_float_tv">
+            <div class="tv-modal-overlay"></div>
+            <button class="btn  ks_stop_tv_dashboard  mr-2" aria-expanded="false">
+                <span class="fa fa-times"/>
+            </button>
+            <div class="owl-carousel owl-theme ">
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ks_gridstack_tv_container">
+        <div class="ks-tv-item ks_chart_container" t-att-data-id="chart_id">
+            <div class="grid-stack-item-content ks_dashboarditem_chart_container ks_dashboard_item_hover card shadow">
+
+                <div class="p-3 py-3 d-flex flex-row align-items-center justify-content-between ">
+                    <div class="d-flex align-items-center w-50">
+                        <h6 class="m-0 font-weight-bold h3 ks_chart_heading mr-3" t-att-title="ks_chart_title">
+                            <t t-esc="ks_chart_title"/>
+                        </h6>
+                        <!--                    <div >-->
+                        <button class="ks_dashboard_item_drill_up d-none btn btn-primary" title="Drill Up" type="button"
+                                t-att-data-item-id="chart_id">Drill Up
+                            <i class="fa fa-arrow-circle-up"/>
+                        </button>
+                    </div>
+                    <!--  Dashboard Item Move/Copy Feature -->
+                    <div class="ks_dashboard_item_button_container ks_dropdown_container ks_dashboard_item_header ks_dashboard_item_header_hover chart_button_container d-flex"
+                         t-att-data-item_id="chart_id">
+                    </div>
+
+                </div>
+                <div class="card-body ks_chart_card_body" style="height:80vh"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ks_gridstack_list_tv_view_container">
+        <div class="ks-tv-item ks_chart_container ks_list_view" t-att-data-id="item_id">
+            <div class="grid-stack-item-content ks_list_view_container ks_dashboard_item_hover card shadow">
+
+                <div class="p-3 py-3 d-flex flex-row align-items-center justify-content-between ">
+                    <div class="d-flex align-items-center  w-50">
+                        <h6 class="m-0 font-weight-bold h3 mr-3 ks_list_view_heading" t-att-title="ks_chart_title">
+                            <t t-esc="ks_chart_title"/>
+                        </h6>
+                        <button class="ks_dashboard_item_drill_up d-none btn btn-primary" title="Drill Up" type="button"
+                                t-att-data-item-id="item_id">Drill Up
+                            <i class="fa fa-arrow-circle-up"/>
+                        </button>
+                    </div>
+                    <div class="ks_pager_name">
+                        <t t-if="ks_pager" t-call="ks_pager_template"/>
+                    </div>
+                </div>
+                <div class="card-body table-responsive"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-extend="ksDashboardNinjaHeader">
+        <t t-jquery="div.ks_am_content_element" t-operation="after">
+            <t t-if='!play_button'>
+                <button class="btn btn-primary ks_start_tv_dashboard mr-2 d-md-block" aria-expanded="false">
+                    <span class="fa fa-md fa-play"/>
+                    Play
+                </button>
+                <button class="btn btn-primary ks_dashboard_print_pdf mr-2 d-md-block" aria-expanded="false">
+                    <span class="fa fa-md fa-print"/>
+                    Print Dashboard
+                </button>
+            </t>
+            <button class="btn btn-primary ks_dashboard_send_email mr-2 d-md-block" aria-expanded="false">
+                <span class="fa fa-envelope"/>
+                <span class="fa fa-spinner fa-spin d-none"/>
+            </button>
+        </t>
+    </t>
+    <t t-extend="ks_main_body_container">
+        <t t-jquery=".ks_dashboard_main_content" t-operation="replace">
+            <div class="ks_dashboard_main_content" id="ks_dash1">
+                <div class="ks_dashboard_item_content grid-stack ks_dashboard_items_list m-3" data-gs-width="36"/>
+            </div>
+        </t>
+    </t>
+    <t t-name="ks_list_view_layout_2">
+        <t t-if="list_view_data">
+            <table id="ksListViewTable" class="table table-dark ks_dn_table ks_list_view_layout_2"
+                   t-att-data-model="list_view_data['model']">
+                <thead class="ks_dn_thead">
+                    <t t-call="ks_dns_list_view_header_2"></t>
+                </thead>
+                <tbody class="ks_table_body">
+                </tbody>
+            </table>
+        </t>
+        <t t-else="">
+            No Data Present
+        </t>
+    </t>
+    <t t-name="ks_dns_list_view_header_2">
+
+        <t t-if="calculation_type == 'custom' &amp; !isDrill">
+            <tr>
+                <t t-set="count" t-value="0"/>
+                <t t-foreach="list_view_data['label']" t-as="table_header">
+                    <th class="ks_dn_th list_header ks_dn_asc" t-att-data-item-id="item_id"
+                        t-att-data-fields="list_view_data['fields'][count]"
+                        t-att-data-store="list_view_data['store'][count]">
+                        <t t-esc="table_header"/>
+                        <t t-if="calculation_type == 'custom' &amp; !isDrill">
+                            <t t-if="list_view_data['store'][count] == true">
+                                <button title="Sort button"
+                                        type="button"
+                                        class="ks_sort_icon ks_dashboard_item_action ks_sort_down ks_list_heder_hover ks_border_aliceblue"
+                                        t-att-data-item-id="item_id"
+                                        t-att-data-fields="list_view_data['fields'][count]"
+                                        aria-expanded="true">
+                                    <i class="fa fa-angle-double-down"/>
+                                </button>
+                                <button title="Sort button"
+                                        type="button"
+                                        class="ks_dashboard_item_action ks_sort_up ks_plus ks_sort_icon ks_list_heder_hover ks_border_aliceblue"
+                                        t-att-data-item-id="item_id"
+                                        t-att-data-fields="list_view_data['fields'][count]"
+                                        aria-expanded="true">
+                                    <i class="fa fa-angle-double-up"/>
+                                </button>
+                            </t>
+                            <t t-set="count" t-value="count+1"/>
+                        </t>
+                    </th>
+                </t>
+                <t t-if="calculation_type == 'custom'">
+                    <th class="ks_dn_th"/>
+                </t>
+            </tr>
+        </t>
+        <t t-else="">
+            <tr>
+
+                <t t-foreach="list_view_data['label']" t-as="table_header">
+                    <th class="ks_dn_th">
+                        <t t-esc="table_header"/>
+                    </th>
+                </t>
+                <t t-if="calculation_type == 'custom'">
+                    <th class="ks_dn_th"/>
+                </t>
+            </tr>
+        </t>
+    </t>
+
+    <t t-name="ks_list_view_layout_3">
+        <t t-if="list_view_data">
+            <table id="ksListViewTable" class="table table-bordered ks_list_view_layout_3 ks_dn_table ks_table_layput_3"
+                   t-att-data-model="list_view_data['model']">
+                <thead class="ks_dn_thead">
+                    <t t-call="ks_dns_list_view_header_3"></t>
+                </thead>
+                <tbody class="ks_table_body">
+                    <!--                    <t t-call="ks_list_view_tmpl"></t>-->
+                </tbody>
+            </table>
+        </t>
+        <t t-else="">
+            No Data Present
+        </t>
+    </t>
+    <t t-name="ks_dns_list_view_header_3">
+        <t t-if="calculation_type == 'custom' &amp; !isDrill">
+            <tr>
+                <t t-set="count" t-value="0"/>
+                <t t-foreach="list_view_data['label']" t-as="table_header">
+                    <th class="ks_dn_th list_header ks_dn_asc" t-att-data-item-id="item_id"
+                        t-att-data-fields="list_view_data['fields'][count]"
+                        t-att-data-store="list_view_data['store'][count]">
+                        <t t-esc="table_header"/>
+                        <t t-if="calculation_type == 'custom' &amp; !isDrill">
+                            <t t-if="list_view_data['store'][count] == true">
+                                <button title="Sort button"
+                                        type="button"
+                                        class="ks_sort_icon ks_dashboard_item_action ks_sort_down ks_list_heder_hover ks_border_aliceblue"
+                                        t-att-data-item-id="item_id"
+                                        t-att-data-fields="list_view_data['fields'][count]"
+                                        aria-expanded="true">
+                                    <i class="fa fa-angle-double-down"/>
+                                </button>
+                                <button title="Sort button"
+                                        type="button"
+                                        class="ks_dashboard_item_action ks_sort_up ks_plus ks_sort_icon ks_list_heder_hover ks_border_aliceblue"
+                                        t-att-data-item-id="item_id"
+                                        t-att-data-fields="list_view_data['fields'][count]"
+                                        aria-expanded="true">
+                                    <i class="fa fa-angle-double-up"/>
+                                </button>
+                            </t>
+                            <t t-set="count" t-value="count+1"/>
+                        </t>
+                    </th>
+                </t>
+                <t t-if="calculation_type == 'custom'">
+                    <th class="ks_dn_th"/>
+                </t>
+            </tr>
+        </t>
+        <t t-else="">
+            <tr>
+
+                <t t-foreach="list_view_data['label']" t-as="table_header">
+                    <th class="ks_dn_th">
+                        <t t-esc="table_header"/>
+                    </th>
+                </t>
+                <t t-if="calculation_type == 'custom'">
+                    <th class="ks_dn_th"/>
+                </t>
+            </tr>
+        </t>
+    </t>
+    <t t-name="ks_list_view_layout_4">
+        <t t-if="list_view_data">
+            <table id="ksListViewTable" class="table table-hover ks_dn_table ks_list_view_layout_4"
+                   t-att-data-model="list_view_data['model']">
+                <thead class="ks_dn_thead">
+                    <t t-call="ks_dns_list_view_header_4"></t>
+                </thead>
+                <tbody class="ks_table_body">
+                    <!--                    <t t-call="ks_list_view_tmpl"></t>-->
+                </tbody>
+            </table>
+        </t>
+        <t t-else="">
+            No Data Present
+        </t>
+    </t>
+    <t t-name="ks_dns_list_view_header_4">
+        <t t-if="calculation_type == 'custom' &amp; !isDrill">
+            <tr>
+                <t t-set="count" t-value="0"/>
+                <t t-foreach="list_view_data['label']" t-as="table_header">
+                    <th class="ks_dn_th list_header ks_dn_asc" t-att-data-item-id="item_id"
+                        t-att-data-fields="list_view_data['fields'][count]"
+                        t-att-data-store="list_view_data['store'][count]">
+                        <t t-esc="table_header"/>
+                        <t t-if="calculation_type == 'custom' &amp; !isDrill">
+                            <t t-if="list_view_data['store'][count] == true">
+                                <button title="Sort button"
+                                        type="button"
+                                        class="ks_sort_icon ks_dashboard_item_action ks_sort_down ks_list_heder_hover ks_border_aliceblue"
+                                        t-att-data-item-id="item_id"
+                                        t-att-data-fields="list_view_data['fields'][count]"
+                                        aria-expanded="true">
+                                    <i class="fa fa-angle-double-down"/>
+                                </button>
+                                <button title="Sort button"
+                                        type="button"
+                                        class="ks_dashboard_item_action ks_sort_up ks_plus ks_sort_icon ks_list_heder_hover ks_border_aliceblue"
+                                        t-att-data-item-id="item_id"
+                                        t-att-data-fields="list_view_data['fields'][count]"
+                                        aria-expanded="true">
+                                    <i class="fa fa-angle-double-up"/>
+                                </button>
+                            </t>
+                            <t t-set="count" t-value="count+1"/>
+                        </t>
+                    </th>
+                </t>
+                <t t-if="calculation_type == 'custom'">
+                    <th class="ks_dn_th"/>
+                </t>
+            </tr>
+        </t>
+        <t t-else="">
+            <tr>
+
+                <t t-foreach="list_view_data['label']" t-as="table_header">
+                    <th class="ks_dn_th">
+                        <t t-esc="table_header"/>
+                    </th>
+                </t>
+                <t t-if="calculation_type == 'custom'">
+                    <th class="ks_dn_th"/>
+                </t>
+            </tr>
+        </t>
+    </t>
+
+    <t t-extend="ks_list_view_container">
+        <t t-jquery="div.card-body.table-responsive.ksMaxTableContent" t-operation="replace">
+
+
+            <div class="card-body table-responsive ksMaxTableContent">
+                <t t-if="list_view_data">
+                    <t t-if="layout === 'layout_2'">
+                        <t t-call="ks_list_view_layout_2"/>
+                    </t>
+                    <t t-elif="layout === 'layout_3'">
+                        <t t-call="ks_list_view_layout_3"/>
+                    </t>
+                    <t t-elif="layout === 'layout_4'">
+                        <t t-call="ks_list_view_layout_4"/>
+                    </t>
+                    <t t-else="">
+                        <t t-call="ks_list_view_table"/>
+                    </t>
+                </t>
+                <t t-else="">
+                    No Data Present
+                </t>
+            </div>
+        </t>
+    </t>
+
+    <!--    <t t-name="ks_record_more">-->
+    <!--        <tr t-if="count">-->
+    <!--            <td class="ks_font">-->
+    <!--                <span>(-->
+    <!--                    <t t-esc="count"/>-->
+    <!--                    records more)-->
+    <!--                </span>-->
+    <!--            </td>-->
+    <!--        </tr>-->
+    <!--    </t>-->
+    <t t-extend="ks_gridstack_list_view_container">
+        <t t-jquery="div.ks_pager_name" t-operation="replace">
+            <div class="ks_pager_name">
+
+                <t t-if="ks_pager" t-call="ks_pager_template"/>
+
+            </div>
+        </t>
+    </t>
+    <t t-extend="ks_list_view_tmpl">
+        <t t-jquery="tr.ks_tr" t-operation="replace">
+            <tr class="ks_tr" t-att-data-record-id="table_row['id']" t-att-data-domain="table_row['domain']"
+                t-att-data-item-Id="item_id"
+                t-att-data-sequence="table_row['sequence']" t-att-data-last_seq="table_row['last_seq']">
+                <t t-set="ks_rec_count" t-value="0"/>
+                <t t-foreach="table_row['data']" t-as="row_data">
+                    <t t-if="table_row['ks_column_type'][ks_rec_count]==='html'">
+                        <td class="ks_list_canvas_click">
+                            <t t-out="row_data"/>
+                        </td>
+                        <t t-set="ks_rec_count" t-value="ks_rec_count+1"/>
+                    </t>
+                    <t t-else="">
+                        <td class="ks_list_canvas_click">
+                            <t t-esc="row_data"/>
+                        </td>
+                        <t t-set="ks_rec_count" t-value="ks_rec_count+1"/>
+                    </t>
+
+                </t>
+                <t t-if="calculation_type == 'custom'">
+                    <td class="ks_info">
+                        <i id="ks_item_info" t-att-data-model="list_view_data['model']"
+                           t-att-data-list-type="list_view_data['list_view_type']"
+                           t-att-data-groupby="list_view_data['groupby']"
+                           t-att-data-record-id="table_row['id']" t-att-data-item-id="item_id"
+                           t-att-data-list-view-type="list_type"
+                           class="fa fa-pencil"/>
+                    </td>
+                </t>
+            </tr>
+        </t>
+    </t>
+    <t t-extend="ks_list_view_table">
+        <t t-jquery="table#ksListViewTable.table.table-hover.ks_list_view_layout_1" t-operation="replace">
+
+            <t t-if="list_view_data">
+
+                <table id="ksListViewTable" class="table table-hover ks_dn_table ks_list_view_layout_1"
+                       t-att-data-model="list_view_data['model']">
+
+                    <thead class="ks_dn_thead">
+
+                        <t t-call="ks_dns_list_view_header"></t>
+
+                    </thead>
+
+                    <tbody class="ks_table_body">
+                    </tbody>
+                </table>
+
+            </t>
+            <t t-else="">
+                No Data Present
+            </t>
+        </t>
+    </t>
+    <t t-name="ks_dns_list_view_header">
+        <t t-if="calculation_type == 'custom' &amp; !isDrill">
+            <tr>
+                <t t-set="count" t-value="0"/>
+                <t t-foreach="list_view_data['label']" t-as="table_header">
+                    <th class="ks_dn_th list_header ks_dn_asc" t-att-data-item-id="item_id"
+                        t-att-data-fields="list_view_data['fields'][count]"
+                        t-att-data-store="list_view_data['store'][count]">
+                        <t t-esc="table_header"/>
+                        <t t-if="calculation_type == 'custom' &amp; !isDrill">
+                            <t t-if="list_view_data['store'][count] == true">
+                                <button title="Sort button"
+                                        type="button"
+                                        class="ks_sort_icon ks_dashboard_item_action ks_sort_down ks_list_heder_hover ks_border_aliceblue"
+                                        t-att-data-item-id="item_id"
+                                        t-att-data-fields="list_view_data['fields'][count]"
+                                        aria-expanded="true">
+                                    <i class="fa fa-angle-double-down"/>
+                                </button>
+                                <button title="Sort button"
+                                        type="button"
+                                        class="ks_dashboard_item_action ks_sort_up ks_plus ks_sort_icon ks_list_heder_hover ks_border_aliceblue"
+                                        t-att-data-item-id="item_id"
+                                        t-att-data-fields="list_view_data['fields'][count]"
+                                        aria-expanded="true">
+                                    <i class="fa fa-angle-double-up"/>
+                                </button>
+                            </t>
+                            <t t-set="count" t-value="count+1"/>
+                        </t>
+                    </th>
+                </t>
+                <t t-if="calculation_type == 'custom'">
+                    <th class="ks_dn_th"/>
+                </t>
+            </tr>
+        </t>
+        <t t-else="">
+            <tr>
+
+                <t t-foreach="list_view_data['label']" t-as="table_header">
+                    <th class="ks_dn_th">
+                        <t t-esc="table_header"/>
+                    </th>
+                </t>
+                <t t-if="calculation_type == 'custom'">
+                    <th class="ks_dn_th"/>
+                </t>
+            </tr>
+        </t>
+
+    </t>
+
+</templates>

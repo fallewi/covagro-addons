@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates>
+
+    <!--Basic Field Image replace view for icon set-->
+    <t t-name="KsFieldBinaryImage">
+        <div class="o_field_image" aria-atomic="true">
+            <t t-if="widget.mode !== 'readonly'">
+                <div class="o_form_image_controls">
+                    <button type="button" class=" fa fa-image fa-lg ks_image_widget_icon_container float-left"
+                            title="Select Icons">
+                    </button>
+                    <button class="fa fa-trash-o fa-lg float-right o_clear_file_button" title="Clear"
+                            aria-label="Clear"/>
+                    <span class="o_form_binary_progress">Uploading...</span>
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <!--Icon Container Modal Template : Modal TO show When clicked on Open Icons Container-->
+    <t t-name="ks_icon_container_modal_template">
+        <div class="modal fade" id="ks_icon_container_modal_id" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Select Icon</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="ks_modal_icon_input_div">
+                            <div class="ks_search_modal_container">
+                                <input type="search" id="site-search" placeholder="Search fa-icon.."
+                                       name="fa Icon Input" aria-label="Search through site content"
+                                       class="ks_modal_icon_input"/>
+
+                                <button class="ks_fa_icon_search">
+                                    <i class="fa fa-search"/>
+                                </button>
+                            </div>
+                            <section
+                                    style="margin-top: 12px;font-size: 14px;text-align: justify;color: black;background:transparent;">
+                                <strong>
+                                    Note:
+                                </strong>
+                                Please use Font Awesome 4.7.0 icons only. E.g. 'fa-bell' or 'bell'.
+                                For more information visit
+                                <a href="https://fontawesome.com/v4.7.0/icons/" target="_blank">Font Awesome 4.7.0</a>
+                            </section>
+                        </div>
+                        <div class="ks_icon_container_grid_view">
+                            <t t-foreach="ks_fa_icons_set" t-as="fa_icon">
+                                <div class="ks_icon_container_list" id="icon1">
+                                    <span t-att-id="'ks.'+fa_icon" t-att-class="'fa fa-' + fa_icon + ' fa-4x'"/>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary ks_icon_container_open_button"
+                                data-dismiss="modal">Select
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </t>
+
+    <!--Color Picker with opacity Layout-->
+    <t t-name="ks_color_picker_opacity_view">
+        <input class='ks_color_picker'/>
+        <!--        <input class="ks_color_picker" type="color" t-att-value="ks_color_value"/>-->
+        Transparency :
+        <input type="range" t-att-value="ks_color_opacity" class="ks_color_opacity" name="ks_db_item_opacity" min="0"
+               max="0.99" step="0.01"/>
+    </t>
+
+    <!--Template Layouts-->
+
+    <t t-name="ks_db_list_field_required">
+        <div class="ks_field_required">
+            <p>Fields Required : Name, Model, Icon (Default or Custom Upload), Layout</p>
+        </div>
+    </t>
+
+    <t t-name="ks_db_list_preview">
+        <div class="ks_field_preview">
+            <p>Coming Soon in Future :)</p>
+        </div>
+    </t>
+
+    <!--layouts for items-->
+    <t t-name="ks_db_list_preview_layout1">
+        <div id="enterID" class="ks_dashboard_item  ks_db_item_preview ks_db_item_preview_color_picker ">
+            <div class="ks_dashboard_item_header ks_dashboard_item_header_hover">
+                <button type="button" title="Customize Item" class="ks_dashboard_item_preview_customize">
+                    <i class="fa fa-cog"/>
+                </button>
+                <button type="button" title="Remove Item" class="ks_dashboard_item_preview_delete">
+                    <i class="fa fa-times"/>
+                </button>
+            </div>
+            <div class="ks_dashboard_item_main_body">
+                <div class="ks_dashboard_icon ks_dashboard_icon_color_picker">
+                    <t t-if="icon_select=='Custom'">
+                        <t t-if="img_src">
+                            <img t-att-src="img_src" class="ks_db_list_image"/>
+                        </t>
+                    </t>
+                    <t t-elif="icon_select=='Default'">
+                        <span t-att-style="'color:'+ icon_color + ';'"
+                              t-att-class="'fa fa-' + default_icon + ' fa-5x'"/>
+                    </t>
+                </div>
+                <div class="ks_dashboard_item_info">
+                    <div class="ks_dashboard_item_name" t-att-title="name">
+                        <t t-esc="name"/>
+                    </div>
+                    <div class="ks_dashboard_item_domain_count" t-att-title="count_tooltip">
+                        <t t-esc="count"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ks_db_list_preview_layout2">
+        <div class="ks_dashboard_item_l2  ks_db_item_preview ks_db_item_preview_color_picker">
+            <div class="ks_dashboard_icon_l2  ks_dashboard_icon_color_picker ks_db_item_preview_l2">
+                <t t-if="icon_select=='Custom'">
+                    <t t-if="img_src">
+                        <img t-att-src="img_src" class="ks_db_list_image"/>
+                    </t>
+                </t>
+                <t t-elif="icon_select=='Default'">
+                    <span t-att-style="'color:'+ icon_color + ';'" t-att-class="'fa fa-' + default_icon + ' fa-5x'"/>
+                </t>
+            </div>
+
+            <div class="ks_dashboard_item_main_body_l2">
+                <div class="ks_dashboard_item_domain_count_l2" t-att-title="count_tooltip">
+                    <t t-esc="count"/>
+                </div>
+                <div class="ks_dashboard_item_name_l2" t-att-title="name">
+                    <t t-esc="name"/>
+                </div>
+
+                <div class="ks_dashboard_item_header_l2 ks_dashboard_item_header_hover">
+                    <button type="button" title="Customize Item" class="ks_dashboard_item_preview_customize">
+                        <i class="fa fa-cog"/>
+                    </button>
+                    <button type="button" title="Remove Item" class="ks_dashboard_item_preview_delete">
+                        <i class="fa fa-times"/>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </t>
+
+
+    <t t-name="ks_db_list_preview_layout3">
+        <div id="enterID" class="ks_dashboard_item  ks_db_item_preview ks_db_item_preview_color_picker">
+            <div class="ks_dashboard_item_header ks_dashboard_item_header_hover">
+                <button type="button" title="Customize Item" class="ks_dashboard_item_preview_customize">
+                    <i class="fa fa-cog"/>
+                </button>
+                <button type="button" title="Remove Item" class="ks_dashboard_item_preview_delete">
+                    <i class="fa fa-times"/>
+                </button>
+            </div>
+            <div class="ks_dashboard_item_main_body">
+                <div class="ks_dashboard_icon_l3 ks_dashboard_icon_color_picker">
+                    <t t-if="icon_select=='Custom'">
+                        <t t-if="img_src">
+                            <img t-att-src="img_src" class="ks_db_list_image"/>
+                        </t>
+                    </t>
+                    <t t-elif="icon_select=='Default'">
+                        <span t-att-style="'color:'+ icon_color + ';'"
+                              t-att-class="'fa fa-' + default_icon + ' fa-5x'"/>
+                    </t>
+                </div>
+                <div class="ks_dashboard_item_info ks_dashboard_item_info_l3">
+                    <div class="ks_dashboard_item_domain_count_l3" t-att-title="count_tooltip">
+                        <t t-esc="count"/>
+                    </div>
+                    <div class="ks_dashboard_item_name_l3" t-att-title="name">
+                        <t t-esc="name"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ks_db_list_preview_layout4">
+        <div class="ks_dashboard_item_l4  ks_db_item_preview ">
+            <div class="ks_dashboard_icon_l4 ks_db_item_preview_color_picker ks_dashboard_icon_color_picker">
+                <t t-if="icon_select=='Custom'">
+                    <t t-if="img_src">
+                        <img t-att-src="img_src" class="ks_db_list_image"/>
+                    </t>
+                </t>
+                <t t-elif="icon_select=='Default'">
+                    <span t-att-style="'color:'+ icon_color + ';'" t-att-class="'fa fa-' + default_icon + ' fa-5x'"/>
+                </t>
+            </div>
+
+            <div class="ks_dashboard_item_main_body_l2">
+                <div class="ks_dashboard_item_domain_count_l2" t-att-title="count_tooltip">
+                    <t t-esc="count"/>
+                </div>
+                <div class="ks_dashboard_item_name_l2" t-att-title="name">
+                    <t t-esc="name"/>
+                </div>
+
+                <div class="ks_dashboard_item_header_l2 ks_dashboard_item_header_hover">
+                    <button type="button" title="Customize Item" class="ks_dashboard_item_preview_customize">
+                        <i class="fa fa-cog"/>
+                    </button>
+                    <button type="button" title="Remove Item" class="ks_dashboard_item_preview_delete">
+                        <i class="fa fa-times"/>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </t>
+
+
+    <t t-name="ks_db_list_preview_layout5">
+        <div class="ks_dashboard_item_l5  ks_db_item_preview ks_db_item_preview_color_picker">
+            <div class="ks_dashboard_icon_l5 ks_dashboard_icon_color_picker">
+                <t t-if="icon_select=='Custom'">
+                    <t t-if="img_src">
+                        <img t-att-src="img_src" class="ks_db_list_image"/>
+                    </t>
+                </t>
+                <t t-elif="icon_select=='Default'">
+                    <span t-att-style="'color:'+ icon_color + ';'" t-att-class="'fa fa-' + default_icon + ' fa-5x'"/>
+                </t>
+            </div>
+            <div class="ks_dashboard_item_main_body_l5">
+                <div class="ks_dashboard_item_domain_count_l5" t-att-title="count_tooltip">
+                    <t t-esc="count"/>
+                </div>
+                <div class="ks_dashboard_item_name_l5" t-att-title="name">
+                    <t t-esc="name"/>
+                </div>
+            </div>
+            <div class="ks_dashboard_item_header_l2 ks_dashboard_item_header_hover">
+                <button type="button" title="Customize Item" class="ks_dashboard_item_preview_customize">
+                    <i class="fa fa-cog"/>
+                </button>
+                <button type="button" title="Remove Item" class="ks_dashboard_item_preview_delete">
+                    <i class="fa fa-times"/>
+                </button>
+            </div>
+        </div>
+    </t>
+
+
+    <t t-name="ks_db_list_preview_layout6">
+        <div class="ks_dashboard_item_l2  ks_db_item_preview ks_db_item_preview_color_picker">
+            <div class="ks_dashboard_item_main_body_l2">
+                <div class="ks_dashboard_item_domain_count_l2" t-att-title="count_tooltip">
+                    <t t-esc="count"/>
+                </div>
+                <div class="ks_dashboard_item_name_l2" t-att-title="name">
+                    <t t-esc="name"/>
+                </div>
+            </div>
+
+            <div class="ks_dashboard_icon_l2 ks_dashboard_icon_color_picker">
+                <t t-if="icon_select=='Custom'">
+                    <t t-if="img_src">
+                        <img t-att-src="img_src" class="ks_db_list_image"/>
+                    </t>
+                </t>
+                <t t-elif="icon_select=='Default'">
+                    <span t-att-style="'color:'+ icon_color + ';'" t-att-class="'fa fa-' + default_icon + ' fa-5x'"/>
+                </t>
+
+                <div class="ks_dashboard_item_header_l2 ks_dashboard_item_header_hover">
+                    <button type="button" title="Customize Item" class="ks_dashboard_item_preview_customize">
+                        <i class="fa fa-cog"/>
+                    </button>
+                    <button type="button" title="Remove Item" class="ks_dashboard_item_preview_delete">
+                        <i class="fa fa-times"/>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ks_kpi_preview_template">
+        <div class="ks_dashboard_kpi ks_dashboard_custom_srollbar  ks_db_kpi_preview ks_db_item_preview_color_picker">
+            <div class="ks_dashboard_icon_l5 ks_dashboard_icon_color_picker">
+                <t t-if="icon_select=='Custom'">
+                    <t t-if="img_src">
+                        <img t-att-src="img_src" class="ks_db_list_image"/>
+                    </t>
+                </t>
+                <t t-elif="icon_select=='Default'">
+                    <span t-att-style="'color:'+ icon_color + ';'" t-att-class="'fa fa-' + default_icon + ' fa-5x'"/>
+                </t>
+            </div>
+            <div class="ks_dashboard_item_main_body_l5">
+                <div class="ks_dashboard_kpi_name_preview">
+                    <t t-esc="name"/>
+                </div>
+                <div class="ks_dashboard_kpi_count_preview" t-att-title="count_1_tooltip">
+                    <t t-esc="count_1"/>
+                </div>
+            </div>
+            <div class="row d-flex ml-auto mr-auto">
+                <t t-if="ks_enable_goal">
+                    <div class="col">
+                        <div style="color: rgba(0, 0, 0, 0.61);">
+                            <span>vs Target</span>
+                        </div>
+                        <div>
+
+                            <span class="target_deviation" style="font-size : medium;">
+                                <t t-esc="target_deviation"/>
+                                <t t-if="target_arrow">
+                                    <i t-att-class="'fa fa-arrow-'+ target_arrow"/>
+                                </t>
+                            </span>
+                        </div>
+                    </div>
+                </t>
+                <t t-if="ks_previous_period">
+                    <div class="col" style="text-align:right;">
+                        <div style="color: rgba(0, 0, 0, 0.61);">
+                            <span>vs Prev</span>
+                        </div>
+                        <div>
+                            <span class="pre_deviation" style="font-size : medium;">
+                                <t t-esc="pre_deviation"/>
+                                <i t-att-class="'fa fa-arrow-'+ pre_arrow"/>
+                            </span>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="ks_kpi_preview_template_3">
+        <div class="ks_dashboard_kpi ks_dashboard_custom_srollbar  ks_db_kpi_preview ks_db_item_preview_color_picker">
+            <div class="ks_dashboard_icon_l5 ks_dashboard_icon_color_picker">
+                <t t-if="icon_select=='Custom'">
+                    <t t-if="img_src">
+                        <img t-att-src="img_src" class="ks_db_list_image"/>
+                    </t>
+                </t>
+                <t t-elif="icon_select=='Default'">
+                    <span t-att-style="'color:'+ icon_color + ';'" t-att-class="'fa fa-' + default_icon + ' fa-5x'"/>
+                </t>
+            </div>
+            <div class="ks_dashboard_item_main_body_l5">
+                <div class="ks_dashboard_kpi_name_preview">
+                    <t t-esc="name"/>
+                </div>
+                <div class="ks_dashboard_kpi_count_preview" t-att-title="count_1_tooltip">
+                    <span class="ks_count">
+                        <t t-esc="count_1"/>
+                    </span>
+                    /
+                    <span>
+                        <t t-esc="target"/>
+                    </span>
+                </div>
+            </div>
+            <div class="text-center ks_progress">
+                <div>
+                    <progress id="ks_progressbar" value="0" max="100"/>
+                </div>
+                <div class="text-center">
+                    <t t-esc="target_progress_deviation"/>%
+                </div>
+            </div>
+            <t t-if="ks_previous_period and previous_period_data">
+                <div class="text-center mt-1">
+                    <div>
+                        <span>vs Prev</span>
+                    </div>
+                    <div>
+                        <t t-esc="previous_period_data"/>
+                        <span class="pre_deviation">
+                            <t t-esc="pre_deviation"/>
+                            <i t-att-class="'fa fa-arrow-'+ pre_arrow"/>
+                        </span>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="ks_kpi_preview_template_2">
+        <div class="ks_dashboard_kpi ks_dashboard_custom_srollbar  ks_db_kpi_preview ks_db_item_preview_color_picker">
+            <div class="ks_dashboard_icon_l5 ks_dashboard_icon_color_picker">
+                <t t-if="icon_select=='Custom'">
+                    <t t-if="img_src">
+                        <img t-att-src="img_src" class="ks_db_list_image"/>
+                    </t>
+                </t>
+                <t t-elif="icon_select=='Default'">
+                    <span t-att-style="'color:'+ icon_color + ';'" t-att-class="'fa fa-' + default_icon + ' fa-5x'"/>
+                </t>
+            </div>
+            <div class="ks_dashboard_item_main_body_l5">
+                <div class="ks_dashboard_kpi_name_preview">
+                    <t t-esc="name"/>
+                </div>
+                <div class="ks_dashboard_kpi_count_preview" t-att-title="count_tooltip">
+                    <span>
+                        <t t-esc="count"/>
+                        <t t-if="target_view =='Progress Bar' and target_enable">/
+                            <t t-esc="target"/>
+                        </t>
+                    </span>
+                </div>
+            </div>
+            <t t-if="ks_enable_goal and target_enable">
+                <t t-if="target_deviation and target_view =='Number'">
+                    <div class="text-center">
+                        <div>
+                            <span class="ks_kpi_target_grey">vs Target</span>
+                        </div>
+                        <div>
+                            <span class="target_deviation">
+                                <t t-esc="target_deviation"/>
+                                <t t-if="pre_arrow">
+                                    <i t-att-class="'fa fa-arrow-'+ pre_arrow"/>
+                                </t>
+                            </span>
+                        </div>
+                    </div>
+                </t>
+                <t t-if="target_progress_deviation and target_view =='Progress Bar'">
+                    <div class="text-center  ks_progress">
+                        <div>
+                            <progress id="ks_progressbar" value="0" max="100"/>
+                        </div>
+                        <div class="text-center">
+                            <t t-esc="target_progress_deviation"/>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </div>
+    </t>
+
+
+    <t t-name="ks_db_item_preview_footer_note">
+        <div class="ks_db_item_preview_footer_note">
+            <strong>Note :</strong>
+            Changing Layout midway will set the default icon colour and font colour for selected layout.
+        </div>
+    </t>
+
+</templates>

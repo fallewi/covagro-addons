@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!-- freight.folder form view -->
+    <record id="view_freight_folder_form" model="ir.ui.view">
+        <field name="name">freight.folder.form</field>
+        <field name="model">freight.folder</field>
+        <field name="arch" type="xml">
+            <form string="Répertoire">
+                <header>
+                    <button name="open_folder" type="object" string="Reopen" class="oe_highlight"
+                            attrs="{'invisible': [('state', '=', 'open')]}"/>
+                    <button name="close_folder" type="object" string="Close" class="oe_highlight"
+                            attrs="{'invisible': [('state', '=', 'closed')]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="open,closed"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" icon="fa-credit-card" name="action_open_invoices" type="object">
+                            <field name="act_credit"/>
+                            <span class="o_stat_text">Crédit</span>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-credit-card-alt" name="action_open_bills" type="object">
+                            <field name="act_debit"/>
+                            <span class="o_stat_text">Débit</span>
+                        </button>
+                        <button class="oe_stat_button" icon="fa-dollar" clickable="0">
+                            <field name="act_pl"/>
+                            <span class="o_stat_text">P/L</span>
+                        </button>
+                    </div>
+
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ref" placeholder="Référence"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="category_id"/>
+                        </group>
+                        <group>
+                            <field name="directory_number"/>
+                            <field name="closing_date"/>
+                        </group>
+                    </group>
+                    <notebook attrs="{'invisible':[('ref','=', 'New')]}">
+                        <page string="Operations">
+                            <field name="operation_ids">
+                                <tree string="Menu">
+                                    <field name="name"/>
+                                    <field name="direction"/>
+                                    <field name="customer_id"/>
+                                    <field name="exp_inv_payment"/>
+                                    <field name="exp_bill_payment"/>
+                                    <field name="exp_payment_margin"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- freight.folder tree view -->
+    <record id="view_freight_folder_tree" model="ir.ui.view">
+        <field name="name">view.freight.folder.tree</field>
+        <field name="model">freight.folder</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="directory_number"/>
+                 <field name="act_credit"/>
+                 <field name="act_debit"/>
+                 <field name="act_pl"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+    <!-- Action for freight.operation -->
+    <record id="action_freight_folder" model="ir.actions.act_window">
+        <field name="name">Fichiers d'expédition</field>
+        <field name="res_model">freight.folder</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="freight_folders_menu"
+            name="Fichiers COVAGRO"
+            parent="scs_freight.main_menu_freight_shipping"
+            action="action_freight_folder"
+            sequence="0"
+    />
+</odoo>

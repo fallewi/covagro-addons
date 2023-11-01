@@ -1,0 +1,447 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* bi_product_low_stock_notification
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-10-11 07:20+0000\n"
+"PO-Revision-Date: 2022-10-11 13:13+0530\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 3.1.1\n"
+
+#. module: bi_product_low_stock_notification
+#: model:mail.template,body_html:bi_product_low_stock_notification.low_stock_email_template
+msgid ""
+"\n"
+"            \n"
+"\n"
+"\t      <p>Hello,</p> <br/><br/>\n"
+"\t      <br/>\n"
+"      <t t-if=\"object.notification_products == 'for_all'\">\n"
+"        <t t-if=\"object.notification_base == 'on_hand'\">\n"
+"            <p>List of product which have less on hand quantity  then global quantity <t t-out=\"object.min_quantity\"> are:</p><br/>\n"
+"        </t>\n"
+"        <t t-if=\"object.notification_base == 'fore_cast'\">\n"
+"            <p>List of product which have less forecast quantity then global quantity <t t-out=\"object.min_quantity\"> are:</p><br/>\n"
+"        </t>\n"
+"        \n"
+"        <table border=1>\n"
+"          <tr> \n"
+"            <th>Product name</th>\n"
+"            <th>Product quantity</th>\n"
+"            <th>Required quantity</th>\n"
+"          </tr>\n"
+"        \n"
+"        <t t-foreach=\"object.low_stock_products_ids\" t-as=\"product\">\n"
+"             \n"
+"          \n"
+"          <tr>\n"
+"          <td><t t-out=\"product.name\"></td>\n"
+"          <td><t t-out=\"product.stock_quantity\"></td>\n"
+"          <td><t t-out=\"object.min_quantity - product.stock_quantity\"></td>\n"
+"        </tr>\n"
+"        </t>\n"
+"      </table>\n"
+"      </t>\n"
+"\n"
+"      <t t-if=\"object.notification_products == 'fore_product'\">\n"
+"        <t t-if=\"object.notification_base == 'on_hand'\">\n"
+"           <p>List of product which have less on hand quantity  then individual minimum quantity are:</p><br/>\n"
+"        </t>\n"
+"        <t t-if=\"object.notification_base == 'fore_cast'\">\n"
+"           <p>List of product which have less forecast quantity  then individual minimum quantity are:</p><br/>\n"
+"        </t>\n"
+"         <table border=1>\n"
+"          <tr>\n"
+"            <th>Product name</th>\n"
+"            <th>Individual minimum quantity</th>\n"
+"            <th>Product quantity</th>\n"
+"            <th>Required quantity</th>\n"
+"          </tr>\n"
+"           <t t-foreach=\"object.low_stock_products_ids\" t-as=\"product\">\n"
+"          <tr>\n"
+"          <td><t t-out=\"product.name\"></td>\n"
+"          <td><t t-out=\"product.limit_quantity\"></td>\n"
+"          <td><t t-out=\"product.stock_quantity\"></td>\n"
+"          <td><t t-out=\"product.limit_quantity - product.stock_quantity\"></td>\n"
+"        </tr>\n"
+"        </t>\n"
+"      </table>\n"
+"      </t>\n"
+"\n"
+"      <t t-if=\"object.notification_products == 'reorder'\">\n"
+"        <t t-if=\"object.notification_base == 'on_hand'\">\n"
+"           <p>List of product which have less on hand quantity  then individual minimum quantity on reorder rules specified are:</p><br/>\n"
+"        </t>\n"
+"        <t t-if=\"object.notification_base == 'fore_cast'\">\n"
+"           <p>List of product which have less forecast quantity  then individual minimum quantity on reorder rules specified are:</p><br/>\n"
+"        </t>\n"
+"         <table border=1>\n"
+"          <tr>\n"
+"            <th>Product name</th>\n"
+"            <th>Minimum quantity Stock</th>\n"
+"            <th>Product quantity</th>\n"
+"            <th>Required quantity</th>\n"
+"          </tr>\n"
+"           <t t-foreach=\"object.low_stock_products_ids\" t-as=\"product\">\n"
+"          <tr>\n"
+"          <td><t t-out=\"product.name\"></td>\n"
+"          <td><t t-out=\"product.limit_quantity\"></td>\n"
+"          <td><t t-out=\"product.stock_quantity\"></td>\n"
+"          <td><t t-out=\"product.limit_quantity - product.stock_quantity\"></td>\n"
+"        </tr>\n"
+"        </t>\n"
+"      </table>\n"
+"      </t>\n"
+"\t    \n"
+"\t  "
+msgstr ""
+"\n"
+"            \n"
+"\n"
+"<p>Hola,</p> <br/><br/>\n"
+"<br/>\n"
+"      <t t-if=\"objeto.notificación_productos == 'para_todos'\">\n"
+"        <t t-if=\"objeto.notificación_base == 'a mano'\">\n"
+"            <p>La lista de productos que tienen menos cantidad disponible que la cantidad global <t t-out=\"object.min_quantity\"> son:</p><br/>\n"
+"        </t>\n"
+"        <t t-if=\"objeto.notificación_base == 'pronóstico'\">\n"
+"            <p>La lista de productos que tienen menos cantidad prevista que la cantidad global <t t-out=\"object.min_quantity\"> son:</p><br/>\n"
+"        </t>\n"
+"        \n"
+"        <borde de la tabla=1>\n"
+"          <tr>\n"
+"            <th>Nombre del producto</th>\n"
+"            <th>Cantidad de producto</th>\n"
+"            <th>Cantidad requerida</th>\n"
+"          </tr>\n"
+"        \n"
+"        <t t-foreach=\"objeto.low_stock_products_ids\" t-as=\"producto\">\n"
+"             \n"
+"          \n"
+"          <tr>\n"
+"          <td><t t-out=\"producto.nombre\"></td>\n"
+"          <td><t t-out=\"producto.stock_cantidad\"></td>\n"
+"          <td><t t-out=\"objeto.min_cantidad - producto.stock_cantidad\"></td>\n"
+"        </tr>\n"
+"        </t>\n"
+"      </tabla>\n"
+"      </t>\n"
+"\n"
+"<t t-if=\"objeto.notificación_productos == 'fore_product'\">\n"
+"        <t t-if=\"objeto.notificación_base == 'a mano'\">\n"
+"           <p>La lista de productos que tienen menos cantidad disponible que la cantidad mínima individual es:</p><br/>\n"
+"        </t>\n"
+"        <t t-if=\"objeto.notificación_base == 'pronóstico'\">\n"
+"           <p>La lista de productos que tienen menos cantidad prevista que la cantidad mínima individual son:</p><br/>\n"
+"        </t>\n"
+"         <borde de la tabla=1>\n"
+"          <tr>\n"
+"            <th>Nombre del producto</th>\n"
+"            <th>Cantidad mínima individual</th>\n"
+"            <th>Cantidad de producto</th>\n"
+"            <th>Cantidad requerida</th>\n"
+"          </tr>\n"
+"           <t t-foreach=\"objeto.low_stock_products_ids\" t-as=\"producto\">\n"
+"          <tr>\n"
+"          <td><t t-out=\"producto.nombre\"></td>\n"
+"          <td><t t-out=\"producto.cantidad_límite\"></td>\n"
+"          <td><t t-out=\"producto.stock_cantidad\"></td>\n"
+"          <td><t t-out=\"producto.cantidad_límite - producto.cantidad_stock\"></td>\n"
+"        </tr>\n"
+"        </t>\n"
+"      </tabla>\n"
+"      </t>\n"
+"\n"
+"      <t t-if=\"objeto.notificación_productos == 'reordenar'\">\n"
+"        <t t-if=\"objeto.notificación_base == 'a mano'\">\n"
+"           <p>La lista de productos que tienen menos cantidad disponible que la cantidad mínima individual en las reglas de reorden especificadas son:</p><br/>\n"
+"        </t>\n"
+"        <t t-if=\"objeto.notificación_base == 'pronóstico'\">\n"
+"           <p>La lista de productos que tienen una cantidad de pronóstico menor que la cantidad mínima individual en las reglas de pedido especificadas son:</p><br/>\n"
+"        </t>\n"
+"         <borde de la tabla=1>\n"
+"          <tr>\n"
+"            <th>Nombre del producto</th>\n"
+"            <th>Cantidad mínima Stock</th>\n"
+"            <th>Cantidad de producto</th>\n"
+"            <th>Cantidad requerida</th>\n"
+"          </tr>\n"
+"           <t t-foreach=\"objeto.low_stock_products_ids\" t-as=\"producto\">\n"
+"          <tr>\n"
+"          <td><t t-out=\"producto.nombre\"></td>\n"
+"          <td><t t-out=\"producto.cantidad_límite\"></td>\n"
+"          <td><t t-out=\"producto.stock_cantidad\"></td>\n"
+"          <td><t t-out=\"producto.cantidad_límite - producto.cantidad_stock\"></td>\n"
+"        </tr>\n"
+"        </t>\n"
+"      </tabla>\n"
+"      </t>\n"
+"\t    \n"
+"\t  "
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields.selection,name:bi_product_low_stock_notification.selection__res_company__notification_products__fore_product
+msgid " Individual for all products"
+msgstr "Individual para todos los productos."
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields.selection,name:bi_product_low_stock_notification.selection__res_company__notification_products__reorder
+msgid " Reorder Rules"
+msgstr "Reglas de reordenamiento"
+
+#. module: bi_product_low_stock_notification
+#: model_terms:ir.ui.view,arch_db:bi_product_low_stock_notification.low_stock_template
+msgid "<b>Product Low Stock Report</b>"
+msgstr "<b>Informe de stock bajo del producto</b>"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_company__notification_product_type
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_config_settings__notification_product_type
+msgid "Apply On"
+msgstr "Aplicar sobre"
+
+#. module: bi_product_low_stock_notification
+#: model_terms:ir.ui.view,arch_db:bi_product_low_stock_notification.view_stock_config_settings_inherit_notification
+msgid "Check minimum quantity on Product or Product Variant."
+msgstr "Consultar cantidad mínima en Producto o Variante de Producto."
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model,name:bi_product_low_stock_notification.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model,name:bi_product_low_stock_notification.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de configuración"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_low_stock_transient__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_low_stock_transient__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_low_stock_transient__display_name
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_config_settings__email_user
+msgid "Email From"
+msgstr "Email de"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields.selection,name:bi_product_low_stock_notification.selection__res_company__notification_base__fore_cast
+msgid "Forecast"
+msgstr "Pronóstico"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields.selection,name:bi_product_low_stock_notification.selection__res_company__notification_products__for_all
+msgid "Global for all product"
+msgstr "Global para todos los productos"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_low_stock_transient__id
+msgid "ID"
+msgstr "IDENTIFICACIÓN"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_low_stock_transient____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_low_stock_transient__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_low_stock_transient__write_date
+msgid "Last Updated on"
+msgstr "Ultima actualización en"
+
+#. module: bi_product_low_stock_notification
+#: model_terms:ir.ui.view,arch_db:bi_product_low_stock_notification.view_company_form_inherit_low_stock
+msgid "Low Stock Notification"
+msgstr "Notificación de existencias bajas"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_company__notify_low_stock
+msgid "Low Stock Notification?"
+msgstr "¿Notificación de existencias bajas?"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_config_settings__low_stock_products_ids
+msgid "Low Stock Products"
+msgstr "Productos de bajo stock"
+
+#. module: bi_product_low_stock_notification
+#: model:mail.template,name:bi_product_low_stock_notification.low_stock_email_template
+msgid "Low Stock e-mail template"
+msgstr "Plantilla de correo electrónico de stock bajo"
+
+#. module: bi_product_low_stock_notification
+#: model:mail.template,subject:bi_product_low_stock_notification.low_stock_email_template
+msgid "Low stock of your products "
+msgstr "Bajo stock de tus productos"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_company__notification_products
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_config_settings__notification_products
+msgid "Min Quantity Based On"
+msgstr "Cantidad mínima basada en"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_product_product__min_quantity
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_product_product__qty_min
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_product_product__temp_min_quantity
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_product_product__temp_qty_min
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_product_template__temp_min_quantity
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_product_template__temp_qty_min
+#: model_terms:ir.ui.view,arch_db:bi_product_low_stock_notification.low_stock_template
+msgid "Minimum Quantity"
+msgstr "Cantidad mínima"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_company__notification_base
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_config_settings__notification_base
+msgid "Notification Based On"
+msgstr "Notificación basada en"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_users__notify_user
+msgid "Notify User"
+msgstr "Notificar a la usuaria"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields.selection,name:bi_product_low_stock_notification.selection__res_company__notification_base__on_hand
+msgid "On hand quantity"
+msgstr "Cantidad disponible"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model,name:bi_product_low_stock_notification.model_product_product
+#: model:ir.model.fields.selection,name:bi_product_low_stock_notification.selection__res_company__notification_product_type__template
+msgid "Product"
+msgstr "Producto"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.actions.report,name:bi_product_low_stock_notification.action_low_stock_report
+msgid "Product Low Stock Report"
+msgstr "Informe de stock bajo del producto"
+
+#. module: bi_product_low_stock_notification
+#: model_terms:ir.ui.view,arch_db:bi_product_low_stock_notification.low_stock_template
+msgid "Product Name"
+msgstr "nombre del producto"
+
+#. module: bi_product_low_stock_notification
+#: model_terms:ir.ui.view,arch_db:bi_product_low_stock_notification.low_stock_template
+msgid "Product Quantity"
+msgstr "Cantidad de producto"
+
+#. module: bi_product_low_stock_notification
+#: model_terms:ir.ui.view,arch_db:bi_product_low_stock_notification.view_stock_config_settings_inherit_notification
+msgid "Product Stock Notification"
+msgstr "Notificación de existencias de productos"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model,name:bi_product_low_stock_notification.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields.selection,name:bi_product_low_stock_notification.selection__res_company__notification_product_type__variant
+msgid "Product Variant"
+msgstr "Variante del producto"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_low_stock_transient__name
+msgid "Product name"
+msgstr "Product name"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_low_stock_transient__stock_quantity
+msgid "Quantity"
+msgstr "Cantidad"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_company__min_quantity
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_config_settings__min_quantity
+msgid "Quantity Limit"
+msgstr "Límite de cantidad"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_low_stock_transient__limit_quantity
+msgid "Quantity limit"
+msgstr "Límite de cantidad"
+
+#. module: bi_product_low_stock_notification
+#: model_terms:ir.ui.view,arch_db:bi_product_low_stock_notification.low_stock_template
+msgid "Required Quantity"
+msgstr "Cantidad requerida"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.actions.server,name:bi_product_low_stock_notification.ir_cron_low_stock_notification_ir_actions_server
+#: model:ir.cron,cron_name:bi_product_low_stock_notification.ir_cron_low_stock_notification
+#: model:ir.cron,name:bi_product_low_stock_notification.ir_cron_low_stock_notification
+msgid "Send low stock mail"
+msgstr "Enviar correo de existencias bajas"
+
+#. module: bi_product_low_stock_notification
+#: model_terms:ir.ui.view,arch_db:bi_product_low_stock_notification.view_stock_config_settings_inherit_notification
+msgid "Set minimum quantity"
+msgstr "Establecer cantidad mínima"
+
+#. module: bi_product_low_stock_notification
+#: model_terms:ir.ui.view,arch_db:bi_product_low_stock_notification.view_stock_config_settings_inherit_notification
+msgid "Set notification mode"
+msgstr "Establecer el modo de notificación"
+
+#. module: bi_product_low_stock_notification
+#: model_terms:ir.ui.view,arch_db:bi_product_low_stock_notification.view_stock_config_settings_inherit_notification
+msgid "Set quantity type"
+msgstr "Establecer tipo de cantidad"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_low_stock_transient__stock_product_id
+msgid "Stock Product"
+msgstr "Producto en existencia"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model,name:bi_product_low_stock_notification.model_res_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_config_settings__value
+msgid "Value"
+msgstr "Valor"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model.fields,field_description:bi_product_low_stock_notification.field_res_config_settings__current_user
+msgid "current"
+msgstr "Actual"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model,name:bi_product_low_stock_notification.model_low_stock_transient
+msgid "low.stock.transient"
+msgstr "stock bajo transitorio"
+
+#. module: bi_product_low_stock_notification
+#: model:ir.model,name:bi_product_low_stock_notification.model_report_bi_product_low_stock_notification_low_stock_template
+msgid "report.bi_product_low_stock_notification.low_stock_template"
+msgstr "report.bi_product_low_stock_notification.low_stock_template"

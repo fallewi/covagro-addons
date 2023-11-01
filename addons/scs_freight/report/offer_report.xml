@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="freight_offer_report">
+
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <br/>
+                        <table style="width:100%">
+                            <tr>
+                                <td style="width:50%">
+                                </td>
+                                <td style="width:50%">
+                                    <div class="border border-dark" style="background-color:#E0E0E0;width:100%">
+                                        <h5 class="text-center">Offre/cotation</h5>
+                                    </div>
+                                    <div>
+                                        Offre N° :
+                                        <span t-field="o.name"/>
+                                        <br/>
+                                        Date :
+                                        <span t-field="o.create_date"/>
+                                        <br/>
+                                    </div>
+                                    <table style="width:100%">
+                                        <tr style="background-color:#E0E0E0" class="border border-dark">
+                                            <td>
+                                                <h5 class="text-center">Client</h5>
+                                            </td>
+                                        </tr>
+                                        <tr class="border border-dark">
+                                            <td class="text-center pb-3">
+                                                <span t-field="o.customer_id"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table style="width:100%; border: 1px solid black;border-collapse: collapse;">
+                            <tr class="text-center">
+                                <th style="border: 1px solid black;border-collapse: collapse;">Référence</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">Origine</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">Service d'origine</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">Service d'origine</th>
+                            </tr>
+                            <tr class="text-center">
+                                <td style="border: 1px solid black;border-collapse: collapse;">
+                                    <span t-field="o.reference"/>
+                                </td>
+                                <td style="border: 1px solid black;border-collapse: collapse;">
+                                    <span t-field="o.loading_country_id"/>,
+                                    <span t-field="o.loading_port_id"/>
+                                </td>
+                                <td style="border: 1px solid black;border-collapse: collapse;">
+                                    <span t-field="o.incoterm_from"/>
+                                </td>
+                            </tr>
+                            <tr class="text-center">
+                                <th style="border: 1px solid black;border-collapse: collapse;">Type d'offre</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">Destination</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">Service de destination</th>
+                            </tr>
+                            <tr class="text-center">
+                                <td style="border: 1px solid black;border-collapse: collapse;">
+                                    <span t-field="o.transport"/>,
+                                    <span t-field="o.direction"/>
+                                </td>
+                                <td style="border: 1px solid black;border-collapse: collapse;">
+                                    <span t-field="o.discharg_country_id"/>,
+                                    <span t-field="o.discharg_port_id"/>
+                                </td>
+                                <td style="border: 1px solid black;border-collapse: collapse;">
+                                    <span t-field="o.incoterm_to"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <!-- Colis summary table -->
+                        <div>
+                            <table style="width:100%">
+                                <tr>
+                                    <td style="width:16%">
+                                        <strong>Nombre de colis :</strong>
+                                    </td>
+                                    <td style="width:16%">
+                                        <span t-field="o.colis_number"/>
+                                    </td>
+                                    <td style="width:16%">
+                                        <strong>Volume :</strong>
+                                    </td>
+                                    <td style="width:16%">
+                                        <span t-field="o.total_weight"/>
+                                        <span>&#13221;</span>
+                                    </td>
+                                    <td style="width:16%">
+                                        <strong>Poids :</strong>
+                                    </td>
+                                    <td style="width:16%">
+                                        <span t-field="o.total_volume"/>
+                                        Kg
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                        </div>
+                        <br/>
+                        <!-- Cargaison table -->
+                        <div class="text-center h5 mt-3">Cargaison</div>
+                        <table style="width:100%; border: 1px solid black;border-collapse: collapse;">
+                            <tr class="text-center" style="background-color:#E0E0E0;">
+                                <th style="border: 1px solid black;border-collapse: collapse;">Conteneur</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">Quantité</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">Poids</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">Volume</th>
+                            </tr>
+                            <t t-foreach="o.container_ids" t-as="line">
+                                <tr>
+                                    <td style="border: 1px solid black;border-collapse: collapse;">
+                                        <span t-field="line.container_id"/>
+                                    </td>
+                                    <td style="border: 1px solid black;border-collapse: collapse;">
+                                        <span t-field="line.qty"/>
+                                    </td>
+                                    <td style="border: 1px solid black;border-collapse: collapse;">
+                                        <span t-field="line.weight"/>
+                                    </td>
+                                    <td style="border: 1px solid black;border-collapse: collapse;">
+                                        <span t-field="line.volume"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+
+                         <!-- tarif table -->
+                        <div class="text-center h5 mt-5">Tarif</div>
+                        <table style="width:100%; border: 1px solid black;border-collapse: collapse;">
+                            <tr class="text-center" style="background-color:#E0E0E0;">
+                                <th style="border: 1px solid black;border-collapse: collapse;">Désignation</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">Quantité</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">prix Unitaire</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">Taxes Totale</th>
+                                <th style="border: 1px solid black;border-collapse: collapse;">Prix de Vente</th>
+                            </tr>
+                            <t t-foreach="o.operation_service_ids" t-as="line">
+                                <tr>
+                                    <td style="border: 1px solid black;border-collapse: collapse;">
+                                        <span t-field="line.product_id"/>
+                                    </td>
+                                    <td style="border: 1px solid black;border-collapse: collapse;">
+                                        <span t-field="line.qty"/>
+                                    </td>
+                                    <td style="border: 1px solid black;border-collapse: collapse;">
+                                        <span t-field="line.list_price"/>
+                                    </td>
+                                    <td style="border: 1px solid black;border-collapse: collapse;">
+                                        <span t-field="line.total_tax"/>
+                                    </td>
+                                    <td style="border: 1px solid black;border-collapse: collapse;">
+                                        <span t-field="line.sale_total"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </table>
+                        <br/>
+
+                        <!-- Totals table -->
+                        <table style="width:100%">
+                            <tr>
+                                <td style="width:50%">
+                                </td>
+                                <td style="width:50%">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Total hors taxes</th>
+                                                <td>
+                                                    <span t-field="o.exp_inv_payment"
+                                                          t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <th scope="row">TVA</th>
+                                                <td>
+                                                    <span t-field="o.exp_payment_taxes"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Total TTC</th>
+                                                <td>
+                                                    <span t-field="o.exp_payment_ttc"
+                                                          t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+
+    </template>
+</odoo>

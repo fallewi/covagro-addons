@@ -10,6 +10,7 @@ services:
     restart: always             # run as a service
     volumes:
         - ./postgresql:/var/lib/postgresql/data
+    privileged: true
 
   odoo15:
     image: odoo:15
@@ -32,4 +33,5 @@ services:
       - ./addons:/mnt/extra-addons
       - ./etc:/etc/odoo
     restart: always             # run as a service
+    privileged: true
     

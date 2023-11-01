@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ks_dn_advance.board_form_inherited" model="ir.ui.view">
+            <field name="name">ks_dashboard_ninja.View</field>
+            <field name="model">ks_dashboard_ninja.board</field>
+            <field name="inherit_id" ref="ks_dashboard_ninja.board_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ks_dashboard_end_date']" position="after">
+                    <field name="ks_croessel_speed" required="1"/>
+                </xpath>
+                <xpath expr="//page[@name='advance_setting']" position="after">
+                    <page string="Mail Configuration">
+                        <group>
+                            <group>
+                                <field name="ks_mail_to_partner"/>
+                                <field name="ks_mail_to_cc_partner" widget="many2many_tags"/>
+                                <field name="ks_mail_email_cc_value" invisible="1"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

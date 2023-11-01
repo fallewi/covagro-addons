@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Users Inherit Form View to Modify it -->
+        <record id="view_users_form_inherit_low_stock" model="ir.ui.view">
+            <field name="name">view.users.form.inherit.low.stock</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/notebook/page[2]/group[1]" position="before">
+                    <!-- Add your fields or attributes here -->
+                    <group>
+                        <field name="notify_user"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_company_form_inherit_low_stock" model="ir.ui.view">
+            <field name="name">view.company.form.inherit.low.stock</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/notebook/page[1]" position="after">
+                    <page string="Low Stock Notification">
+                        <group>
+                            <field name="notify_low_stock"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

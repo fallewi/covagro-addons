@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+ak_tender_batch_invitation.access_requisition_vendor,access_requisition_vendor,ak_tender_batch_invitation.model_requisition_vendor,purchase.group_purchase_user,1,1,1,1
+ak_tender_batch_invitation.access_invite_vendors_wizard,access_invite_vendors_wizard,ak_tender_batch_invitation.model_invite_vendors_wizard,base.group_user,1,1,1,1

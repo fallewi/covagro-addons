@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Form View for Pending Repair Confirm. -->
+    <record id="pending_repair_confirm_form_view" model="ir.ui.view">
+        <field name="name">pending.repair.confirm.form</field>
+        <field name="model">pending.repair.confirm</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Veuillez définir l'Odomètre actuel du véhicule en état de marche !" width="150" height="150">
+                <separator string="Voulez-vous fermer le WO avec force car certains types de réparation sont sélectionnés pour être réparés mais ne sont pas terminés" colspan="4" />
+                <footer>
+                    <button name="confirm_wo_forcefully" string="Confirmer" type="object" default_focus="1" class="oe_highlight"/>
+                     or
+                    <button string="Annuler" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

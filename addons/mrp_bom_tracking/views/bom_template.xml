@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2019 ForgeFlow S.L. (https://www.forgeflow.com)
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl). -->
+<odoo>
+    <template id="track_bom_line_template">
+        <div>
+            <strong>Les quantités ou UoM des composants ont été mises à jour.</strong>
+            <ul>
+                <t t-foreach="lines" t-as="line">
+                    <li><t t-esc="line.product_id.display_name" />:</li>
+                    La quantité de produit: <t t-esc="line.product_qty" /><t
+                        t-if='line.product_qty != product_qty'
+                    > -&gt; <t t-esc="float(product_qty)" /></t><br />
+                    Unité de mesure du produit: <t
+                        t-esc="line.product_uom_id.display_name"
+                    /><t t-if='line.product_uom_id != product_uom_id'> -&gt; <t
+                            t-esc="product_uom_id.display_name"
+                        /></t><br />
+                </t>
+            </ul>
+        </div>
+    </template>
+    <template id="track_bom_template">
+        <div>
+            <strong>Les composants ont changé.</strong>
+            <ul>
+                <t t-foreach="lines" t-as="line">
+                    <li><t t-esc="line.product_id.display_name" />: <t
+                            t-esc="mode"
+                        /> composant<br /></li>
+                    La quantité de produit: <t t-esc="line.product_qty" /><br />
+                    Unité de mesure du produit: <t
+                        t-esc="line.product_uom_id.display_name"
+                    /><br />
+                </t>
+            </ul>
+        </div>
+    </template>
+    <template id="track_bom_template_2">
+        <div>
+            <strong>Les composants ont changé.</strong>
+            <ul>
+                <t t-foreach="lines" t-as="line">
+                    <li><t t-esc="line.product_id.display_name" />:
+                Composant supprimé<br /></li>
+                    <li><t t-esc="product_id.display_name" />:
+                Nouveau composant<br /></li>
+                </t>
+            </ul>
+        </div>
+    </template>
+</odoo>

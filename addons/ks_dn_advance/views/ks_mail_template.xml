@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--Email template -->
+        <record id="ks_mail_templates" model="mail.template">
+            <field name="name">Email template</field>
+            <field name="model_id" ref="ks_dashboard_ninja.model_ks_dashboard_ninja_board"/>
+            <field name="email_from">{{object.env.user.email}}</field>
+            <field name="email_to">{{ object.ks_mail_to_partner.email }}</field>
+            <field name="email_cc">{{ object.ks_mail_email_cc_value }}</field>
+            <field name="auto_delete" eval="False"/>
+            <field name="subject">Dashboard Report | {{ctx['ks_report_name']}}</field>
+            <field name="body_html" type="html">
+                <div class="container-fluid">
+                    Hello <t t-out="object.ks_mail_to_partner.name or ''"/>,
+                    <br/>
+                    <p>I hope this email finds you well. I am pleased to share the <b><t t-out="ctx['ks_report_name']"/></b> Report with you, kindly find the attachment enclosed. </p>
+                    <p>
+                    If you have any questions or require further information, please feel free to reach out. I am happy to assist you.
+                    </p>
+
+                       Best regards,
+                        <br/>
+                        <t t-out="object.env.user.name or ''"/>
+
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

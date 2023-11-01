@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="freight_shipping_order">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <br />
+                        <center>
+                            <h4>Envoi de la commande</h4>
+                        </center>
+                        <table style="width:100%">
+                            <tr>
+                                <td style="width:60%">
+                                    <h5>
+                                        <b>
+                                            <span t-field="o.name" />
+                                        </b>
+                                    </h5>
+                                </td>
+                                <td align="right" style="width:40%;">
+                                    <t t-if="o.name != 'New'">
+                                        <img
+                                            alt="Barcode"
+                                            t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 150)"
+                                            style="height:4rem;"
+                                        />
+                                    </t>
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                        <div>
+                            <table style="width:100%">
+                                <tr>
+                                    <th style="width:60%">Client:</th>
+                                    <th
+                                        style="width:40%;"
+                                        t-if="o.customer_id != o.consignee_id"
+                                    >Destinataire:</th>
+                                </tr>
+                                <tr>
+                                    <td style="width:60%">
+                                        <address
+                                            t-field="o.customer_id"
+                                            t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'
+                                        />
+                                        <span t-if="o.customer_id.vat">TIN: <span
+                                                t-field="o.customer_id.vat"
+                                            /></span>
+                                    </td>
+                                    <td
+                                        style="width:40%;"
+                                        t-if="o.customer_id != o.consignee_id"
+                                    >
+                                        <address
+                                            t-field="o.consignee_id"
+                                            t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'
+                                        />
+                                        <span t-if="o.consignee_id.vat">TIN: <span
+                                                t-field="o.consignee_id.vat"
+                                            /></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <table style="background-color:#E0E0E0;width:100%">
+                                <tr>
+                                    <th
+                                        style="padding:5px;border-left:1pt solid black;border-top:1pt solid black;"
+                                    >Direction:</th>
+                                    <td style="padding:5px;border-top:1pt solid black;">
+                                        <span t-field="o.direction" />
+                                    </td>
+                                    <th
+                                        style="padding:5px;border-top:1pt solid black;"
+                                    >Port de chargement:</th>
+                                    <td
+                                        style="padding:5px;border-right:1pt solid black;border-top:1pt solid black;"
+                                    >
+                                        <span t-field="o.loading_port_id.name" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th
+                                        style="padding:5px;border-left:1pt solid black;"
+                                    >Transport:</th>
+                                    <td style="padding:5px;">
+                                        <span t-field="o.transport" />
+                                    </td>
+                                    <th style="padding:5px;">Port de décharge:</th>
+                                    <td
+                                        style="padding:5px;border-right:1pt solid black;"
+                                    >
+                                        <span t-field="o.discharg_port_id.name" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th
+                                        style="padding:5px;border-left:1pt solid black;"
+                                    >Date de commande:</th>
+                                    <td style="padding:5px;">
+                                        <span t-field="o.order_date" />
+                                    </td>
+                                    <th style="padding:5px;">Opérateur:</th>
+                                    <td
+                                        style="padding:5px;border-right:1pt solid black;"
+                                    >
+                                        <span t-field="o.operator_id.name" />
+                                    </td>
+                                </tr>
+                                <tr t-if="o.direction == 'import'">
+                                    <th
+                                        style="padding:5px;border-left:1pt solid black;border-bottom:1pt solid black;"
+                                    >Date de réception prévue:</th>
+                                    <td
+                                        style="padding:5px;border-bottom:1pt solid black;"
+                                    >
+                                        <span t-field="o.exp_rec_date" />
+                                    </td>
+                                    <th
+                                        style="padding:5px;border-bottom:1pt solid black;"
+                                    >Date de réception réelle:</th>
+                                    <td
+                                        style="padding:5px;border-right:1pt solid black;border-bottom:1pt solid black;"
+                                    >
+                                        <span t-field="o.act_rec_date" />
+                                    </td>
+                                </tr>
+                                <tr t-if="o.direction == 'export'">
+                                    <th
+                                        style="padding:5px;border-left:1pt solid black;border-bottom:1pt solid black;"
+                                    >Date d'envoi prévue:</th>
+                                    <td
+                                        style="padding:5px;border-bottom:1pt solid black;"
+                                    >
+                                        <span t-field="o.exp_send_date" />
+                                    </td>
+                                    <th
+                                        style="padding:5px;border-bottom:1pt solid black;"
+                                    >Date d'envoi réelle:</th>
+                                    <td
+                                        style="padding:5px;border-right:1pt solid black;border-bottom:1pt solid black;"
+                                    >
+                                        <span t-field="o.act_send_date" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <br />
+                            <table class="table table-condensed"
+                                t-if="o.operation_line_ids"
+                            >
+                                <h6>
+                                    <b>Commandes:</b>
+                                </h6>
+                                <tr style="background-color:darkgray">
+                                    <th>Conteneur</th>
+                                    <th>Description</th>
+                                    <th>Tarification</th>
+                                    <th>Poids</th>
+                                    <th>Volume</th>
+                                    <th>Prix</th>
+                                </tr>
+                                <t t-foreach="o.operation_line_ids" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <span t-field="line.container_id.name" />
+                                        </td>
+                                        <td>
+                                            <span t-field="line.product_id.name" />
+                                        </td>
+                                        <td>
+                                            <span t-field="line.price_list_id.name" />
+                                        </td>
+                                        <td>
+                                            <span t-field="line.exp_gross_weight" />
+                                        </td>
+                                        <td>
+                                            <span t-field="line.exp_vol" />
+                                        </td>
+                                        <td>
+                                            <span t-field="line.sale_price" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <table class="table table-condensed" t-if="o.routes_ids">
+                                <h6>
+                                    <b>Routes:</b>
+                                </h6>
+                                <tr style="background-color:darkgray">
+                                    <th>Opération d'itinéraire</th>
+                                    <th>Emplacement de la source</th>
+                                    <th>Lieu de destination</th>
+                                    <th>Transport</th>
+                                    <th>Prix</th>
+                                </tr>
+                                <t t-foreach="o.routes_ids" t-as="route">
+                                    <tr>
+                                        <td>
+                                            <span t-field="route.route_operation" />
+                                        </td>
+                                        <td>
+                                            <span
+                                                t-field="route.source_location.name"
+                                            />
+                                        </td>
+                                        <td>
+                                            <span t-field="route.dest_location.name" />
+                                        </td>
+                                        <td>
+                                            <span t-field="route.transport" />
+                                        </td>
+                                        <td>
+                                            <span t-field="route.sale_total" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <table class="table table-condensed" t-if="o.service_ids">
+                                <h6>
+                                    <b>Services:</b>
+                                </h6>
+                                <tr style="background-color:darkgray">
+                                    <th>Fournisseur</th>
+                                    <th>Service</th>
+                                    <th>Quantité</th>
+                                    <th>Prix</th>
+                                    <th>Prix ​​total</th>
+                                </tr>
+                                <t t-foreach="o.service_ids" t-as="s">
+                                    <tr>
+                                        <td>
+                                            <span t-field="s.vendor_id.name" />
+                                        </td>
+                                        <td>
+                                            <span t-field="s.product_id.name" />
+                                        </td>
+                                        <td>
+                                            <span t-field="s.qty" />
+                                        </td>
+                                        <td>
+                                            <span t-field="s.list_price" />
+                                        </td>
+                                        <td>
+                                            <span t-field="s.sale_total" />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

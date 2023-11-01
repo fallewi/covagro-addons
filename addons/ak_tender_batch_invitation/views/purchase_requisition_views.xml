@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_requisition_form_batch_vendor_invitation" model="ir.ui.view">
+        <field name="name">purchase.requisition.form.batch.vendor.invitation</field>
+        <field name="model">purchase.requisition</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_cancel']" position="before">
+                <button name="%(ak_tender_batch_invitation.action_invite_vendors)d" class="btn-primary" type="action" string="Inviter des Fournisseurs"  attrs="{'invisible': ['|',('state', 'in', ['draft', 'done', 'cancel']), ('is_quantity_copy','=','none')]}"/>/>
+            </xpath>
+            <xpath expr="//page[@name='products']" position="after" >
+                <page string="Fournisseurs" name="Fournisseurs"  attrs="{'invisible': [('is_quantity_copy', '=', 'none')]}">
+                        <field name="partner_ids" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="partner_id"/>
+                                <field name="invitation_state" readonly="1"/>
+                                <field name="purchase_order_id" readonly="1"/>
+                            </tree>
+                        </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

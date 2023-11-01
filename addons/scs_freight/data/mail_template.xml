@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+        <!-- Mail Template for Clearance Agent -->
+        <record id="custom_clearence_agent" model="mail.template">
+            <field name="name">Modèle de courrier de dédouanement personnalisé</field>
+            <field
+                    name="email_from"
+            >${user.company_id and user.company_id.email or user.partner_id and user.partner_id.email or ''}
+            </field>
+            <field
+                    name="email_to"
+            >${object.agent_id and object.agent_id.email or ''}
+            </field>
+            <field name="subject">Custom Clearance For Freight Operation</field>
+            <field name="model_id" ref="model_operation_custom"/>
+            <field name="auto_delete" eval="True"/>
+            <field
+                    name="body_html"
+            ><![CDATA[
+                <p>
+                   Hello <b>${object.agent_id and object.agent_id.name or ''} </b>,
+                </p>
+                <p>
+                  Nous avons besoin d'un dédouanement pour nous une opération de fret.
+                    Les informations et documents liés à l'opération sont ci-dessous, veuillez les trouver.
+                </p>
+                <p><b> Clearance Detail : </b></p>
+                <table width="50%" border="1">
+                    <tr>
+                        <th>From </th>
+                        <th>To,</th>
+                        <th>Type de Transport </th>
+                    </tr>
+                    <tr>
+                        <td>${object.operation_id.loading_port_id.name or ''}</td>
+                        <td>${object.operation_id.discharg_port_id.name or ''}</td>
+                        <td>${object.operation_id.transport}</td>
+                    </tr>
+                </table>
+                    Merçi.
+                ]]></field>
+        </record>
+
+        <!-- Mail Template for freight offer -->
+        <record id="email_template_offer" model="mail.template">
+            <field name="name">Offre: Envoyée par email</field>
+            <field name="model_id" ref="model_freight_offer"/>
+            <field name="email_from">${(user.email_formatted) |safe}</field>
+            <field name="partner_to">${object.customer_id.id}</field>
+            <field name="subject">Offer ${object.name} for ${object.customer_id.name}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Chers ${object.customer_id.name},
+                        <br/>
+                        <br/>
+                        Voici votre offre personnalisée
+                        <strong>${object.name}</strong>
+                        <br/>
+                        <br/>
+
+                        N'hésitez pas à nous contacter si vous avez des questions.
+                    </p>
+                </div>
+            </field>
+            <field name="report_template" ref="scs_freight.offer_report"/>
+            <field name="report_name">Offer_${object.name}</field>
+
+        </record>
+
+
+    </data>
+</odoo>

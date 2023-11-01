@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Form View of Revision Reason -->
+    <record id="wiz_custom_clearance_reason_view" model="ir.ui.view">
+        <field name="name">wiz.custom.clearance.reason.view</field>
+        <field name="model">wiz.custom.clearance.reason</field>
+        <field name="arch" type="xml">
+            <form>
+                <field
+                    name="reason"
+                    placeholder="Ajouter un motif de révision"
+                    required="1"
+                />
+                <footer>
+                    <button
+                        name="action_custom_revision"
+                        string="Révision"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button string="Annuler" special="cancel" class="btn-secondary" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <!-- Action View of Revision Reason -->
+    <record id="action_wiz_custo_clearance_reason" model="ir.actions.act_window">
+        <field name="name">Raison de la révision</field>
+        <field name="res_model">wiz.custom.clearance.reason</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="wiz_custom_clearance_reason_view" />
+    </record>
+</odoo>

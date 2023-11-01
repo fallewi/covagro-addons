@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Custom Clearance tree View -->
+    <record id="view_operation_custom_tree" model="ir.ui.view">
+        <field name="name">view.operation.custom.tree</field>
+        <field name="model">operation.custom</field>
+        <field name="arch" type="xml">
+            <tree string="Dédouanement">
+                <field name="name" force_save="1"/>
+                <field name="operation_id"/>
+                <field name="date"/>
+                <field
+                        name="agent_id"
+                        domain="[('agent', '=', True)]"
+                        context="{'default_agent': True}"
+                />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Custom Clearance form View -->
+    <record id="view_operation_custom_form" model="ir.ui.view">
+        <field name="name">view.operation.custom.form</field>
+        <field name="model">operation.custom</field>
+        <field name="arch" type="xml">
+            <form string="Dédouanement">
+                <header>
+                    <button
+                            name="action_confirm_custom"
+                            type="object"
+                            string="Confirm"
+                            attrs="{'invisible': [('state', 'not in', ['draft'])]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="action_clear_custom"
+                            type="object"
+                            string="Done"
+                            attrs="{'invisible': [('state', 'not in', ['confirm'])]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="%(action_wiz_custo_clearance_reason)d"
+                            type="action"
+                            string="Revision"
+                            attrs="{'invisible': [('state', 'not in', ['confirm'])]}"
+                            class="oe_highlight"
+                    />
+                    <button
+                            name="action_cancel_custom"
+                            type="object"
+                            string="Cancel"
+                            attrs="{'invisible': [('state', 'not in', ['draft', 'confirm'])]}"
+                            class="oe_highlight"
+                    />
+                    <field
+                            name="state"
+                            widget="statusbar"
+                            nolabel="1"
+                            statusbar_visible="draft,confirm,done"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button
+                                name="operation_custom_revision"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-repeat"
+                                attrs="{'invisible':[('revision_count','=',0)]}"
+                        >
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="revision_count"/>
+                                </span>
+                                <span class="o_stat_text">Révision</span>
+                            </div>
+                        </button>
+                    </div>
+                    <label for="name" string="Nom"/>
+                    <h2>
+                        <field name="name" readonly="1" force_save="1"/>
+                    </h2>
+                    <group>
+                        <group>
+                            <field
+                                    name="operation_id"
+                                    required="1"
+                                    attrs="{'readonly': [('state', 'in', ['confirm', 'done', 'cancel'])]}"
+                                    domain="[('state','not in',['draft','recived','delivered','cancel'])]"
+                            />
+                            <field
+                                    name="type"
+                                    attrs="{'readonly': [('state', 'in', ['confirm', 'done', 'cancel'])]}"
+                            />
+                            <field
+                                    name="agent_id"
+                                    required="1"
+                                    attrs="{'readonly': [('state', 'in', ['confirm', 'done', 'cancel'])]}"
+                                    domain="[('agent', '=', True)]"
+                                    context="{'default_agent': True}"
+                            />
+                        </group>
+                        <group>
+
+                            <field
+                                    name="need_document"
+                                    attrs="{'readonly': [('state', 'in', ['confirm', 'done', 'cancel'])]}"
+                            />
+                            <field
+                                    name="exonerated"
+                                    attrs="{'readonly': [('state', 'in', ['confirm', 'done', 'cancel'])]}"
+                            />
+                            <field
+                                    name="exoneration_number"
+                                    attrs="{'readonly': [('state', 'in', ['confirm', 'done', 'cancel'])], 'invisible': [('exonerated', '=', False)]}"
+                            />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="re_export" invisible="1"/>
+                        <field name="temporary_admission" invisible="1"/>
+                        <field name="direction" invisible="1"/>
+                        <field
+                                name="direct_removal"
+                                attrs="{'readonly': [('state', 'in', ['confirm', 'done', 'cancel'])]}"
+                        />
+                        <field
+                                name="admission_type"
+                                attrs="{'readonly': [('state', 'in', ['confirm', 'done', 'cancel'])], 'invisible': ['|', ('temporary_admission', '=', False), ('direction', '=', 'export')]}"
+                        />
+                        <field
+                                name="declaration_entry"
+                                attrs="{'readonly': [('state', 'in', ['confirm', 'done', 'cancel'])], 'invisible': [('re_export', '=', False)]}"
+                        />
+                        <field
+                                name="declaration_number"
+                                attrs="{'readonly': [('state', 'in', ['confirm', 'done', 'cancel'])], 'invisible': [('temporary_admission', '=', False)]}"
+                        />
+                        <field
+                                name="expiration_date"
+                                attrs="{'readonly': [('state', 'in', ['confirm', 'done', 'cancel'])], 'invisible': [('temporary_admission', '=', False)]}"
+                        />
+                    </group>
+
+                    <notebook attrs="{'invisible': [('need_document','=',False)]}">
+                        <page string="Document">
+                            <field
+                                    name="attachment_ids"
+                                    attrs="{'readonly': [('state', 'in', ['confirm', 'done', 'cancel'])], 'invisible': [('need_document','=',False)]}"
+                            >
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="type"/>
+                                    <field
+                                            name="datas"
+                                            attrs="{'invisible': [('type','=','url')]}"
+                                    />
+                                    <field
+                                            name="url"
+                                            attrs="{'invisible': [('type','=','binary')]}"
+                                    />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action for operation.custom clearance -->
+    <record id="action_operation_custom" model="ir.actions.act_window">
+        <field name="name">Dédouanement</field>
+        <field name="res_model">operation.custom</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- operation custom revision search View -->
+    <record id="view_operation_custom_revision_search" model="ir.ui.view">
+        <field name="name">view.operation.custom.revision.search</field>
+        <field name="model">operation.custom.revision</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="operation_id"/>
+                <field name="agent_id"/>
+                <filter
+                        name="fil_order"
+                        string="Operation"
+                        context="{'group_by': 'operation_id'}"
+                />
+            </search>
+        </field>
+    </record>
+    <!-- operation custom revision tree View -->
+    <record id="view_operation_custom_revision_tree" model="ir.ui.view">
+        <field name="name">view.operation.custom.revision.tree</field>
+        <field name="model">operation.custom.revision</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0" string="Custom Clearance Revision">
+                <field name="name"/>
+                <field name="operation_id"/>
+                <field name="date"/>
+                <field name="agent_id"/>
+            </tree>
+        </field>
+    </record>
+    <!-- operation custom clearance revision form View -->
+    <record id="view_operation_custom_revision_form" model="ir.ui.view">
+        <field name="name">view.operation.custom.revision.form</field>
+        <field name="model">operation.custom.revision</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0" string="Révision du dédouanement">
+                <sheet>
+                    <label for="name" string="Nom"/>
+                    <h2>
+                        <field name="name" readonly="1"/>
+                    </h2>
+                    <group>
+                        <group>
+                            <field name="operation_id" required="1" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="agent_id" required="1" readonly="1"/>
+                            <field name="operator_id" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Document">
+                            <field name="revision_doc_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Raison">
+                            <field name="reason" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Action for operation.custom revision -->
+    <record id="action_operation_custom_revision" model="ir.actions.act_window">
+        <field name="name">Révision du dédouanement</field>
+        <field name="res_model">operation.custom.revision</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'search_default_fil_order': 1}</field>
+    </record>
+    <menuitem
+            id="main_menu_custom_activity"
+            name="Activité personnalisée"
+            parent="root_menu_freight"
+            sequence="3"
+            action="action_operation_custom"
+            groups="freight_operation_admin"
+    />
+    <menuitem
+            id="menu_custom_clearance"
+            name="Dédouanement"
+            parent="main_menu_custom_activity"
+            sequence="1"
+            action="action_operation_custom"
+            groups="freight_operation_admin"
+    />
+    <menuitem
+            id="menu_custom_revision"
+            name="Révision personnalisée"
+            parent="main_menu_custom_activity"
+            sequence="2"
+            action="action_operation_custom_revision"
+            groups="freight_operation_admin"
+    />
+</odoo>

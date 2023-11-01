@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data> 
+    
+        <record id="mrp_bom_material_cost_form_view" model="ir.ui.view">
+            <field name="name">mrp.bom.material.cost.form.view</field>
+            <field name="model">mrp.bom</field>
+            <field name="inherit_id" ref="mrp.mrp_bom_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                	<page string="Coût matériel direct">
+                        <field name="bom_material_cost_ids" widget="one2many_list">
+                            <tree string="Coût matériel direct" editable="bottom">
+                                <field name="operation_id" />
+                                <field name="product_id"/>
+                                <field name="planned_qty"/>
+                                <field name="uom_id"/>
+                                <field name="cost"  widget="monetary"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="total_cost"  widget="monetary"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="bom_total_material_cost">
+                            <div class="oe_inline o_td_label">
+                                <label for="bom_total_material_cost" />
+                            </div>
+                            <field name="bom_total_material_cost" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' />
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </page>
+                    
+                    <page string="Coût de la main-d'œuvre directe">
+                        <field name="bom_labour_cost_ids" widget="one2many_list">
+                            <tree string="Direct Labour Cost" editable="bottom">
+                                <field name="operation_id" />
+                                <field name="planned_qty"/>
+                                <field name="cost"  widget="monetary"/>
+                                <field name="total_cost"  widget="monetary"/>
+                                <field name="currency_id" invisible="1"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="bom_total_labour_cost">
+                            <div class="oe_inline o_td_label">
+                                <label for="bom_total_labour_cost" />
+                            </div>
+                            <field name="bom_total_labour_cost" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' />
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </page>
+                    
+                    <page string="Frais généraux directs">
+                        <field name="bom_overhead_cost_ids" widget="one2many_list">
+                            <tree string="Frais généraux directs" editable="bottom">
+                                <field name="operation_id" />
+                                
+                                <field name="planned_qty"/>
+                                
+                                <field name="cost"  widget="monetary"/>
+                                <field name="total_cost"  widget="monetary"/>
+                                <field name="currency_id" invisible="1"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="bom_total_overhead_cost">
+                            <div class="oe_inline o_td_label">
+                                <label for="bom_total_overhead_cost" />
+                            </div>
+                            <field name="bom_total_overhead_cost" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' />
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </page>
+                    
+                    <page string="Coût">
+                        <group>
+                            <group>
+                                <field name="bom_total_material_cost"/> 
+                                <field name="bom_total_labour_cost"/> 
+                                <field name="bom_total_overhead_cost"/> 
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+    	</record>
+    
+        <record id="mrp_production_material_cost_form_view" model="ir.ui.view">
+            <field name="name">mrp.production.material.cost.form.view</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                	<page string="Coût matériel direct">
+                        <field name="pro_material_cost_ids" widget="one2many_list" attrs="{'readonly': [('state', 'not in', ('draft','confirmed'))]}">
+                            <tree string="Coût matériel direct" editable="bottom">
+                                <field name="operation_id" />
+                                <field name="product_id"/>
+                                <field name="planned_qty"/>
+                                <field name="actual_qty"/>
+                                <field name="uom_id"/>
+                                <field name="cost"  widget="monetary" sum="cost"/>
+                                <field name="total_cost"  widget="monetary" sum="total_cost"/>
+                                <field name="total_actual_cost"  widget="monetary" sum="total_actual_cost"/>
+                                <field name="currency_id" invisible="1"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="total_material_cost">
+                            <div class="oe_inline o_td_label">
+                                <label for="total_material_cost" />
+                            </div>
+                            <field name="total_material_cost" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' />
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </page>
+                    
+                    <page string="Coût de la main-d'œuvre directe">
+                        <field name="pro_labour_cost_ids" widget="one2many_list" attrs="{'readonly': [('state', 'not in', ('draft','confirmed'))]}">
+                            <tree string="Coût de la main-d'œuvre directe" editable="bottom">
+                                <field name="operation_id" />
+                                
+                                <field name="planned_qty"/>
+                                <field name="actual_qty"/>
+                                
+                                <field name="cost"  widget="monetary" sum="cost"/>
+                                <field name="total_cost"  widget="monetary" sum="total_cost"/>
+                                <field name="total_actual_cost"  widget="monetary" sum="total_actual_cost"/>
+                                <field name="currency_id" invisible="1"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="total_labour_cost">
+                            <div class="oe_inline o_td_label">
+                                <label for="total_labour_cost" />
+                            </div>
+                            <field name="total_labour_cost" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' />
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </page>
+                    
+                    <page string="Frais généraux de fabrication">
+                        <field name="pro_overhead_cost_ids" widget="one2many_list" attrs="{'readonly': [('state', 'not in', ('draft','confirmed'))]}">
+                            <tree string="Frais généraux directs" editable="bottom">
+                                <field name="operation_id" />
+                                
+                                <field name="planned_qty"/>
+                                <field name="actual_qty"/>
+                                
+                                <field name="cost"  widget="monetary" sum="cost"/>
+                                <field name="total_cost"  widget="monetary" sum="total_cost"/>
+                                <field name="total_actual_cost"  widget="monetary" sum="total_actual_cost"/>
+                                <field name="currency_id" invisible="1"/>
+                            </tree>
+                        </field>
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="total_overhead_cost">
+                            <div class="oe_inline o_td_label">
+                                <label for="total_overhead_cost" />
+                            </div>
+                            <field name="total_overhead_cost" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' />
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </page>
+                    
+                    <page string="Coût">
+                        <group>
+                            <group>
+                                <field name="total_material_cost"/> 
+                                <field name="total_labour_cost"/> 
+                                <field name="total_overhead_cost"/> 
+                                <field name="total_all_cost"/>    
+                            </group>
+                            
+                            <group>
+                                <field name="total_actual_material_cost"/> 
+                                <field name="total_actual_labour_cost"/> 
+                                <field name="total_actual_overhead_cost"/> 
+                                <field name="total_actual_all_cost"/>
+                                <field name="product_unit_cost"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>    
+            </field>
+        </record>        	
+        
+        <record id="view_production_cost_pivot" model="ir.ui.view">
+            <field name="name">mrp.production.cost.pivot</field>
+            <field name="model">mrp.production</field>
+            <field name="arch" type="xml">
+                <pivot string="Chiffrage du processus de fabrication">
+                    <field name="product_id" type="row"/>
+                </pivot>
+            </field>
+        </record>
+        
+    </data>
+</odoo>

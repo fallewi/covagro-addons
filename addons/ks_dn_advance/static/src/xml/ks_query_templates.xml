@@ -1,0 +1,62 @@
+<templates>
+<t t-name="ks_select_labels">
+        <t t-if="mode == 'edit'">
+            <select t-att-id="class" class="o_input o_group_selector o_add_group ks_label_select'" >
+                <t t-foreach="Object.keys(ks_columns_list)" t-as="ks_columns">
+                    <option t-att-value="ks_columns">
+                        <t t-if="ks_columns_list[ks_columns]">
+                            <t t-esc="ks_columns_list[ks_columns]"/>
+                        </t>
+                    </option>
+                </t>
+            </select>
+        </t>
+        <t t-else="">
+            <span>
+                <t t-esc="value"/>
+            </span>
+        </t>
+    </t>
+
+    <t t-name="ks_y_label_table">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Measures
+                    </th>
+                    <th>
+                        Chart Type
+                    </th>
+                   <t t-if="ks_is_group_column">
+                        <th>
+                            Group
+                        </th>
+                    </t>
+                </tr>
+            </thead>
+            <tbody class="ks_y_axis">
+                <t t-foreach="Object.keys(label_rows)" t-as="table_row">
+
+                    <tr>
+                        <td>
+                            <t t-esc="label_rows[table_row]['measure']"/>
+                        </td>
+                        <td>
+                            <t t-call="ks_select_labels">
+                                <t t-set="ks_columns_list" t-value="label_rows[table_row]['chart_type']"/>
+                                <t t-set="class" t-value="table_row"/>
+                                <t t-set="value" t-value="label_rows[table_row]['chart_type'][chart_type[table_row]]"/>
+                            </t>
+                        </td>
+                         <t t-if="ks_is_group_column">
+                            <td t-att-id="table_row" contenteditable="true" class="ks_stack_group">
+                                <t t-esc="label_rows[table_row]['group']"/>
+                            </td>
+                         </t>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </t>
+    </templates>

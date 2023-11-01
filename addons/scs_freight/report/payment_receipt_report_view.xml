@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="inv_payment_receipt">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context({'lang':o.customer_id.lang})" />
+            <t
+                t-foreach="request.env['account.move'].search([('operation_id', '=', o.id),('move_type', '=', 'out_invoice')])"
+                t-as="inv"
+            >
+                <div class="page">
+                    <div class="oe_row">
+                        <br />
+                        <br />
+                        <center>
+                            <h4>
+                                <b>Reçu de paiement de facture</b>
+                            </h4>
+                        </center>
+                        <span t-esc="invoice" />
+                        <table>
+                            <tr>
+                                <th>Nom du client:</th>
+                                <td>
+                                    <span t-field="inv.partner_id.name" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Date de facturation:</th>
+                                <td>
+                                    <span t-field="inv.invoice_date" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br />
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th
+                                    style="background-color:#5DADE2 !important;color:white;"
+                                >FACTURE TOTALE </th>
+                                <th
+                                    style="background-color:#5DADE2 !important;color:white;"
+                                >MONTANT PAYÉ</th>
+                                <th
+                                    style="background-color:#5DADE2 !important;color:white;"
+                                >MONTANT DÛ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="balance" t-value='0' />
+                            <t
+                                t-set="balance"
+                                t-value="inv.amount_total-inv.amount_residual"
+                            />
+                            <tr>
+                                <td>
+                                    <p t-field="inv.amount_total" />
+                                </td>
+                                <td>
+                                    <strong>
+                                        <t
+                                            t-esc="balance"
+                                            t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"
+                                        />
+                                    </strong>
+                                </td>
+                                <td>
+                                    <p t-field="inv.amount_residual" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <t
+                        t-if="inv.amount_total != inv.amount_residual and inv.amount_residual != 0"
+                    >
+                        <center>
+                            <h4>
+                                <b>Détails de paiement de la facture</b>
+                            </h4>
+                        </center>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th
+                                        style="background-color:#5DADE2 !important;color:white;"
+                                    >DATE DE PAIEMENT</th>
+                                    <th
+                                        style="background-color:#5DADE2 !important;color:white;"
+                                    >MODE DE PAIEMENT</th>
+                                    <th
+                                        style="background-color:#5DADE2 !important;color:white;"
+                                    >MONTANT DE PAIEMENT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="get_payment_details(inv)" t-as="p">
+                                    <tr>
+                                        <td>
+                                            <span
+                                                t-att-style="style"
+                                                t-esc="p['payment_date']"
+                                            />
+                                        </td>
+                                        <td>
+                                            <span
+                                                t-att-style="style"
+                                                t-esc="p['payment_journal_name']"
+                                            />
+                                        </td>
+                                        <td>
+                                            <span
+                                                t-att-style="style"
+                                                t-esc="p['payment_amount']"
+                                                t-options="{'widget': 'monetary', 'display_currency': inv.currency_id}"
+                                            />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+    <template id="inv_payment_receipt_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <span t-esc="o" />
+                <t
+                    t-call="scs_freight.inv_payment_receipt"
+                    t-lang="o.customer_id.lang"
+                />
+            </t>
+        </t>
+    </template>
+    <template id="bill_payment_receipt">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="o.with_context({'lang':o.customer_id.lang})" />
+            <div class="page">
+                <t
+                    t-foreach="request.env['account.move'].search([('operation_id', '=', o.id),('move_type', '=', 'in_invoice')])"
+                    t-as="bill"
+                >
+                    <div class="oe_row">
+                        <br />
+                        <br />
+                        <center>
+                            <h4>
+                                <b>Reçu de paiement de facture</b>
+                            </h4>
+                        </center>
+                        <table>
+                            <tr>
+                                <th>Nom du fournisseur:</th>
+                                <td>
+                                    <span t-field="bill.partner_id.name" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Date de facturation:</th>
+                                <td>
+                                    <span t-field="bill.invoice_date" />
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br />
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th
+                                    style="background-color:#5DADE2 !important;color:white;"
+                                >TOTAL DE LA FACTURE</th>
+                                <th
+                                    style="background-color:#5DADE2 !important;color:white;"
+                                >MONTANT PAYÉ</th>
+                                <th
+                                    style="background-color:#5DADE2 !important;color:white;"
+                                >MONTANT DÛ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="balance" t-value='0' />
+                            <t
+                                t-set="balance"
+                                t-value="bill.amount_total-bill.amount_residual"
+                            />
+                            <tr>
+                                <td>
+                                    <p t-field="bill.amount_total" />
+                                </td>
+                                <td>
+                                    <strong>
+                                        <t
+                                            t-esc="balance"
+                                            t-options="{'widget': 'monetary', 'display_currency': bill.currency_id}"
+                                        />
+                                    </strong>
+                                </td>
+                                <td>
+                                    <p t-field="bill.amount_residual" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <t
+                        t-if="bill.amount_total != bill.amount_residual and bill.amount_residual != 0"
+                    >
+                        <center>
+                            <h4>
+                                <b>Détails du paiement de la facture</b>
+                            </h4>
+                        </center>
+                        <table class="table table-condensed">
+                            <thead>
+                                <tr>
+                                    <th
+                                        style="background-color:#5DADE2 !important;color:white;"
+                                    >DATE DE PAIEMENT</th>
+                                    <th
+                                        style="background-color:#5DADE2 !important;color:white;"
+                                    >MODE DE PAIEMENT</th>
+                                    <th
+                                        style="background-color:#5DADE2 !important;color:white;"
+                                    >MONTANT DU PAIEMENT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="get_bill_payment_details(bill)" t-as="p">
+                                    <tr>
+                                        <td>
+                                            <span
+                                                t-att-style="style"
+                                                t-esc="p['payment_date']"
+                                            />
+                                        </td>
+                                        <td>
+                                            <span
+                                                t-att-style="style"
+                                                t-esc="p['payment_journal_name']"
+                                            />
+                                        </td>
+                                        <td>
+                                            <span
+                                                t-att-style="style"
+                                                t-esc="p['payment_amount']"
+                                                t-options="{'widget': 'monetary', 'display_currency': bill.currency_id}"
+                                            />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+    <template id="bill_payment_receipt_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t
+                    t-call="scs_freight.bill_payment_receipt"
+                    t-lang="o.customer_id.lang"
+                />
+            </t>
+        </t>
+    </template>
+</odoo>

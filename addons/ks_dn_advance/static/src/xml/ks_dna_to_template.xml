@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+      <t t-name="ks_gridstack_todo_tv_view_container">
+        <div class="ks-tv-item ks_chart_container ks_list_view" t-att-data-id="item_id">
+            <div class="grid-stack-item-content ks_list_view_container ks_dashboard_item_hover card shadow">
+
+
+                <div class="ks_card_header">
+                    <div class="p-3 py-3 d-flex flex-row align-items-center justify-content-between ">
+                    <div class="d-flex align-items-center  w-50">
+                        <h6 class="m-0 font-weight-bold  h3 mr-3 ks_list_view_heading" t-att-title="ks_chart_title">
+                            <t t-esc="ks_chart_title"/>
+                        </h6>
+                    </div>
+                </div>
+
+                <div class="card-header">
+                    <div class="nav-tabs-navigation">
+                        <div class="nav-tabs-wrapper">
+
+                            <t t-if="to_do_view_data['label']">
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                            <t t-set="ks_rec_count" t-value="0"/>
+                                    <t t-foreach="to_do_view_data['label']" t-as="table_header">
+                                        <li class="nav-item">
+
+                                              <a class="nav-link ks_dna_li_tab"
+                                                 t-att-data-item-id="item_id"
+                                                 t-att-data-section-id="to_do_view_data['ks_section_id'][ks_rec_count]"
+                                                 data-toggle="pill"
+                                                 href="#">
+                                                    <t t-esc="table_header"/>
+                                                </a>
+
+                                                </li>
+                                        <t t-set="ks_rec_count" t-value="ks_rec_count+1"/>
+                                    </t>
+                                </ul>
+
+                            </t>
+                            <t t-else="">
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                    <li class="nav-item" >
+                                        No Section Available.
+                                    </li>
+                                </ul>
+                                </t>
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="ks_to_do_card_body card-body table-responsive"/>
+            </div>
+        </div>
+    </t>
+</template>

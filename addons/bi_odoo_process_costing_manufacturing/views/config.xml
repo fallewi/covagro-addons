@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<record id="view_res_config_process_inherit" model="ir.ui.view">
+			<field name="name">process.res.config.settings.inherite</field>
+			<field name="model">res.config.settings</field>
+			<field name="inherit_id" ref="mrp.res_config_settings_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//div[@groups='mrp.group_mrp_manager']" position="inside">
+					 <h2>MO Process Costing</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-md-6 col-xs-12 o_setting_box"  >
+                                <div class="o_setting_right_pane">
+                                    <label for='process_costing'/>
+                                    <div class="text-muted">
+                                        Process Costing Method.
+                                    </div>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <field name="process_costing" widget='radio'/>
+                                </div>
+                            </div>
+                        </div>
+					</xpath>
+			</field>
+		</record>
+
+         <record id="mrp_workcenter_view_inherit_extend_view_1_pro" model="ir.ui.view">
+            <field name="name">mrp.workcenter.extend.view.1</field>
+            <field name="model">mrp.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
+            <field name="arch" type="xml">
+                <group name="costing" position="after">
+                   <group>
+                        <separator string="Actual Costing"/>
+                        <field name="overhead_cost_hour"/>
+                        
+                        <field name="labour_costs_hour"/>  
+                    </group>
+                </group>
+           </field>
+        </record>
+</odoo>
